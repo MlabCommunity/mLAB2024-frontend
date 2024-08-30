@@ -1,7 +1,7 @@
 "use server";
 import { signUpUrl } from "@/constants/api";
 import { signUpSchema } from "@/lib/form-schemas";
-import axiosInstance from "@/utils/actions/axiosInstance";
+import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
 import { z } from "zod";
 

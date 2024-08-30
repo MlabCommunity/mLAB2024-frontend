@@ -22,7 +22,6 @@ export default function LoginForm() {
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
     watch,
   } = useForm<FormData>({

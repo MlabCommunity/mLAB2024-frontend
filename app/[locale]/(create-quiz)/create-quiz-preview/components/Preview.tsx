@@ -11,6 +11,10 @@ import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
 import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import { useMutation } from "@tanstack/react-query";
+import { createQuiz } from "@/utils/actions/quiz/createQuiz";
+import toast from "react-hot-toast";
 
 const mockQuestions = {
   title: "What is the purpose of quantum physics?",
@@ -104,21 +108,45 @@ const mockQuestions = {
 };
 
 function Preview() {
+  const { generatedQuizData: mockQuestions, setGeneratedQuizData } =
+    useGenerateQuizStore();
   const router = useRouter();
   const t = useTranslations("QuizPreview");
   const { closeModal, openModal, setModalData } = useModalStore();
 
-  const [questions, setQuestions] = useState(
-    mockQuestions.generateQuestionsDto
-  );
+  const [questions, setQuestions] = useState(mockQuestions?.createQuestionsDto);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
   >(null);
 
+  const { mutate } = useMutation({
+    mutationFn: createQuiz,
+
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      setGeneratedQuizData(data);
+      router.push(routes.createQuiz[3].route);
+      toast.success("Quiz created successfully");
+    },
+    onMutate: () => {
+      toast.loading("Creating quiz...");
+    },
+    onSettled() {
+      toast.dismiss();
+    },
+  });
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(routes.createQuiz[3].route);
+    mutate({
+      quizDto: {
+        ...mockQuestions,
+        createQuestionsDto: questions,
+      },
+    });
   };
 
   const handleDeleteQuestion = (index: number) => {
@@ -166,9 +194,9 @@ function Preview() {
       updatedQuizData[currentQuestionIndex] = {
         ...updatedQuizData[currentQuestionIndex], // Retain existing properties
         title: updatedQuestion.question, // Update the title
-        generateAnswersDto: updatedQuestion.options.map((option: string) => ({
+        createAnswersDto: updatedQuestion.options.map((option: string) => ({
           content: option,
-          iscorrect: updatedQuestion.selected === option,
+          isCorrect: updatedQuestion.selected === option,
         })),
       };
       setQuestions(updatedQuizData);
@@ -182,7 +210,7 @@ function Preview() {
         <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
           <div className="flex gap-3 sm:gap-2 md:gap-0 justify-between items-center">
             <Chip color="primary" size="md" radius="sm">
-              {t("numberOfQuestions")}
+              Total {questions?.length} questions
             </Chip>
             <div className="flex items-center flex-col sm:flex-row gap-2">
               <label className="text-sm order-1" htmlFor="answers">
@@ -207,16 +235,16 @@ function Preview() {
             {t("addNewQuestionBtn")}
           </Button>
           <div>
-            {questions.length === 0 ? (
+            {questions?.length === 0 ? (
               <p>No questions available.</p>
             ) : (
-              questions.map((question, index) => (
+              questions?.map((question, index) => (
                 <QuizItem
                   key={index}
                   questionId={index + 1}
                   number={index + 1}
                   question={question.title}
-                  options={question.generateAnswersDto} // Pass the full array with content and iscorrect
+                  options={question.createAnswersDto} // Pass the full array with content and iscorrect
                   description={""}
                   showCorrectAnswers={showCorrectAnswers} // Make sure this prop is being passed
                   handleDelete={() => handleDeleteQuestion(index)}
@@ -240,12 +268,12 @@ function Preview() {
               questionData={{
                 question: questions[currentQuestionIndex].title,
                 description: questions[currentQuestionIndex].title,
-                options: questions[currentQuestionIndex].generateAnswersDto.map(
+                options: questions[currentQuestionIndex].createAnswersDto.map(
                   (ans) => ans.content
                 ),
                 selected:
-                  questions[currentQuestionIndex].generateAnswersDto.find(
-                    (ans) => ans.iscorrect
+                  questions[currentQuestionIndex].createAnswersDto.find(
+                    (ans) => ans.isCorrect
                   )?.content || "",
               }}
               onSave={handleSaveEdit}

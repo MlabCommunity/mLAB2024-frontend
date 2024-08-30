@@ -8,72 +8,108 @@ import { useRouter } from "next/navigation";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import { QuestionType } from "@/types";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
 function ButtonGroupComponent() {
-  // State to track the selected button in each group
-  const [selectedType, setSelectedType] = useState("multiple-choice");
+  const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
+  const { content } = generateQuizData;
+  const [selectedType, setSelectedType] =
+    useState<QuestionType>("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
 
-  // Handle clicks for the type of questions
-  const handleTypeClick = (type: string) => {
+  const handleTypeClick = (type: QuestionType) => {
     setSelectedType(type);
   };
 
-  // Handle clicks for the number of questions
   const handleQuantityClick = (qty: string) => {
     setSelectedQuantity(qty);
   };
   const router = useRouter();
+
+  const { mutate, isPending, data } = useMutation({
+    mutationFn: generateQuiz,
+
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      setGeneratedQuizData(data);
+      router.push(routes.createQuiz[2].route);
+      toast.success("Quiz generated successfully");
+    },
+    onMutate: () => {
+      toast.loading("Generating quiz...", { id: "loading-toast" });
+    },
+    onSettled() {
+      toast.dismiss("loading-toast");
+    },
+  });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(routes.createQuiz[2].route);
-    // API call here
+    let numberOfQuestions;
+    if (selectedQuantity === "low") {
+      numberOfQuestions = 5;
+    } else if (selectedQuantity === "medium") {
+      numberOfQuestions = 10;
+    } else if (selectedQuantity === "high") {
+      numberOfQuestions = 15;
+    }
+
+    if (content && numberOfQuestions && selectedType) {
+      mutate({
+        content: content,
+        numberOfQuestions: numberOfQuestions,
+        questionType: selectedType,
+      });
+    }
   };
+
   const t = useTranslations("ConfigureQuiz");
   return (
     <form
       onSubmit={handleSubmit}
-      className=" md:w-full   rounded-lg flex flex-col "
+      className=" md:w-full rounded-lg flex flex-col "
     >
       <div className="flex flex-col bg-content2 gap-4 p-6">
         <span>{t("questionsType")}</span>
         <div className="w-full flex">
           <ButtonGroup
-            className="flex flex-col md:flex-row justify-start gap-2 md:gap-0 items-start w-full"
+            className="flex flex-col md:flex-row justify-start gap-2 items-start w-full"
             variant="solid"
             color="primary"
             radius="md"
             size="md"
           >
             <Button
-              variant={selectedType === "multiple-choice" ? "solid" : "flat"}
-              className={`w-full md:w-auto justify-start ${
-                selectedType === "multiple-choice" ? "text-white" : ""
-              }`}
+              variant={selectedType === "MultipleChoice" ? "solid" : "flat"}
+              className="w-full justify-start md:w-auto rounded-lg"
               size="lg"
               startContent={
-                selectedType === "multiple-choice" ? (
+                selectedType === "MultipleChoice" ? (
                   <TickCircle />
                 ) : (
                   <EmptyCircle />
                 )
               }
-              name="multiple-choice"
-              aria-pressed={selectedType === "multiple-choice"}
-              onClick={() => handleTypeClick("multiple-choice")}
+              name="MultipleChoice"
+              aria-pressed={selectedType === "MultipleChoice"}
+              onClick={() => handleTypeClick("MultipleChoice")}
             >
               <span>{t("multipleChoice")}</span>
             </Button>
             <Button
-              variant={selectedType === "true-false" ? "solid" : "flat"}
-              className="w-full justify-start md:w-auto"
+              variant={selectedType === "TrueFalse" ? "solid" : "flat"}
+              className="w-full justify-start md:w-auto rounded-lg"
               size="lg"
               startContent={
-                selectedType === "true-false" ? <TickCircle /> : <EmptyCircle />
+                selectedType === "TrueFalse" ? <TickCircle /> : <EmptyCircle />
               }
-              name="true-false"
-              aria-pressed={selectedType === "true-false"}
-              onClick={() => handleTypeClick("true-false")}
+              name="TrueFalse"
+              aria-pressed={selectedType === "TrueFalse"}
+              onClick={() => handleTypeClick("TrueFalse")}
             >
               <span>{t("trueFalse")}</span>
             </Button>
@@ -84,7 +120,7 @@ function ButtonGroupComponent() {
         <div className="gap-4 p-6 flex flex-col bg-content2">
           <span>{t("howManyQuestions")}</span>
           <ButtonGroup
-            className="flex-col w-full gap-2 md:gap-0 items-start flex md:flex-row justify-start"
+            className="flex-col w-full gap-2 items-start flex md:flex-row justify-start"
             variant="solid"
             color="primary"
             radius="md"
@@ -92,7 +128,7 @@ function ButtonGroupComponent() {
           >
             <Button
               variant={selectedQuantity === "low" ? "solid" : "flat"}
-              className="w-full justify-start md:w-auto"
+              className="w-full justify-start md:w-auto rounded-lg"
               size="lg"
               startContent={
                 selectedQuantity === "low" ? <TickCircle /> : <EmptyCircle />
@@ -105,9 +141,7 @@ function ButtonGroupComponent() {
             </Button>
             <Button
               variant={selectedQuantity === "medium" ? "solid" : "flat"}
-              className={`w-full md:w-auto justify-start ${
-                selectedQuantity === "medium" ? "text-white" : ""
-              }`}
+              className="w-full justify-start md:w-auto rounded-xl"
               size="lg"
               startContent={
                 selectedQuantity === "medium" ? <TickCircle /> : <EmptyCircle />
@@ -120,7 +154,7 @@ function ButtonGroupComponent() {
             </Button>
             <Button
               variant={selectedQuantity === "high" ? "solid" : "flat"}
-              className="w-full justify-start md:w-auto"
+              className="w-full justify-start md:w-auto rounded-lg"
               size="lg"
               startContent={
                 selectedQuantity === "high" ? <TickCircle /> : <EmptyCircle />
@@ -130,19 +164,6 @@ function ButtonGroupComponent() {
               onClick={() => handleQuantityClick("high")}
             >
               <span>{t("high")}</span>
-            </Button>
-            <Button
-              variant={selectedQuantity === "manual" ? "solid" : "flat"}
-              className="w-full justify-start md:w-auto"
-              size="lg"
-              startContent={
-                selectedQuantity === "manual" ? <TickCircle /> : <EmptyCircle />
-              }
-              name="manual"
-              aria-pressed={selectedQuantity === "manual"}
-              onClick={() => handleQuantityClick("manual")}
-            >
-              <span>{t("man")}</span>
             </Button>
           </ButtonGroup>
         </div>

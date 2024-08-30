@@ -10,7 +10,7 @@ type QuizItemPropType = {
   questionId: number;
   question: string;
   number: number;
-  options: { content: string; iscorrect: boolean }[]; // Updated type
+  options: { content: string; isCorrect: boolean }[]; // Updated type
   description: string;
   showCorrectAnswers?: boolean; // New prop for showing correct answers
   handleDelete: () => void;
@@ -40,8 +40,18 @@ const QuizItem = ({
             {question}
           </h1>
           <div className="flex p-2 gap-2">
-            <Image onClick={handleDelete} src={thrash} alt="delete" />
-            <Image onClick={handleEdit} src={edit} alt="edit" />
+            <Image
+              onClick={handleDelete}
+              src={thrash}
+              alt="delete"
+              className="cursor-pointer"
+            />
+            <Image
+              onClick={handleEdit}
+              src={edit}
+              alt="edit"
+              className="cursor-pointer"
+            />
           </div>
         </div>
         <span>{description}</span>
@@ -54,11 +64,11 @@ const QuizItem = ({
               className="justify-start items-center flex"
               style={{
                 backgroundColor:
-                  showCorrectAnswers && option.iscorrect
+                  showCorrectAnswers && option.isCorrect
                     ? "#D1FAE5" // Light green background for correct answer
                     : "",
                 color:
-                  showCorrectAnswers && option.iscorrect
+                  showCorrectAnswers && option.isCorrect
                     ? "#065F46" // Dark green text color for correct answer
                     : "",
               }}

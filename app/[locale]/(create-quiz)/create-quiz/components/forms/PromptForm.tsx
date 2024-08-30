@@ -10,8 +10,10 @@ import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
 import { PromptSchema } from "@/lib/form-schemas";
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
 
 const PromptForm = () => {
+  const { setGenerateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
   const promptSchema = z.object({
     prompt: z.string().min(10, { message: t("promptRequiredField") }),
@@ -24,9 +26,10 @@ const PromptForm = () => {
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
   const router = useRouter();
   const onSubmit = (data: FormValue) => {
-    console.log(data);
     router.push(routes.createQuiz[1].route);
-    // Call your API here
+    setGenerateQuizData({
+      content: data.prompt,
+    });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

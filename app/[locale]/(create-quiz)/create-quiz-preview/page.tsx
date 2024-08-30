@@ -1,8 +1,6 @@
 import React from "react";
 import Preview from "./components/Preview";
-import { getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
-import AddQuestionModal from "../../modals/AddQuestionModal";
 const PreviewPage = () => {
   const t = useTranslations("QuizPreview");
 

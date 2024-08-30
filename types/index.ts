@@ -20,8 +20,16 @@ export type GenerateQuizResponse = {
     answers: [
       {
         content: string;
-        iscorrect: boolean;
+        isCorrect: boolean;
       }
     ]
   ];
+};
+
+export type QuestionType = "MultipleChoice" | "TrueFalse" | "";
+
+export type GenerateQuizT = {
+  content?: string;
+  numberOfQuestions?: number;
+  questionType?: QuestionType;
 };

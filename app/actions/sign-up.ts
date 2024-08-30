@@ -3,6 +3,7 @@ import { signUpUrl } from "@/constants/api";
 import { signUpSchema } from "@/lib/form-schemas";
 import axiosInstance from "@/utils/actions/axiosInstance";
 import { AxiosError } from "axios";
+
 import { z } from "zod";
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {

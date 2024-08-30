@@ -1,8 +1,8 @@
 import { refreshTokenUrl } from "@/constants/api";
-import axiosInstance from "../axiosInstance";
-import Cookies from "js-cookie"; // Ensure you have js-cookie installed
+import axiosInstance from "../../axiosInstance";
+import Cookies from "js-cookie";
 
-let isRefreshing = false; // Flag to track if a refresh is in progress
+let isRefreshing = false;
 type TokenType = string;
 
 type SubscriberCallback = (
@@ -10,9 +10,10 @@ type SubscriberCallback = (
   refreshToken: TokenType
 ) => void;
 let subscribers: SubscriberCallback[] = [];
+
 const onRefreshed = (accessToken: TokenType, refreshToken: TokenType): void => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
-  subscribers = []; // Clear the subscribers after refreshing
+  subscribers = [];
 };
 
 const subscribeTokenRefresh = (callback: SubscriberCallback): void => {
@@ -21,7 +22,6 @@ const subscribeTokenRefresh = (callback: SubscriberCallback): void => {
 
 export const refreshToken = async () => {
   if (isRefreshing) {
-    // If a refresh is already in progress, return a promise that resolves when done
     return new Promise((resolve) => {
       subscribeTokenRefresh((accessToken: string, refreshToken: string) => {
         resolve({ accessToken, refreshToken });
@@ -32,24 +32,32 @@ export const refreshToken = async () => {
   isRefreshing = true;
 
   try {
-    const response = await axiosInstance.post(refreshTokenUrl);
+    const refreshToken = Cookies.get("RefreshToken");
+
+    if (!refreshToken) {
+      throw new Error("No refresh token available");
+    }
+
+    const response = await axiosInstance.post(refreshTokenUrl, {
+      refreshToken,
+    });
 
     if (response.status === 200) {
-      const { accessToken, refreshToken } = response.data;
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      // Clear existing tokens
       Cookies.remove("AccessToken");
       Cookies.remove("RefreshToken");
 
-      // Set new tokens in cookies with expiration
       Cookies.set("AccessToken", accessToken, { expires: 1 });
-      Cookies.set("RefreshToken", refreshToken, { expires: 7 });
+      Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
 
-      onRefreshed(accessToken, refreshToken);
-      return { accessToken, refreshToken };
+      onRefreshed(accessToken, newRefreshToken);
+      return { accessToken, newRefreshToken };
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
+    Cookies.remove("AccessToken");
+    Cookies.remove("RefreshToken");
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

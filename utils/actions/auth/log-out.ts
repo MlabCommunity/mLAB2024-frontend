@@ -1,13 +1,13 @@
 "use server";
 
-import { z } from "zod";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { logOutUrl } from "@/constants/api";
+import axiosInstance from "../../axiosInstance";
 
 export const logOutUser = async () => {
   try {
-    axios.post(
+    axiosInstance.post(
       logOutUrl,
       {},
       {

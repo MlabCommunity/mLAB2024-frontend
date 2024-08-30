@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
 import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
+import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 
 const mockQuestions = {
   title: "What is the purpose of quantum physics?",
@@ -106,7 +107,7 @@ const mockQuestions = {
 function Preview() {
   const router = useRouter();
   const t = useTranslations("QuizPreview");
-  const { closeModal, openModal, setModalData } = useModalStore();
+  const { closeModal, openModal, setModalData, isOpen, type } = useModalStore();
 
   const [questions, setQuestions] = useState(
     mockQuestions.generateQuestionsDto
@@ -138,7 +139,6 @@ function Preview() {
   const handleConfirmDelete = (index: number) => {
     const updatedQuizData = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuizData);
-
     if (updatedQuizData.length === 0) {
       setCurrentQuestionIndex(null); // Reset index when there are no questions
       closeModal(); // Close any open modal since there's no data to show
@@ -176,6 +176,10 @@ function Preview() {
     }
   };
 
+  const handleOpenAddQuestion = () => {
+    openModal("addQuestion");
+  };
+
   return (
     <>
       <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
@@ -203,6 +207,7 @@ function Preview() {
             color="primary"
             size="sm"
             radius="md"
+            onClick={handleOpenAddQuestion}
           >
             {t("addNewQuestionBtn")}
           </Button>
@@ -229,6 +234,8 @@ function Preview() {
         <NavigationControls>
           <SaveQuiz />
         </NavigationControls>
+        {/* Conditional rendering for AddQuestionModal */}
+        {type === "addQuestion" && <AddQuestionModal />}
         {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
           <>
             <DeleteQuestionModal

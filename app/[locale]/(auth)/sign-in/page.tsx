@@ -14,7 +14,7 @@ const SignInPage = async () => {
           height={100}
           className="mx-auto"
         />
-        <p className="text-sm font-semibold text-primary mt-4">
+        <p className="text-sm font-semibold text-white mt-4">
           {t("signInEnterText")}
         </p>
         <SignInForm />

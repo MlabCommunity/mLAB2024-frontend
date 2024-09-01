@@ -2,7 +2,7 @@
 
 import { signInSchema } from "@/lib/form-schemas";
 import { z } from "zod";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { signInUrl } from "@/constants/api";
 import axiosInstance from "../../axiosInstance";
@@ -21,21 +21,16 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
     });
 
     if (rememberMe) {
-      cookies().set("AccessToken", response.data.accessToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: "strict",
-      });
       cookies().set("RefreshToken", response.data.refreshToken, {
         secure: true,
-        httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
+        path: "/",
       });
     } else {
       cookies().set("AccessToken", response.data.accessToken, {
         secure: true,
-        httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
+        path: "/",
       });
     }
   } catch (error) {

@@ -46,7 +46,7 @@ function SignUpForm() {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 px-6 py-2">
       <div className="flex flex-col gap-2">
         <label className={"text-medium"} htmlFor="email">
           E-mail

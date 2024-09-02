@@ -1,17 +1,18 @@
 import React from "react";
+import PromptForm from "./components/forms/PromptForm";
 import { getTranslations } from "next-intl/server";
-import PromptForm from "../forms/PromptForm";
-async function Prompt() {
+
+const GenerateQuizPage = async () => {
   const t = await getTranslations("CreateQuiz");
   return (
     <div className="flex flex-col gap-6 p-3 md:w-[55rem] mx-auto ">
-      <h1 className="text-4xl font-semibold">{t("createQuizHeading")}</h1>
+      <h2 className="text-4xl font-semibold">{t("createQuizHeading")}</h2>
       <p className="text-foreground-700">{t("createQuizMessage")}</p>
-      <article className=" rounded-lg">
+      <article className="rounded-lg">
         <PromptForm />
       </article>
     </div>
   );
-}
+};
 
-export default Prompt;
+export default GenerateQuizPage;

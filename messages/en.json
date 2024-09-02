@@ -140,7 +140,9 @@
     "low": "Low",
     "med": "Medium",
     "high": "High",
-    "man": "Manual"
+    "man": "Manual",
+    "generatedSuccessfullyMsg": "Quiz generated successfully",
+    "generating": "Generating quiz..."
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",
@@ -148,7 +150,9 @@
     "numberOfQuestions": "Total 5 questions",
     "addNewQuestionBtn": "Add New Question",
     "answers": "Answers",
-    "saveQuizButton": "Save Quiz"
+    "saveQuizButton": "Save Quiz",
+    "createdSuccessfullyMsg": "Quiz created successfully",
+    "creating": "Creating quiz..."
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",

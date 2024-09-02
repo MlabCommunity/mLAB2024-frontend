@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import QuizItem from "./Quiz/QuizItem";
+import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button, Chip } from "@nextui-org/react";
-import SaveQuiz from "../../create-quiz/components/buttons/SaveQuiz";
-import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
+import SaveQuiz from "../../../(generate-quiz)/generate-quiz/components/buttons/SaveQuiz";
+import NavigationControls from "../../../(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
@@ -15,106 +15,17 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
-
-const mockQuestions = {
-  title: "What is the purpose of quantum physics?",
-  description: "Test your knowledge about the purpose of quantum physics",
-  generateQuestionsDto: [
-    {
-      title: "What is the primary goal of quantum physics?",
-      generateAnswersDto: [
-        {
-          content: "To understand the behavior of macroscopic objects",
-          iscorrect: false,
-        },
-        {
-          content: "To understand the behavior of microscopic particles",
-          iscorrect: false,
-        },
-        {
-          content: "To understand the fundamental laws of the universe",
-          iscorrect: true,
-        },
-        {
-          content: "To develop new technologies",
-          iscorrect: false,
-        },
-      ],
-    },
-    {
-      title: "What is the main application of quantum physics?",
-      generateAnswersDto: [
-        {
-          content: "Medical research",
-          iscorrect: false,
-        },
-        {
-          content: "Computer science",
-          iscorrect: false,
-        },
-        {
-          content: "Materials science",
-          iscorrect: false,
-        },
-        {
-          content: "Understanding the behavior of matter and energy",
-          iscorrect: true,
-        },
-      ],
-    },
-    {
-      title: "What is the primary focus of quantum physics?",
-      generateAnswersDto: [
-        {
-          content: "The behavior of macroscopic objects",
-          iscorrect: false,
-        },
-        {
-          content: "The behavior of microscopic particles",
-          iscorrect: true,
-        },
-        {
-          content: "The behavior of living organisms",
-          iscorrect: false,
-        },
-        {
-          content: "The behavior of the universe as a whole",
-          iscorrect: false,
-        },
-      ],
-    },
-    {
-      title: "What is the main benefit of quantum physics?",
-      generateAnswersDto: [
-        {
-          content: "Improved medical treatments",
-          iscorrect: false,
-        },
-        {
-          content: "New technologies and innovations",
-          iscorrect: true,
-        },
-        {
-          content: "Better understanding of the universe",
-          iscorrect: false,
-        },
-        {
-          content: "Increased funding for research",
-          iscorrect: false,
-        },
-      ],
-    },
-  ],
-};
+import { QuestionsT } from "@/types";
 
 function Preview() {
-  const { generatedQuizData: mockQuestions, setGeneratedQuizData } =
-    useGenerateQuizStore();
+  const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const router = useRouter();
   const t = useTranslations("QuizPreview");
   const { closeModal, openModal, setModalData } = useModalStore();
 
-  const [questions, setQuestions] = useState(mockQuestions?.createQuestionsDto);
+  const [questions, setQuestions] = useState<QuestionsT[]>(
+    generatedQuizData?.createQuestionsDto
+  );
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
@@ -129,13 +40,13 @@ function Preview() {
     onSuccess: (data) => {
       setGeneratedQuizData(data);
       router.push(routes.createQuiz[3].route);
-      toast.success("Quiz created successfully");
+      toast.success(t("createdSuccessfullyMsg"));
     },
     onMutate: () => {
-      toast.loading("Creating quiz...");
+      toast.loading(t("creating"), { id: "loading-toast" });
     },
     onSettled() {
-      toast.dismiss();
+      toast.dismiss("loading-toast");
     },
   });
 
@@ -143,7 +54,7 @@ function Preview() {
     e.preventDefault();
     mutate({
       quizDto: {
-        ...mockQuestions,
+        ...generatedQuizData,
         createQuestionsDto: questions,
       },
     });
@@ -168,10 +79,9 @@ function Preview() {
     setQuestions(updatedQuizData);
 
     if (updatedQuizData.length === 0) {
-      setCurrentQuestionIndex(null); // Reset index when there are no questions
-      closeModal(); // Close any open modal since there's no data to show
+      setCurrentQuestionIndex(null);
+      closeModal();
     } else {
-      // If questions remain, keep the index within bounds
       setCurrentQuestionIndex(
         Math.min(currentQuestionIndex as number, updatedQuizData.length - 1)
       );
@@ -192,15 +102,15 @@ function Preview() {
     ) {
       const updatedQuizData = [...questions];
       updatedQuizData[currentQuestionIndex] = {
-        ...updatedQuizData[currentQuestionIndex], // Retain existing properties
-        title: updatedQuestion.question, // Update the title
+        ...updatedQuizData[currentQuestionIndex],
+        title: updatedQuestion.question,
         createAnswersDto: updatedQuestion.options.map((option: string) => ({
           content: option,
           isCorrect: updatedQuestion.selected === option,
         })),
       };
       setQuestions(updatedQuizData);
-      closeModal(); // Ensure the modal is closed after saving
+      closeModal();
     }
   };
 
@@ -244,9 +154,9 @@ function Preview() {
                   questionId={index + 1}
                   number={index + 1}
                   question={question.title}
-                  options={question.createAnswersDto} // Pass the full array with content and iscorrect
+                  options={question.createAnswersDto}
                   description={""}
-                  showCorrectAnswers={showCorrectAnswers} // Make sure this prop is being passed
+                  showCorrectAnswers={showCorrectAnswers}
                   handleDelete={() => handleDeleteQuestion(index)}
                   handleEdit={() => handleEditQuestion(index)}
                 />

@@ -13,7 +13,7 @@ import {
   Tabs,
 } from "@nextui-org/react";
 import React from "react";
-import NavigationControls from "../(create-quiz)/create-quiz/components/buttons/NavigationControls";
+import NavigationControls from "../(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 let questions = [
   { title: "Question2" },
   { title: "Question3" },

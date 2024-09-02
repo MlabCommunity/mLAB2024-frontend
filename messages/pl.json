@@ -139,7 +139,9 @@
     "low": "Mała",
     "med": "Średnia",
     "high": "Duża",
-    "man": "Ręcznie"
+    "man": "Ręcznie",
+    "generatedSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
+    "generating": "Generowanie quizu..."
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",
@@ -147,7 +149,9 @@
     "numberOfQuestions": "Łącznie 5 pytań",
     "addNewQuestionBtn": "Dodaj pytanie",
     "answers": "Odpowiedzi",
-    "saveQuizButton": "Zapisz quiz"
+    "saveQuizButton": "Zapisz quiz",
+    "createdSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
+    "creating": "Tworzenie quizu..."
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Sukces",

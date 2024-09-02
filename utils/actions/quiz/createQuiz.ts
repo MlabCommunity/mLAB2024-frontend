@@ -10,7 +10,6 @@ import { AxiosError } from "axios";
 
 export const createQuiz = async (data: any) => {
   const token = cookies().get("AccessToken")?.value;
-  console.log(data);
   try {
     const response = await axiosInstance.post(createQuizUrl, data, {
       headers: {

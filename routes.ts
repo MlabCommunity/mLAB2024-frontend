@@ -1,10 +1,10 @@
 export const routes = {
   createQuiz: [
     {
-      route: "/create-quiz",
+      route: "/generate-quiz",
     },
     {
-      route: "/create-quiz-configure-quiz",
+      route: "/generate-configure-quiz",
     },
     {
       route: "/create-quiz-preview",

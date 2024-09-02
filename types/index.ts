@@ -33,3 +33,11 @@ export type GenerateQuizT = {
   numberOfQuestions?: number;
   questionType?: QuestionType;
 };
+
+export type QuestionsT = {
+  title: string;
+  createAnswersDto: {
+    content: string;
+    isCorrect: boolean;
+  }[];
+};

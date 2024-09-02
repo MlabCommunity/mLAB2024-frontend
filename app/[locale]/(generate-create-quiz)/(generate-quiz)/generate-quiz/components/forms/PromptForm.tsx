@@ -9,28 +9,31 @@ import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
-import { PromptSchema } from "@/lib/form-schemas";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 
 const PromptForm = () => {
   const { setGenerateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
+
   const promptSchema = z.object({
     prompt: z.string().min(10, { message: t("promptRequiredField") }),
   });
   type FormValue = z.infer<typeof promptSchema>;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
   const router = useRouter();
+
   const onSubmit = (data: FormValue) => {
     router.push(routes.createQuiz[1].route);
     setGenerateQuizData({
       content: data.prompt,
     });
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Textarea
@@ -40,10 +43,10 @@ const PromptForm = () => {
         {...register("prompt", { required: true })}
         labelPlacement="outside"
         placeholder={t("promptForm")}
-        className="p-6 gap-2 bg-content2"
+        className="p-6 gap-2 bg-content2 rounded-lg"
       />
       {errors.prompt && (
-        <div className="text-red-500 text-sm">{errors.prompt.message}</div>
+        <div className="text-red-500 text-sm mt-2">{errors.prompt.message}</div>
       )}
       <NavigationControls>
         <NextButton />

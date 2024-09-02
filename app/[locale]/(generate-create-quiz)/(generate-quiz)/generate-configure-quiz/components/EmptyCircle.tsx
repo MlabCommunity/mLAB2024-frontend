@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import emptyCircle from "../../../../../public/assets/record.svg";
+import emptyCircle from "@/public/assets/record.svg";
 
 const EmptyCircle = () => {
   return (

@@ -1,7 +1,5 @@
-import Image from "next/image";
 import React from "react";
-import documentIcon from "../../../../public/assets/WEB/vuesax/bold/vuesax/bold/document-copy.svg";
-import BackToDashboard from "../create-quiz/components/buttons/BackToDashboard";
+import BackToDashboard from "../../(generate-quiz)/generate-quiz/components/buttons/BackToDashboard";
 import { getTranslations } from "next-intl/server";
 const page = async () => {
   const t = await getTranslations("CreateQuizSuccess");
@@ -12,7 +10,7 @@ const page = async () => {
       <div className="bg-content2 p-6 gap-6 flex flex-col">
         <div className=" flex items-center h-[52px] bg-white p-3  gap-3 justify-center">
           <span className="text-lg">link.com/unique-id123</span>
-          <Image src={documentIcon} alt="Document Icon" />
+          {/* <Image src={documentIcon} alt="Document Icon" /> */}
         </div>
       </div>
       <div className="flex items-center justify-end">

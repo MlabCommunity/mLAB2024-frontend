@@ -21,6 +21,11 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
     });
 
     if (rememberMe) {
+      cookies().set("AccessToken", response.data.accessToken, {
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+      });
       cookies().set("RefreshToken", response.data.refreshToken, {
         secure: true,
         sameSite: "lax",

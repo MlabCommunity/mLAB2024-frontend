@@ -11,12 +11,10 @@ import {
 } from "@nextui-org/react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
-
 export default function DeleteQuizzModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "deleteQuizz";
   const t = useTranslations("Dashboard");
-
   return (
     <Modal
       isOpen={isModalOpen}
@@ -71,7 +69,7 @@ export default function DeleteQuizzModal() {
           <Button variant="bordered" onPress={closeModal}>
             {t("cancel")}
           </Button>
-          <Button color="danger" onPress={closeModal}>
+          <Button color="danger" onPress={modalData.onConfirmDelete}>
             {t("delete")}
           </Button>
         </ModalFooter>

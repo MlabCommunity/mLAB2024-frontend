@@ -16,12 +16,13 @@ import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
 import { QuestionsT } from "@/types";
+import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 
 function Preview() {
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const router = useRouter();
   const t = useTranslations("QuizPreview");
-  const { closeModal, openModal, setModalData } = useModalStore();
+  const { closeModal, openModal, setModalData, isOpen, type } = useModalStore();
 
   const [questions, setQuestions] = useState<QuestionsT[]>(
     generatedQuizData?.createQuestionsDto
@@ -77,7 +78,6 @@ function Preview() {
   const handleConfirmDelete = (index: number) => {
     const updatedQuizData = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuizData);
-
     if (updatedQuizData.length === 0) {
       setCurrentQuestionIndex(null);
       closeModal();
@@ -114,6 +114,10 @@ function Preview() {
     }
   };
 
+  const handleOpenAddQuestion = () => {
+    openModal("addQuestion");
+  };
+
   return (
     <>
       <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
@@ -141,6 +145,7 @@ function Preview() {
             color="primary"
             size="sm"
             radius="md"
+            onClick={handleOpenAddQuestion}
           >
             {t("addNewQuestionBtn")}
           </Button>
@@ -167,6 +172,8 @@ function Preview() {
         <NavigationControls>
           <SaveQuiz />
         </NavigationControls>
+        {/* Conditional rendering for AddQuestionModal */}
+        {type === "addQuestion" && <AddQuestionModal />}
         {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
           <>
             <DeleteQuestionModal

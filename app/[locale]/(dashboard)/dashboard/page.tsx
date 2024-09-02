@@ -1,32 +1,22 @@
+"use client";
 import React from "react";
 import QuizCard from "../components/QuizCard";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { routes } from "@/routes";
+import { getQuizList } from "@/utils/actions/quiz/getQuizList";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
-const quizzes = [
-  {
-    title: "Identify your biggest roadblock to succeeding in cryptocurrency",
-    description: "Quiz description",
-    status: "Active",
-    questions: 15,
-  },
-  {
-    title: "Identify your biggest roadblock to succeeding in cryptocurrency",
-    description: "Quiz description",
-    status: "Disabled",
-    questions: 10,
-  },
-  {
-    title: "Identify your biggest roadblock to succeeding in cryptocurrency",
-    description: "Quiz description",
-    status: "Active",
-    questions: 5,
-  },
-];
+const DashboardPage = () => {
+  const t = useTranslations("Dashboard");
 
-const DashboardPage = async () => {
-  const t = await getTranslations("Dashboard");
+  // Using the useQuery hook to fetch the quiz list
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["quizList"], // Using a more descriptive key
+    queryFn: getQuizList,
+  });
+
   return (
     <section className="py-8 w-full md:max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start mb-5 font-semibold">
@@ -43,13 +33,14 @@ const DashboardPage = async () => {
         {t("manageQuizz")}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-        {quizzes.map((quiz, index) => (
+        {data?.items.map((quiz, index) => (
           <QuizCard
-            key={index}
+            key={quiz.id}
+            id={quiz.id}
             title={quiz.title}
             description={quiz.description}
             status={quiz.status}
-            questions={quiz.questions}
+            questions={quiz.totalQuestions}
           />
         ))}
         <div className="border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">

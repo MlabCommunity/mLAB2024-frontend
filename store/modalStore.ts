@@ -4,6 +4,7 @@ type ModalDataT = {
   description: string;
   status: string;
   questions: number;
+  onConfirmDelete?: () => void;
 };
 
 interface ModalStore {

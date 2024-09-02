@@ -1,5 +1,4 @@
 "use server";
-
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { currentProfileUrl, signInUrl } from "@/constants/api";

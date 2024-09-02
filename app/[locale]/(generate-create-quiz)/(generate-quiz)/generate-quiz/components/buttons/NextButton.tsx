@@ -4,7 +4,7 @@ import RightArrow from "./RightArrow";
 import { useTranslations } from "next-intl";
 
 interface NextButtonProps {
-  isPending: boolean;
+  isPending?: boolean;
 }
 const NextButton = ({ isPending }: NextButtonProps) => {
   const t = useTranslations("CreateQuiz");

@@ -12,7 +12,7 @@ export const useGenerateQuizStore = create<GenerateQuizStore>((set) => ({
   generateQuizData: {
     content: "",
     numberOfQuestions: 0,
-    questionType: "",
+    questionTypes: [""],
   },
   setGenerateQuizData: (data: GenerateQuizT) => set({ generateQuizData: data }),
   generatedQuizData: [],

@@ -12,7 +12,6 @@ type QuizItemProps = {
   question: string;
   number: number;
   options: { content: string; isCorrect: boolean }[];
-  description: string;
   showCorrectAnswers?: boolean;
   handleDelete: () => void;
   handleEdit: () => void;
@@ -23,7 +22,6 @@ const QuizItem = ({
   question,
   options,
   number,
-  description,
   handleDelete,
   handleEdit,
   showCorrectAnswers,
@@ -43,10 +41,9 @@ const QuizItem = ({
             </Button>
             <Button variant="light" size="sm">
               <Image onClick={handleEdit} src={edit} alt="edit" />
-            </Button>x
+            </Button>
           </div>
         </div>
-        <span>{description}</span>
         <div className="flex flex-col gap-2">
           {options.map((option, index) => (
             <Button

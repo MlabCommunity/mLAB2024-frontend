@@ -5,7 +5,11 @@ import React from "react";
 import CancelQuizModal from "../../../components/CancelQuizModal";
 import { useTranslations } from "next-intl";
 
-function CancelButton() {
+interface CancelButtonProps {
+  isPending?: boolean;
+}
+
+function CancelButton({ isPending }: CancelButtonProps) {
   const t = useTranslations("CreateQuiz");
   const { openModal } = useModalStore();
   const handleOpenModal = () => {
@@ -19,6 +23,7 @@ function CancelButton() {
         color="primary"
         size="lg"
         radius="sm"
+        isDisabled={isPending}
       >
         {t("cancelButton")}
       </Button>

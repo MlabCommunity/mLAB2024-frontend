@@ -35,14 +35,6 @@ axiosInstance.interceptors.response.use(
 
     const refreshToken = Cookies.get("RefreshToken");
 
-    if (!refreshToken) {
-      Cookies.remove("AccessToken");
-      setTimeout(() => {
-        window.location.href = routes.signIn;
-      }, 0);
-      return Promise.reject(error);
-    }
-
     try {
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;

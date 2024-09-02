@@ -1,78 +1,35 @@
-export type AnswerMapItem = {
+export type AnswerMapItemT = {
   [key: number]: number | undefined;
 };
 
-export type HistoryItem = {
+export type HistoryItemT = {
   question: string;
   selectedAnswer: string;
   isCorrect: boolean;
   options: { answer: string; properValue: boolean }[];
 };
 
-export type UpdateProfile = {
+export type UpdateProfileT = {
   userName: string;
 };
-export type GenerateQuizResponse = {
-  title: string;
-  description: string;
-  questions: [
-    title: string,
-    answers: [
-      {
-        content: string;
-        isCorrect: boolean;
-      }
-    ]
-  ];
-};
 
-<<<<<<< HEAD
-export type QuestionType = "MultipleChoice" | "TrueFalse" | "";
+export type QuestionTypeT = "MultipleChoice" | "TrueFalse" | "";
 
 export type GenerateQuizT = {
   content?: string;
   numberOfQuestions?: number;
-  questionType?: QuestionType;
+  questionTypes?: QuestionTypeT[];
 };
 
-export type QuestionsT = {
+export type GeneratedQuizT = {
   title: string;
-  createAnswersDto: {
-    content: string;
-    isCorrect: boolean;
-  }[];
-=======
-export type CreateQuiz = {
-  quizDto: {
-    title: string;
-    description: string;
-    createQuestionsDto: [
-      title: string,
-      description: string,
-      createAnswersDto: [
-        {
-          content: string;
-          isCorrect: string;
-        }
-      ]
-    ];
-  };
+  createAnswersDto: { content: string; isCorrect: boolean }[];
 };
-
-export type QuizzList = {
-  items: [
-    {
-      id: string;
-      title: string;
-      description: string;
-      availibility: string;
-      status: "Active" | "Disabled";
-      totalQuestions: number;
-    }
-  ];
-  totalPages: number;
-  totalItemsCount: number;
-  itemsFrom: number;
-  itemsTo: number;
->>>>>>> 3f069289be673dd2401684cf7aea93013e087d29
+export type DashboardQuizT = {
+  availability: "Public" | "Private";
+  description: string;
+  id: string;
+  status: "Active" | "Inactive";
+  title: string;
+  totalQuestions: number;
 };

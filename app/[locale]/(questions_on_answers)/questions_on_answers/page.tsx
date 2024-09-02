@@ -5,36 +5,13 @@ import Questions from "../NavbarContent/Questions";
 import Statistics from "../NavbarContent/Statistics";
 import Settings from "../NavbarContent/Settings";
 import { useTranslations } from "next-intl";
+import mockQuizzes from "../mockData/mockQuizzes.json";
 const QuizDetail = () => {
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");
 
-  const [quizData, setQuizData] = useState([
-    {
-      question: "1. What is one of the key features of cryptocurrencies?",
-      description: "Quiz description",
-      options: ["Physical existence", "Test1", "test2", "test3"],
-      selected: "Test1",
-    },
-    {
-      question: "2. What is another key feature of cryptocurrencies?",
-      description: "Quiz description",
-      options: ["Physical existence", "Test1", "test2", "test3"],
-      selected: "test3",
-    },
-    {
-      question: "3. What is a third key feature of cryptocurrencies?",
-      description: "Quiz description",
-      options: ["Physical existence", "Test1", "test2", "test3"],
-      selected: "test2",
-    },
-    {
-      question: "4. What is a fourth key feature of cryptocurrencies?",
-      description: "Quiz description",
-      options: ["Physical existence", "Test1", "test2", "test3"],
-      selected: "Test1",
-    },
-  ]);
+  // Insert the json api response for future requests
+  const [quizData, setQuizData] = useState(mockQuizzes);
   const navRef = useRef(null);
   const t = useTranslations("QuestionsOnAnswers");
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
@@ -44,6 +21,7 @@ const QuizDetail = () => {
       setActiveTab(target);
     }
   };
+
   const renderTabContent = function (activeTab: string) {
     switch (activeTab) {
       case "Questions":

@@ -25,3 +25,37 @@ export type GenerateQuizResponse = {
     ]
   ];
 };
+
+export type CreateQuiz = {
+  quizDto: {
+    title: string;
+    description: string;
+    createQuestionsDto: [
+      title: string,
+      description: string,
+      createAnswersDto: [
+        {
+          content: string;
+          isCorrect: string;
+        }
+      ]
+    ];
+  };
+};
+
+export type QuizzList = {
+  items: [
+    {
+      id: string;
+      title: string;
+      description: string;
+      availibility: string;
+      status: "Active" | "Disabled";
+      totalQuestions: number;
+    }
+  ];
+  totalPages: number;
+  totalItemsCount: number;
+  itemsFrom: number;
+  itemsTo: number;
+};

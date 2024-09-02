@@ -2,8 +2,7 @@
 import { useModalStore } from "@/store/modalStore";
 import { Button } from "@nextui-org/react";
 import React from "react";
-import CancelQuizModal from "../../../components/CancelQuizModal";
-import { getTranslations } from "next-intl/server";
+import CancelQuizModal from "../../../modals/CancelQuizModal";
 import { useTranslations } from "next-intl";
 
 function CancelButton() {

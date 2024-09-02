@@ -11,7 +11,6 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import React from "react";
 
 function CancelQuizModal() {

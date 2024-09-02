@@ -6,3 +6,5 @@ export const logOutUrl = `${API_BASE_URL}/api/auth/logout`;
 
 export const refreshTokenUrl = `${API_BASE_URL}/api/auth/refresh-token`;
 export const currentProfileUrl = `${API_BASE_URL}/api/profile`;
+export const QuizListUrl = `${API_BASE_URL}/api/quiz`;
+export const DeleteQuiz = `${API_BASE_URL}/api/quiz/`; // <- Insert id here

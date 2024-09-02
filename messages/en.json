@@ -47,8 +47,10 @@
     "displayName": "This is your public display name.",
     "updateButton": "Update",
     "deleteAccount": "Delete account",
+    "deletedQuizSuccess": "Deleted quiz succesfully",
+    "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
-    "profileUpdated": "Profile updated successfully!"
+    "profileUpdated": "Profile updated succesfully!"
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Quiz Detail",

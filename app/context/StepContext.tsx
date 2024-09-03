@@ -24,7 +24,6 @@ const StepperContext = createContext<StepContextProps | undefined>(undefined);
 function StepperProvider({ children }: { children: ReactNode }) {
   const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
 
-  // Assuming routes.createQuiz is an array of objects like [{ route: "/step1" }, { route: "/step2" }, ...]
   const stepperRoutes = routes.createQuiz.slice(1, 4);
 
   const currentRoute = usePathname();

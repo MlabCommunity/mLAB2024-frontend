@@ -1,7 +1,5 @@
 "use client";
-import { routes } from "@/routes";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Dot from "./Dot/Dot";
 import { useStepper } from "@/app/context/StepContext";
 

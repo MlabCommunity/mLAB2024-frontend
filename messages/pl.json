@@ -127,7 +127,11 @@
     "contentLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",
     "cancelQuizWarningText": "Zamierzasz opuścić proces tworzenia quizu. Wszelkie dotychczasowe postępy zostaną utracone. Tej czynności nie można cofnąć",
-    "cancelQuizConfirm": "Tak, opuszczam"
+    "cancelQuizConfirm": "Tak, opuszczam",
+    "uploadFile": "Dodaj plik",
+    "uploadFileData": "Przesuń i upuść tutaj plik albo ",
+    "uploadFileSupportedFormats": "Wspierane formaty: PDF, PPTX ",
+    "uploadFileMaximumSize": "Maksymalny rozmiar: 25 MB"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Konfiguracja quizu",

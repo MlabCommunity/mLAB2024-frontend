@@ -10,6 +10,7 @@ import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import InsertFileButton from "../buttons/InsertFileButton";
 
 const PromptForm = () => {
   const { setGenerateQuizData } = useGenerateQuizStore();
@@ -50,6 +51,7 @@ const PromptForm = () => {
       )}
       <NavigationControls>
         <NextButton />
+        <InsertFileButton />
       </NavigationControls>
     </form>
   );

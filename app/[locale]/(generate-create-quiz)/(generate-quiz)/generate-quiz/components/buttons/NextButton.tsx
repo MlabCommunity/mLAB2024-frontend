@@ -2,7 +2,11 @@ import React from "react";
 import { Button } from "@nextui-org/button";
 import RightArrow from "./RightArrow";
 import { useTranslations } from "next-intl";
-const NextButton = () => {
+
+interface NextButtonProps {
+  isPending?: boolean;
+}
+const NextButton = ({ isPending }: NextButtonProps) => {
   const t = useTranslations("CreateQuiz");
   return (
     <Button
@@ -11,6 +15,7 @@ const NextButton = () => {
       color="primary"
       size="lg"
       radius="sm"
+      isDisabled={isPending}
       endContent={<RightArrow />}
     >
       {t("nextButton")}

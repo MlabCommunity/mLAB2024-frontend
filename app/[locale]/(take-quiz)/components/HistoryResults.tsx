@@ -7,13 +7,13 @@ import cancelCircle from "@/public/assets/circle-cancel.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/routes";
-import { HistoryItem } from "@/types";
+import { HistoryItemT } from "@/types";
 import { useTranslations } from "next-intl";
 
 interface HistoryResultsProps {
   correctAnswers: number;
   quizLength: number;
-  history: HistoryItem[];
+  history: HistoryItemT[];
 }
 
 const HistoryResults = ({

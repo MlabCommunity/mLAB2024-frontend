@@ -14,7 +14,6 @@ export const logOutUser = async () => {
         withCredentials: true,
       }
     );
-
     cookies().delete("AccessToken");
     cookies().delete("RefreshToken");
   } catch (error) {

@@ -1,15 +1,15 @@
-export type AnswerMapItem = {
+export type AnswerMapItemT = {
   [key: number]: number | undefined;
 };
 
-export type HistoryItem = {
+export type HistoryItemT = {
   question: string;
   selectedAnswer: string;
   isCorrect: boolean;
   options: { answer: string; properValue: boolean }[];
 };
 
-export type UpdateProfile = {
+export type UpdateProfileT = {
   userName: string;
 };
 export type GenerateQuizResponse = {
@@ -25,14 +25,28 @@ export type GenerateQuizResponse = {
     ]
   ];
 };
-
-export type QuestionType = ["MultipleChoice" | "TrueFalse"] | "";
+export type QuestionTypeT = "MultipleChoice" | "TrueFalse" | "";
 
 export type GenerateQuizT = {
   content?: string;
   numberOfQuestions?: number;
-  questionType?: QuestionType;
+  questionTypes?: QuestionTypeT[];
 };
+
+export type GeneratedQuizT = {
+  title: string;
+  createAnswersDto: { content: string; isCorrect: boolean }[];
+};
+export type DashboardQuizT = {
+  availability: "Public" | "Private";
+  description: string;
+  id: string;
+  status: "Active" | "Inactive";
+  title: string;
+  totalQuestions: number;
+};
+
+export type QuestionType = ["MultipleChoice" | "TrueFalse"] | "";
 
 export type QuestionsT = {
   title: string;

@@ -9,7 +9,8 @@ import NavigationControls from "../../generate-quiz/components/buttons/Navigatio
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
-import { QuestionType } from "@/types";
+
+import { QuestionTypeT } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
@@ -21,10 +22,10 @@ function ButtonGroupComponent() {
   const { content } = generateQuizData;
 
   const [selectedType, setSelectedType] =
-    useState<QuestionType>("MultipleChoice");
+    useState<QuestionTypeT>("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
     onError: (error) => {
       toast.error(error.message);
@@ -96,7 +97,8 @@ function ButtonGroupComponent() {
                 }
                 name={type.value}
                 aria-pressed={selectedType === type.value}
-                onClick={() => setSelectedType(type.value as QuestionType)}
+                onClick={() => setSelectedType(type.value as QuestionTypeT)}
+                isDisabled={isPending}
               >
                 <span>{type.label}</span>
               </Button>
@@ -113,6 +115,7 @@ function ButtonGroupComponent() {
             color="primary"
             radius="md"
             size="md"
+            isDisabled={isPending}
           >
             {quantities.map((quantity) => (
               <Button
@@ -120,6 +123,7 @@ function ButtonGroupComponent() {
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
                 className="w-full justify-start md:w-auto rounded-lg"
                 size="lg"
+                isDisabled={isPending}
                 startContent={
                   selectedQuantity === quantity.value ? (
                     <TickCircle />
@@ -137,8 +141,8 @@ function ButtonGroupComponent() {
           </ButtonGroup>
         </div>
       </div>
-      <NavigationControls>
-        <NextButton />
+      <NavigationControls isPending={isPending}>
+        <NextButton isPending={isPending} />
       </NavigationControls>
     </form>
   );

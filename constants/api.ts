@@ -7,5 +7,8 @@ export const refreshTokenUrl = `${API_BASE_URL}/api/auth/refresh-token`;
 export const currentProfileUrl = `${API_BASE_URL}/api/profile`;
 export const generateQuizUrl = `${API_BASE_URL}/api/quiz/generate-quiz`;
 export const createQuizUrl = `${API_BASE_URL}/api/quiz/create-quiz`;
+
 export const deleteQuiz = `${API_BASE_URL}/api/quiz/`;
 export const quizListUrl = `${API_BASE_URL}/api/quiz`;
+
+export const deleteQuizUrl = `${API_BASE_URL}/api/quiz/`;

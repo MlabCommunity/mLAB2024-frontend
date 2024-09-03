@@ -6,7 +6,7 @@ import QuizResults from "../../components/QuizResults";
 import HistoryResults from "../../components/HistoryResults";
 import TakeQuizBox from "../../components/TakeQuizBox";
 import Quiz from "../../components/Quiz";
-import { AnswerMapItem, HistoryItem } from "@/types";
+import {  AnswerMapItemT, HistoryItemT } from "@/types";
 import { quizData } from "@/constants";
 
 
@@ -15,8 +15,8 @@ const TakeQuiz = () => {
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-  const [answersMap, setAnswersMap] = useState<AnswerMapItem>({});
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [answersMap, setAnswersMap] = useState<AnswerMapItemT>({});
+  const [history, setHistory] = useState<HistoryItemT[]>([]);
 
   const { questions } = quizData;
   const { question, answers, correctAnswer } = questions[activeQuestion];

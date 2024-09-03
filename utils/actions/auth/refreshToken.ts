@@ -10,7 +10,6 @@ type SubscriberCallback = (
   refreshToken: TokenType
 ) => void;
 let subscribers: SubscriberCallback[] = [];
-
 const onRefreshed = (accessToken: TokenType, refreshToken: TokenType): void => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
   subscribers = [];

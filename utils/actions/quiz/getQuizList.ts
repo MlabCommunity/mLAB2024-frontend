@@ -1,22 +1,23 @@
 "use server";
 
-import { signInSchema } from "@/lib/form-schemas";
-import { z } from "zod";
-import { GenerateQuizT } from "@/types";
-
-import { cookies } from "next/headers";
-import { createQuizUrl, generateQuizUrl, signInUrl } from "@/constants/api";
-import axiosInstance from "../../axiosInstance";
+import { quizListUrl } from "@/constants/api";
+import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
-
-export const createQuiz = async (data: any) => {
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+export const getQuizList = async () => {
   const token = cookies().get("AccessToken")?.value;
   try {
-    const response = await axiosInstance.post(createQuizUrl, data, {
+    const response = await axiosInstance.get(quizListUrl, {
+      params: {
+        Page: 1,
+        PageSize: 6,
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    revalidatePath("/dashboard");
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

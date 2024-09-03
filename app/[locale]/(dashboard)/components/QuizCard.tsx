@@ -5,49 +5,51 @@ import Image from "next/image";
 import React from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import axios from "axios";
-import { getQuizList } from "@/utils/actions/quiz/getQuizList";
-import { deleteQuizz } from "@/utils/actions/quiz/deleteQuiz";
+import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
+
 interface QuizCardProps {
   title: string;
-  id?: string; // Ensure id is optional, but ideally it should be required
+  id?: string;
   description: string;
   status: string;
   questions: number;
 }
 
-const QuizCard: React.FC<QuizCardProps> = ({
+const QuizCard = ({
   title,
   id,
   description,
   status,
   questions,
-}) => {
-  const { openModal, setModalData, closeModal, type } = useModalStore();
+}: QuizCardProps) => {
+  const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
+  const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: deleteQuizz,
+    mutationFn: deleteQuiz,
     onSuccess: () => {
       toast.success(t("deletedQuizSuccess"));
+      closeModal();
     },
-
     onError: (error: any) => {
       toast.error(error.message);
     },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["quizList"],
+      });
+    },
   });
 
-  // Function to handle quiz deletion
   const handleDeleteQuiz = async (id: string) => {
-    console.log(id);
     mutate(id);
   };
 
-  // Function to open the delete modal with the necessary data
   const handleOpenDeleteModal = (id?: string) => {
-    if (!id) return; // Ensure the id is available
+    if (!id) return;
     openModal("deleteQuizz");
     setModalData({
       title,
@@ -71,7 +73,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
         </div>
         <button
           className="ml-5 cursor-pointer"
-          onClick={() => handleOpenDeleteModal(id)} // Pass the id here
+          onClick={() => handleOpenDeleteModal(id)}
         >
           <Image
             src="/assets/bin.svg"

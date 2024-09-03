@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "deleteQuestion" | "editQuestion" | "";
+export type ModalType = "deleteQuestion" | "editQuestion" | "addQuestion" | "";
 
 type ModalDataT = {
   onConfirmDelete?: () => void;

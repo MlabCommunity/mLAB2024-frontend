@@ -1,25 +1,29 @@
 "use client";
-
-import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from "@nextui-org/react";
+import { routes } from "@/routes";
 import { useModalStore } from "@/store/modalStore";
+import { clearLocalStorageRoutes } from "@/utils/clearLsRoutes";
+import {
+  Button,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-export default function DeleteQuizzModal() {
+import React from "react";
+
+function CancelQuizModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
-  const isModalOpen = isOpen && type === "deleteQuizz";
-  const t = useTranslations("Dashboard");
+  const isModalOpen = isOpen && type === "cancelCreateQuizz";
+  const t = useTranslations("CreateQuiz");
   return (
     <Modal
-      isOpen={isModalOpen}
       onOpenChange={closeModal}
+      isOpen={isModalOpen}
       size="5xl"
+      className="bg-content2 "
       closeButton={
         <button
           style={{
@@ -45,35 +49,31 @@ export default function DeleteQuizzModal() {
         <ModalHeader>
           <div className="flex flex-col justify-start">
             <p className="text-lg text-foreground-700 font-semibold">
-              {t("areYouSureText")}
+              {t("cancelQuizWarning")}
             </p>
             <p className="text-base text-foreground-500 font-medium mt-1">
-              {t("deleteWarning")}
+              {t("cancelQuizWarningText")}
             </p>
           </div>
         </ModalHeader>
-        <ModalBody>
-          <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
-            <p className="text-foreground-700 font-semibold">
-              {modalData.title}
-            </p>
-            <p className="text-foreground-600">{modalData.description}</p>
-          </div>
-          <div className=" bg-blue-600 text-white px-2 py-1 rounded-lg max-w-36 text-center">
-            <p className="text-white text-small">
-              {t("total")} {modalData.questions} {t("questions")}
-            </p>
-          </div>
-        </ModalBody>
+        <ModalBody></ModalBody>
         <ModalFooter>
-          <Button variant="bordered" onPress={closeModal}>
-            {t("cancel")}
+          <Button variant="flat" color="primary" onPress={closeModal}>
+            {t("cancelButton")}
           </Button>
-          <Button color="danger" onPress={modalData.onConfirmDelete}>
-            {t("delete")}
-          </Button>
+          <Link href={routes.dashboard}>
+            <Button
+              onClick={clearLocalStorageRoutes}
+              color="danger"
+              onPress={() => localStorage.removeItem("visitedRoutes")}
+            >
+              {t("cancelQuizConfirm")}
+            </Button>
+          </Link>
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
 }
+
+export default CancelQuizModal;

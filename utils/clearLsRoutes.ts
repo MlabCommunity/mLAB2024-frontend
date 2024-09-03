@@ -1,3 +1,3 @@
 export const clearLocalStorageRoutes = () => {
-  localStorage.removeItem("visitedRoutes");
+  localStorage.clear();
 };

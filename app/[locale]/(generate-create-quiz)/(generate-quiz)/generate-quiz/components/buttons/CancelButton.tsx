@@ -4,7 +4,6 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 import CancelQuizModal from "../../../components/CancelQuizModal";
 import { useTranslations } from "next-intl";
-import { clearLocalStorageRoutes } from "@/utils/clearLsRoutes";
 
 interface CancelButtonProps {
   isPending?: boolean;
@@ -12,7 +11,7 @@ interface CancelButtonProps {
 
 function CancelButton({ isPending }: CancelButtonProps) {
   const t = useTranslations("CreateQuiz");
-  const { openModal, setModalData } = useModalStore();
+  const { openModal, setModalData, closeModal } = useModalStore();
   const handleOpenModal = () => {
     openModal("cancelCreateQuizz");
   };

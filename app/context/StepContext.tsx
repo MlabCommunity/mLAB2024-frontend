@@ -13,7 +13,7 @@ type stepperRoutes = {
 };
 interface StepContextProps {
   visitedRoutes: string[];
-  setVisitedRoutes: React.Dispatch<SetStateAction<string[]>>; // Corrected the type
+  setVisitedRoutes: React.Dispatch<SetStateAction<string[]>>;
   stepperRoutes: stepperRoutes[];
   currentRoute: string;
   updateLocalStorageRoutes: () => void;

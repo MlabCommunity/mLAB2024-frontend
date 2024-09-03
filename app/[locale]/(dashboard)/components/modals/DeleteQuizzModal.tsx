@@ -71,7 +71,7 @@ export default function DeleteQuizzModal() {
           <Button variant="bordered" onPress={closeModal}>
             {t("cancel")}
           </Button>
-          <Button color="danger" onPress={closeModal}>
+          <Button color="danger" onPress={modalData.onConfirmDelete}>
             {t("delete")}
           </Button>
         </ModalFooter>

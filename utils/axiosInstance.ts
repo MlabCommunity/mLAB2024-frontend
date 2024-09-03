@@ -37,7 +37,6 @@ axiosInstance.interceptors.response.use(
 
     if (!refreshToken) {
       Cookies.remove("AccessToken");
-      window.location.href = routes.signIn;
       return Promise.reject(error);
     }
 

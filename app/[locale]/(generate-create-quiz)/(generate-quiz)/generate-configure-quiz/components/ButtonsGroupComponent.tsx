@@ -20,7 +20,8 @@ function ButtonGroupComponent() {
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const { content } = generateQuizData;
 
-  const [selectedType, setSelectedType] = useState<QuestionType>("MultipleChoice");
+  const [selectedType, setSelectedType] =
+    useState<QuestionType>("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
 
   const { mutate } = useMutation({
@@ -53,7 +54,7 @@ function ButtonGroupComponent() {
       mutate({
         content: content,
         numberOfQuestions: numberOfQuestions,
-        questionType: selectedType,
+        questionTypes: [selectedType],
       });
     }
   };
@@ -70,7 +71,10 @@ function ButtonGroupComponent() {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="md:w-full rounded-lg flex flex-col">
+    <form
+      onSubmit={handleSubmit}
+      className="md:w-full rounded-lg flex flex-col"
+    >
       <div className="flex flex-col bg-content2 gap-4 p-6">
         <span>{t("questionsType")}</span>
         <div className="w-full flex">
@@ -87,7 +91,9 @@ function ButtonGroupComponent() {
                 variant={selectedType === type.value ? "solid" : "flat"}
                 className="w-full justify-start md:w-auto rounded-lg"
                 size="lg"
-                startContent={selectedType === type.value ? <TickCircle /> : <EmptyCircle />}
+                startContent={
+                  selectedType === type.value ? <TickCircle /> : <EmptyCircle />
+                }
                 name={type.value}
                 aria-pressed={selectedType === type.value}
                 onClick={() => setSelectedType(type.value as QuestionType)}
@@ -114,7 +120,13 @@ function ButtonGroupComponent() {
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
                 className="w-full justify-start md:w-auto rounded-lg"
                 size="lg"
-                startContent={selectedQuantity === quantity.value ? <TickCircle /> : <EmptyCircle />}
+                startContent={
+                  selectedQuantity === quantity.value ? (
+                    <TickCircle />
+                  ) : (
+                    <EmptyCircle />
+                  )
+                }
                 name={quantity.value}
                 aria-pressed={selectedQuantity === quantity.value}
                 onClick={() => setSelectedQuantity(quantity.value)}

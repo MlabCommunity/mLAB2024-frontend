@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 interface AddQuestionModal {
-  setQuestions: Dispatch<SetStateAction<QuizDataT[]>>;
+  setQuestions?: Dispatch<SetStateAction<QuizDataT[]>>;
 }
 
 function AddQuestionModal({ setQuestions }: AddQuestionModal) {
@@ -84,7 +84,7 @@ function AddQuestionModal({ setQuestions }: AddQuestionModal) {
         };
       }),
     };
-    setQuestions((prev) => [...prev, newQuestion]);
+    setQuestions!((prev) => [...prev, newQuestion]);
     closeModal();
   };
 

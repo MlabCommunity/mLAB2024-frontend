@@ -1,4 +1,6 @@
 "use client";
+import { routes } from "@/routes";
+import { usePathname } from "next/navigation";
 import React, {
   useState,
   createContext,
@@ -6,36 +8,63 @@ import React, {
   SetStateAction,
 } from "react";
 
-type StepContextProps = {
-  currentStep: number;
-  setCurrentStep: React.Dispatch<SetStateAction<number>>;
-  incrementStep: () => void;
-  decrementStep: () => void;
+type stepperRoutes = {
+  route: string;
 };
+interface StepContextProps {
+  visitedRoutes: string[];
+  setVisitedRoutes: React.Dispatch<SetStateAction<string[]>>;
+  stepperRoutes: stepperRoutes[];
+  currentRoute: string;
+  updateLocalStorageRoutes: () => void;
+}
 
-const StepContext = createContext<StepContextProps | undefined>(undefined);
+const StepperContext = createContext<StepContextProps | undefined>(undefined);
 
-function StepContextProvider({ children }: { children: ReactNode }) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const incrementStep = () => {
-    setCurrentStep((prev) => prev + 1);
+function StepperProvider({ children }: { children: ReactNode }) {
+  const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
+
+  const stepperRoutes = routes.createQuiz.slice(1, 4);
+
+  const currentRoute = usePathname();
+
+  const updateLocalStorageRoutes = () => {
+    const storedRoutes = JSON.parse(
+      localStorage.getItem("visitedRoutes") || "[]"
+    );
+    setVisitedRoutes(storedRoutes);
+
+    if (currentRoute && !storedRoutes.includes(currentRoute)) {
+      const updatedVisitedRoutes = [...storedRoutes, currentRoute];
+      localStorage.setItem(
+        "visitedRoutes",
+        JSON.stringify(updatedVisitedRoutes)
+      );
+      setVisitedRoutes(updatedVisitedRoutes);
+    }
   };
-  const decrementStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
-  };
+
   return (
-    <StepContext.Provider
-      value={{ currentStep, setCurrentStep, incrementStep, decrementStep }}
+    <StepperContext.Provider
+      value={{
+        stepperRoutes,
+        visitedRoutes,
+        setVisitedRoutes,
+        currentRoute,
+        updateLocalStorageRoutes,
+      }}
     >
       {children}
-    </StepContext.Provider>
+    </StepperContext.Provider>
   );
 }
-export const useStep = () => {
-  const context = React.useContext(StepContext);
+
+export const useStepper = () => {
+  const context = React.useContext(StepperContext);
   if (!context) {
-    throw new Error("useStep must be used within a StepContextProvider");
+    throw new Error("useStepper must be used within a StepContextProvider");
   }
   return context;
 };
-export default StepContextProvider;
+
+export default StepperProvider;

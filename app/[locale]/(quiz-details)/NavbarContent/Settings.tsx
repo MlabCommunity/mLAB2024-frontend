@@ -22,14 +22,15 @@ function Settings({
     const { name } = e.target;
     setAvailability(name);
   };
+
   const t = useTranslations("QuestionsOnAnswers");
   return (
     <NavbarContentContainer className="bg-content2 p-6 flex flex-col gap-2 rounded-lg">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h1 className="text-lg text-foreground-700">
+          <p className="text-lg text-foreground-700">
             {t("quizStatusHeading")}
-          </h1>
+          </p>
           <p className="text-sm text-foreground-600">{t("quizStatus")}</p>
         </div>
         <Switch
@@ -39,7 +40,7 @@ function Settings({
           }}
         />
       </div>
-      <aside className="flex flex-col gap-2">
+      <aside className="flex flex-col gap-2 mt-2">
         <span className="text-lg text-foreground-700">{t("availability")}</span>
         <div className="flex flex-col gap-2">
           <Checkbox

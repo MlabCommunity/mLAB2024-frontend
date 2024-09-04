@@ -11,12 +11,19 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 function CancelQuizModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "cancelCreateQuizz";
   const t = useTranslations("CreateQuiz");
+  const router = useRouter();
+  const handleClose = () => {
+    localStorage.removeItem("visitedRoutes");
+    closeModal();
+    router.push(routes.dashboard);
+  };
   return (
     <Modal
       onOpenChange={closeModal}
@@ -61,7 +68,7 @@ function CancelQuizModal() {
             {t("cancelButton")}
           </Button>
           <Link href={routes.dashboard}>
-            <Button color="danger" onPress={closeModal}>
+            <Button color="danger" onPress={handleClose}>
               {t("cancelQuizConfirm")}
             </Button>
           </Link>

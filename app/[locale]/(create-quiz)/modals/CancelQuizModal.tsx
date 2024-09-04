@@ -1,9 +1,8 @@
 "use client";
-import { routes } from "@/routes";
 import { useModalStore } from "@/store/modalStore";
+import { clearLocalStorageRoutes } from "@/utils/clearLsRoutes";
 import {
   Button,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,9 +16,12 @@ function CancelQuizModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "cancelCreateQuizz";
   const t = useTranslations("CreateQuiz");
+  const handleCancelQuiz = () => {
+    clearLocalStorageRoutes();
+    closeModal();
+  };
   return (
     <Modal
-      onOpenChange={closeModal}
       isOpen={isModalOpen}
       size="5xl"
       className="bg-content2 "
@@ -60,11 +62,9 @@ function CancelQuizModal() {
           <Button variant="flat" color="primary" onPress={closeModal}>
             {t("cancelButton")}
           </Button>
-          <Link href={routes.dashboard}>
-            <Button color="danger" onPress={closeModal}>
-              {t("cancelQuizConfirm")}
-            </Button>
-          </Link>
+          <Button onPress={handleCancelQuiz} color="danger">
+            {t("cancelQuizConfirm")}
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

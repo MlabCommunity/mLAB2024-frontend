@@ -12,7 +12,19 @@ export type HistoryItemT = {
 export type UpdateProfileT = {
   userName: string;
 };
-
+export type GenerateQuizResponse = {
+  title: string;
+  description: string;
+  questions: [
+    title: string,
+    answers: [
+      {
+        content: string;
+        isCorrect: boolean;
+      }
+    ]
+  ];
+};
 export type QuestionTypeT = "MultipleChoice" | "TrueFalse" | "";
 
 export type GenerateQuizT = {
@@ -26,6 +38,7 @@ export type GeneratedQuizT = {
   createAnswersDto: { content: string; isCorrect: boolean }[];
 };
 export type DashboardQuizT = {
+  id?: string;
   availability: "Public" | "Private";
   description: string;
   status: "Active" | "Inactive";

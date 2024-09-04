@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { API_BASE_URL, refreshTokenUrl } from "@/constants/api";
-import { routes } from "@/routes";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,

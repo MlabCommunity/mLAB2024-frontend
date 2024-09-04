@@ -84,12 +84,19 @@ const QuizDetail = ({ params }: { params: { quizId: string } }) => {
           </Button>
         </div>
         <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
-          {isFetching && <Skeleton className="w-1/2 h-10 rounded-lg" />}
-          <h3 className="font-bold text-lg text-foreground-800">
-            {singleQuizData?.title}
-          </h3>
-          {isFetching && <Skeleton className="w-full h-7 mt-2 rounded-lg" />}
-          <p className="text-foreground-600">{singleQuizData?.description}</p>
+          {isFetching ? (
+            <Skeleton className="w-1/2 h-10 rounded-lg" />
+          ) : (
+            <h3 className="font-bold text-lg text-foreground-800">
+              {singleQuizData?.title}
+            </h3>
+          )}
+
+          {isFetching ? (
+            <Skeleton className="w-full h-7 mt-2 rounded-lg" />
+          ) : (
+            <p className="text-foreground-600">{singleQuizData?.description}</p>
+          )}
         </div>
         <nav
           ref={navRef}

@@ -11,10 +11,11 @@ interface CancelButtonProps {
 
 function CancelButton({ isPending }: CancelButtonProps) {
   const t = useTranslations("CreateQuiz");
-  const { openModal } = useModalStore();
+  const { openModal, setModalData, closeModal } = useModalStore();
   const handleOpenModal = () => {
     openModal("cancelCreateQuizz");
   };
+
   return (
     <>
       <Button

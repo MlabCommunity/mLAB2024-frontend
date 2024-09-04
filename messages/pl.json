@@ -131,7 +131,8 @@
     "uploadFile": "Dodaj plik",
     "uploadFileData": "Przesuń i upuść tutaj plik albo ",
     "uploadFileSupportedFormats": "Wspierane formaty: PDF, PPTX ",
-    "uploadFileMaximumSize": "Maksymalny rozmiar: 25 MB"
+    "uploadFileMaximumSize": "Maksymalny rozmiar: 25 MB",
+    "uploadFileDownload": "Pobierz"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Konfiguracja quizu",

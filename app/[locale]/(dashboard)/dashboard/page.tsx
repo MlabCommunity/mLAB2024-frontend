@@ -1,18 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import QuizCard from "../components/QuizCard";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGetQuizList } from "@/utils/hooks/useGetQuizList";
 import { DashboardQuizT } from "@/types";
-import { Skeleton } from "@nextui-org/react";
+import { Pagination, Skeleton } from "@nextui-org/react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
-  const { data, isPending, isFetching } = useGetQuizList();
+  const [page, setPage] = useState(1);
+  const pageSize = 4;
 
-  const skeletonItems = Array.from({ length: 4 });
+  const { data, isPending, isFetching } = useGetQuizList(page);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  const skeletonItems = Array.from({ length: pageSize });
+
+  // Extract pagination info
+  const totalItems = data?.totalItems; // Total number of items
+  const totalPages = data?.totalPages; // Total number of pages
 
   return (
     <section className="py-8 w-full md:max-w-7xl">
@@ -64,6 +77,13 @@ const DashboardPage = () => {
           </Link>
         </div>
       </div>
+      {/* Pagination Component */}
+      <Pagination
+        className="flex justify-center w-full pt-12"
+        total={totalPages}
+        initialPage={page}
+        onChange={(pageNumber) => setPage(pageNumber)}
+      />
     </section>
   );
 };

@@ -11,18 +11,19 @@ import {
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import React, { useRef } from "react";
+import ImagePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
+import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
 
 function InsertFileModal() {
-  const { isOpen, closeModal, setModalData } = useModalStore();
+  const { isOpen, closeModal, type } = useModalStore();
   const t = useTranslations("CreateQuiz");
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const isModalOpen = isOpen && type === "uploadFile";
 
-  const handleUploadFile = () => {
-    fileInputRef.current?.click();
-  };
+  // Server action needs to be provided to integrate with APi
+
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isModalOpen}
       size="5xl"
       className="bg-content2 "
       closeButton={
@@ -56,21 +57,23 @@ function InsertFileModal() {
             </div>
           </ModalHeader>
           <ModalBody>
-            <div className="border border-slate-500 border-dashed h-[500px] flex flex-col items-center justify-center">
-              <Input ref={fileInputRef} className=" hidden" type="file"></Input>
-              <div className="text-foreground-600 md:text-2xl text-lg flex gap-2">
-                <span>{t("uploadFileData")}</span>
-                <span onClick={handleUploadFile} className="underline">
-                  {t("uploadFile")}
-                </span>
-              </div>
+            <div className="w-full h-full">
+              <FilePicker id={"file"} name={"filePicker"} />
             </div>
+            <aside className="flex justify-between">
+              <div className="">
+                <p className="text-foreground-600">
+                  {t("uploadFileSupportedFormats")}
+                </p>
+              </div>
+              <div className="">{t("uploadFileMaximumSize")}</div>
+            </aside>
           </ModalBody>
           <ModalFooter>
             <Button variant="flat" color="primary" onPress={closeModal}>
               {t("cancelButton")}
             </Button>
-            <Button onPress={closeModal} color="primary">
+            <Button type="submit" onPress={closeModal} color="primary">
               {t("nextButton")}
             </Button>
           </ModalFooter>

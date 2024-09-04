@@ -64,7 +64,7 @@
     "questionsSmall": "questions",
     "answers": "Answers",
     "addNewButton": "Add new question",
-    "manageSettings": "Manage your quiz settings here. You can need text gpt",
+    "manageSettings": "Manage your quiz settings here.",
     "quizStatusHeading": "Quiz Status",
     "quizStatus": "When switched on, the quiz is active and available for everyone. If not, no one can access the quiz from the external link.",
     "Stopped": "Stopped",
@@ -86,11 +86,12 @@
     "seconds_one": "second",
     "seconds_few": "seconds",
     "seconds_many": "seconds",
+    "generalSettingsHeadingTitle": "This is the title of your quiz. It will be displayed on the quiz page. You can change it at any time.",
     "generalSettingsHeading": "Quiz Title",
-    "generalSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. YYou can change it anytime",
-    "quizDescriptonSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. YYou can change it anytime",
+    "generalSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. You can change it anytime",
+    "quizDescriptonSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. You can change it anytime",
     "quizDescriptionSettingsHeading": "Quiz description",
-    "quizDescriptionSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. YYou can change it anytime",
+    "quizDescriptionSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. You can change it anytime",
     "questionDescription": "Quizz description",
     "optional": "optional",
     "cancel": "Cancel",
@@ -98,7 +99,9 @@
     "questionTitle": "Question Title",
     "areYouSure": "Are you sure ?",
     "delete": "Delete",
-    "cannotUndo": "This action cannot be undone. Once you delete the question, there is no going back."
+    "cannotUndo": "This action cannot be undone. Once you delete the question, there is no going back.",
+    "quizDetails": "Quiz details",
+    "titleRequired": "Title is required."
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -188,5 +191,16 @@
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",
     "notFound": "Oops! Page Not Found"
+  },
+  "AddQuestionModal": {
+    "questionDescription": "Question description (optional)",
+    "questionTitle": "Question Title",
+    "answers": "Answers",
+    "cancel": "Cancel",
+    "save": "Save",
+    "manual": "Manual",
+    "ai": "AI Generation",
+    "addQuestion": "Add question field",
+    "remove": "Remove"
   }
 }

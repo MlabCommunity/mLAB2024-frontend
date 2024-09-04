@@ -28,8 +28,16 @@ export type GeneratedQuizT = {
 export type DashboardQuizT = {
   availability: "Public" | "Private";
   description: string;
-  id: string;
   status: "Active" | "Inactive";
   title: string;
   totalQuestions: number;
+};
+
+export type QuizDataT = {
+  title: string;
+  description: string;
+  answers: {
+    content: string;
+    isCorrect: boolean;
+  }[];
 };

@@ -63,7 +63,7 @@
     "questionsSmall": "pytania",
     "answers": "Odpowiedzi",
     "addNewButton": "Dodaj nowe pytanie",
-    "manageSettings": "Zarządzaj ustawieniami swojego quizu tutaj. Możesz użyć tekstu z GPT.",
+    "manageSettings": "Zarządzaj ustawieniami swojego quizu tutaj.",
     "quizStatus": "Po włączeniu quiz jest aktywny i dostępny dla wszystkich. Jeśli nie, nikt nie może uzyskać dostępu do quizu z zewnętrznego łącza.",
     "quizStatusHeading": "Status Quizu",
     "Stopped": "Wstrzymany",
@@ -97,7 +97,9 @@
     "cancel": "Anuluj",
     "areYouSure": "Czy  jesteś pewien?",
     "delete": "Usuń",
-    "cannotUndo": "Wprowadzone zmiany nie można będzie cofnąć"
+    "cannotUndo": "Wprowadzone zmiany nie można będzie cofnąć",
+    "quizDetails":"Szczegóły quizu",
+    "titleRequired": "Tytuł quizu jest wymagany"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",
@@ -187,5 +189,16 @@
   "NotFoundPage": {
     "goDashboard": "Przejdź do panelu",
     "notFound": "Ups! Strona nie znaleziona"
+  },
+  "AddQuestionModal": {
+    "questionDescription": "Opis pytania (opcjonalnie)",
+    "questionTitle": "Tytuł pytania",
+    "answers": "Odpowiedzi",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "manual": "Manualnie",
+    "ai": "Generowanie AI",
+    "addQuestion": "Dodaj pole pytania",
+    "remove": "Usuń"
   }
 }

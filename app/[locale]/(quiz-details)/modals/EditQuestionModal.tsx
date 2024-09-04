@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import closeIcon from '/public/assets/closeIcon.svg';
-import { useTranslations } from 'next-intl';
-import { useModalStore } from '@/store/modalStore2';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import closeIcon from "/public/assets/closeIcon.svg";
+import { useTranslations } from "next-intl";
+import { useModalStore } from "@/store/modalStore2";
 
 interface QuestionData {
   question: string;
@@ -21,7 +20,7 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
   questionData,
   onSave,
 }) => {
-  const t = useTranslations('QuestionsOnAnswers');
+  const t = useTranslations("QuestionsOnAnswers");
   const { type, isOpen, closeModal } = useModalStore((state) => ({
     type: state.type,
     isOpen: state.isOpen,
@@ -51,7 +50,7 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
     closeModal();
   };
 
-  if (!(isOpen && type === 'editQuestion')) return null;
+  if (!(isOpen && type === "editQuestion")) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -65,7 +64,7 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">
-            {t('questionTitle')} <span className="text-red-500">*</span>:
+            {t("questionTitle")} <span className="text-red-500">*</span>:
           </label>
           <input
             type="text"
@@ -77,7 +76,7 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">
-            {t('questionDescription')} ({t('optional')}):
+            {t("questionDescription")} ({t("optional")}):
           </label>
           <input
             type="text"
@@ -88,11 +87,13 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">{t('answers')}:</label>
-          {options.map((option, index) => (
+          <label className="block font-semibold mb-2">{t("answers")}:</label>
+          {options?.map((option, index) => (
             <div key={index} className="flex items-center space-x-2 mb-2">
               <div
-                className={`custom-radio ${selectedOption === option ? 'custom-radio-checked' : ''}`}
+                className={`custom-radio ${
+                  selectedOption === option ? "custom-radio-checked" : ""
+                }`}
                 onClick={() => setSelectedOption(option)}
               />
               <input
@@ -114,10 +115,13 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
             onClick={closeModal}
             className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md "
           >
-            {t('cancel')}
+            {t("cancel")}
           </button>
-          <button onClick={handleSave} className="bg-blue-600 text-white py-2 px-4 rounded-lg">
-            {t('save')}
+          <button
+            onClick={handleSave}
+            className="bg-blue-600 text-white py-2 px-4 rounded-lg"
+          >
+            {t("save")}
           </button>
         </div>
       </div>

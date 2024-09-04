@@ -10,3 +10,4 @@ export const generateQuizUrl = `${API_BASE_URL}/api/quiz/generate-quiz`;
 export const createQuizUrl = `${API_BASE_URL}/api/quiz/create-quiz`;
 export const quizListUrl = `${API_BASE_URL}/api/quiz`;
 export const deleteQuizUrl = `${API_BASE_URL}/api/quiz/`;
+export const singleQuizUrl = `${API_BASE_URL}/api/quiz/`;

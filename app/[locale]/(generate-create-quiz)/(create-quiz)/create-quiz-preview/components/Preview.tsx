@@ -17,6 +17,7 @@ import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
 import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 import { GeneratedQuizT } from "@/types";
+import { QuestionsT } from "@/types";
 
 function Preview() {
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();

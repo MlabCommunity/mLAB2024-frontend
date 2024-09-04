@@ -24,6 +24,7 @@ function InsertFileModal() {
   return (
     <Modal
       isOpen={isModalOpen}
+      onOpenChange={closeModal}
       size="5xl"
       className="bg-content2 "
       closeButton={
@@ -73,7 +74,7 @@ function InsertFileModal() {
             <Button variant="flat" color="primary" onPress={closeModal}>
               {t("cancelButton")}
             </Button>
-            <Button type="submit" onPress={closeModal} color="primary">
+            <Button onPress={closeModal} color="primary">
               {t("nextButton")}
             </Button>
           </ModalFooter>

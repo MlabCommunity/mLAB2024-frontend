@@ -5,6 +5,7 @@ type ModalDataT = {
   status: string;
   questions: number;
   onConfirmDelete?: () => void;
+  isPending: boolean;
 };
 
 interface ModalStore {
@@ -34,6 +35,7 @@ export const useModalStore = create<ModalStore>((set) => ({
     status: "",
     questions: 0,
     onConfirmDelete: () => {},
+    isPending: false,
   },
   setModalData: (data: ModalDataT) => set({ modalData: data }),
 }));

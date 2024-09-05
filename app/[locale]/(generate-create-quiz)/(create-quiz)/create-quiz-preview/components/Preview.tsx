@@ -9,20 +9,19 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
-import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
-import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
 import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 import { GeneratedQuizT } from "@/types";
-import { QuestionsT } from "@/types";
+import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
+import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
 
 function Preview() {
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const t = useTranslations("QuizPreview");
-  const { closeModal, openModal, setModalData, isOpen, type } = useModalStore();
+  const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
 
   const [questions, setQuestions] = useState<GeneratedQuizT[]>(
@@ -120,8 +119,6 @@ function Preview() {
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
-
-  console.log(questions);
 
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">

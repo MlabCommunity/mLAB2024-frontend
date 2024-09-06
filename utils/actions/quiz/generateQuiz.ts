@@ -32,7 +32,7 @@ export const generateQuiz = async (data: GenerateQuizT) => {
       console.log("Axios error:", error.response?.data); // Log server error response
       throw error;
     } else {
-      console.log("Unexpected error:", error.message); // Log unexpected error
+      console.log("Unexpected error:", error); // Log unexpected error
       throw new Error("An unexpected error occurred");
     }
   }

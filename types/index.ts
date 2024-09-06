@@ -39,37 +39,19 @@ export type GeneratedQuizT = {
   createAnswersDto: { content: string; isCorrect: boolean }[];
 };
 export type DashboardQuizT = {
+  id?: string;
   availability: "Public" | "Private";
   description: string;
-  id: string;
   status: "Active" | "Inactive";
   title: string;
   totalQuestions: number;
 };
 
-export type QuestionType = ["MultipleChoice" | "TrueFalse"] | "";
-
-export type QuestionsT = {
+export type QuizDataT = {
   title: string;
-  createAnswersDto: {
+  description: string;
+  answers: {
     content: string;
     isCorrect: boolean;
   }[];
-};
-
-export type QuizzList = {
-  items: [
-    {
-      id: string;
-      title: string;
-      description: string;
-      availibility: string;
-      status: "Active" | "Disabled";
-      totalQuestions: number;
-    }
-  ];
-  totalPages: number;
-  totalItemsCount: number;
-  itemsFrom: number;
-  itemsTo: number;
 };

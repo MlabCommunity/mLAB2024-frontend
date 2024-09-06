@@ -1,20 +1,9 @@
 "use client";
 import { useModalStore } from "@/store/modalStore";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
-import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker"; // Assuming this is the correct import
-import { useMutation } from "@tanstack/react-query";
-import { uploadFileAction } from "@/utils/actions/quiz/uploadFileAction";
-import toast from "react-hot-toast";
-import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import React from "react";
+import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
 function InsertFileModal() {
   const { isOpen, closeModal, type } = useModalStore();
   const t = useTranslations("CreateQuiz");

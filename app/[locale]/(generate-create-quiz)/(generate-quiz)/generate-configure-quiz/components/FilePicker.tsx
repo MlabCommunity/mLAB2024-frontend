@@ -1,7 +1,6 @@
 "use client";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { Button } from "@nextui-org/react";
-import { File } from "buffer";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -14,7 +13,7 @@ interface FilePickerProps {
   onClose: () => void;
 }
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 1MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 export default function FilePicker({ id, name, onClose }: FilePickerProps) {
   const t = useTranslations("CreateQuiz");
@@ -46,7 +45,7 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const attachments = generateQuizData.Attachments || [];
+  const attachments: File[] = generateQuizData.Attachments || [];
 
   const handleDeleteAttachments = () => {
     if (fileInputRef.current) {
@@ -54,13 +53,14 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     }
     setGenerateQuizData({ ...generateQuizData, Attachments: [] });
   };
+
   useEffect(() => {
     console.log(generateQuizData);
   }, [generateQuizData]);
+
   const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
     useDropzone({
       onDrop: (acceptedFiles) => validateFiles(acceptedFiles),
-      accept: ".docx,.pdf,.txt,.xls", // File extensions you want to accept
       maxSize: MAX_FILE_SIZE,
     });
 
@@ -86,7 +86,7 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
       setErrorMessage("");
       toast.success(t("uploadFileSuccess"));
       setGenerateQuizData({
-        Attachments: [...newAttachments],
+        Attachments: [...attachments, ...newAttachments], // Append to existing attachments
       });
     }
   };
@@ -95,7 +95,6 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     e.preventDefault();
     if (!errorMessage) {
       onClose();
-      // Proceed with submitting or other actions if there's no error
       console.log("Form submitted with data:", generateQuizData.Attachments);
     }
   };

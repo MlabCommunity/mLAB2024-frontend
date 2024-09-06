@@ -19,4 +19,5 @@ export const routes = {
   profile: "/profile",
   root: "/",
   takeQuiz: "/take-quiz/1",
+  quizDetails: "/quiz-details/",
 };

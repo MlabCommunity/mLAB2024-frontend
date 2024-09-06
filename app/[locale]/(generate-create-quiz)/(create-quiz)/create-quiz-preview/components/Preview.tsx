@@ -9,14 +9,15 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
+
+import DeleteQuestionModal from "@/app/[locale]/(quiz-details)/modals/DeleteQuestionModal";
+import EditQuestionModal from "@/app/[locale]/(quiz-details)/modals/EditQuestionModal";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
 import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 import { GeneratedQuizT } from "@/types";
-import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
-import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
 
 function Preview() {
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();

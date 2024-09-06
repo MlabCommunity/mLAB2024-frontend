@@ -1,9 +1,8 @@
 "use client";
 import { useModalStore } from "@/store/modalStore2";
+import { GeneratedQuizT, QuizDataT } from "@/types";
 import {
   Button,
-  Card,
-  CardBody,
   Checkbox,
   Input,
   Modal,
@@ -12,20 +11,83 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import React from "react";
-import NavigationControls from "../(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
-let questions = [
-  { title: "Question2" },
-  { title: "Question3" },
-  { title: "Question4" },
-  { title: "Question5" },
-];
-function AddQuestionModal() {
+import { useTranslations } from "next-intl";
+import React, { Dispatch, SetStateAction, useState } from "react";
+
+interface AddQuestionModal {
+  setQuestions?: Dispatch<SetStateAction<QuizDataT[]>>;
+}
+
+function AddQuestionModal({ setQuestions }: AddQuestionModal) {
+  const [modalValues, setModalValues] = useState({
+    title: "",
+    description: "",
+  });
+  const t = useTranslations("AddQuestionModal");
   const { closeModal, isOpen, type } = useModalStore();
+  const [answers, setAnswers] = useState([{ id: 1, value: "" }]);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<
+    number | null
+  >(null);
+
   const samplePlaceholder =
-    "What is one of the key features of cryptocurrencies?";
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
   if (!isOpen && type !== "addQuestion") return null;
+
+  const handleAddQuestion = () => {
+    setAnswers([...answers, { id: answers.length + 1, value: "" }]);
+  };
+
+  const handleRemoveQuestion = (index: number) => {
+    const updatedQuestions = answers.filter((_, i) => i !== index);
+    setAnswers(updatedQuestions);
+
+    if (selectedQuestionIndex === index) {
+      setSelectedQuestionIndex(null);
+    } else if (
+      selectedQuestionIndex !== null &&
+      selectedQuestionIndex > index
+    ) {
+      setSelectedQuestionIndex(selectedQuestionIndex - 1);
+    }
+  };
+
+  const handleInputChange = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newQuestions = [...answers];
+    newQuestions[index].value = event.target.value;
+    setAnswers(newQuestions);
+  };
+
+  const handleSelectQuestion = (index: number) => {
+    setSelectedQuestionIndex(index);
+  };
+
+  const allQuestionsFilled = answers.every(
+    (question) => question.value.trim().length > 0
+  );
+
+  const isReadyToSubmit =
+    answers.length >= 2 && modalValues.title.length > 0 && allQuestionsFilled;
+
+  const handleSubmit = () => {
+    const newQuestion = {
+      title: modalValues.title,
+      description: modalValues.description,
+      answers: answers.map((answer, index) => {
+        return {
+          content: answer.value,
+          isCorrect: index === selectedQuestionIndex,
+        };
+      }),
+    };
+    setQuestions!((prev) => [...prev, newQuestion]);
+    closeModal();
+  };
+
   return (
     <Modal
       className="p-6 gap-6 flex"
@@ -41,45 +103,78 @@ function AddQuestionModal() {
           aria-label="Options"
           className="w-full h-full"
         >
-          <Tab className="flex flex-col gap-4" key="photos" title="Manual">
+          <Tab className="flex flex-col gap-4" key="photos" title={t("manual")}>
             <div className="flex flex-col gap-4 h-full">
-              <h1>Question Title</h1>
-              <Input placeholder={samplePlaceholder} />
-              <h1>Question Description</h1>
-              <Input placeholder={samplePlaceholder} />
-              <h1>Answers</h1>
-              <section className="flex flex-col gap-2">
-                {questions.map((question, index) => (
-                  <div className="flex items-center gap-2" key={index}>
-                    <Checkbox />
-                    <Input placeholder={samplePlaceholder} />
-                  </div>
-                ))}
-              </section>
+              <div className="flex flex-col gap-2">
+                <h3>{t("questionTitle")}</h3>
+                <Input
+                  placeholder={samplePlaceholder}
+                  value={modalValues.title}
+                  onChange={(event) =>
+                    setModalValues({
+                      ...modalValues,
+                      title: event.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3>{t("questionDescription")}</h3>
+                <Input
+                  placeholder={samplePlaceholder}
+                  value={modalValues.description}
+                  onChange={(event) =>
+                    setModalValues({
+                      ...modalValues,
+                      description: event.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3>{t("answers")}</h3>
+                <div className="flex flex-col gap-2">
+                  {answers.map((question, index) => (
+                    <div className="flex items-center gap-2" key={index}>
+                      <Checkbox
+                        isSelected={selectedQuestionIndex === index}
+                        onChange={() => handleSelectQuestion(index)}
+                      />
+                      <Input
+                        placeholder={samplePlaceholder}
+                        value={question.value}
+                        onChange={(event) => handleInputChange(index, event)}
+                      />
+                      <Button onClick={() => handleRemoveQuestion(index)}>
+                        {t("remove")}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Button color="primary" onClick={handleAddQuestion}>
+                {t("addQuestion")}
+              </Button>
             </div>
           </Tab>
-          <Tab
-            className="w-full h-full "
-            key="AIGeneration"
-            title="AI Generation"
-          >
-            <div className="flex flex-col justify-center w-full p-6 gap-6  h-full">
-              <h1>Prompt</h1>
-              <Input
-                variant="flat"
-                color="default"
-                radius="sm"
-                size="md"
-              ></Input>
+          <Tab className="w-full h-full " key="AIGeneration" title={t("ai")}>
+            <div className="flex flex-col justify-center w-full p-6 gap-6 h-full">
+              <h3>Prompt</h3>
+              <Input variant="flat" color="default" radius="sm" size="md" />
             </div>
           </Tab>
         </Tabs>
         <ModalFooter>
           <Button variant="flat" color="primary" onClick={closeModal}>
-            Cancel
+            {t("cancel")}
           </Button>
-          <Button color="primary" variant="solid">
-            Save
+          <Button
+            color="primary"
+            variant="solid"
+            isDisabled={!isReadyToSubmit}
+            onClick={handleSubmit}
+          >
+            {t("save")}
           </Button>
         </ModalFooter>
       </ModalContent>

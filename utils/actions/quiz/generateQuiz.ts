@@ -1,28 +1,37 @@
 "use server";
-
-import { signInSchema } from "@/lib/form-schemas";
-import { z } from "zod";
-
 import { cookies } from "next/headers";
-import { generateQuizUrl, signInUrl } from "@/constants/api";
+import { AxiosError } from "axios";
 import axiosInstance from "../../axiosInstance";
 import { GenerateQuizT } from "@/types";
-import { AxiosError } from "axios";
+import { generateQuizUrl } from "@/constants/api";
 
 export const generateQuiz = async (data: GenerateQuizT) => {
   const token = cookies().get("AccessToken")?.value;
+  const refreshToken = cookies().get("RefreshToken")?.value; // Get the RefreshToken
+
+  // Check if the RefreshToken is available
+  if (!refreshToken) {
+    throw new Error("RefreshToken is missing");
+  }
+  const payload = {
+    ...data,
+    RefreshToken: refreshToken,
+  };
   try {
-    const response = await axiosInstance.post(generateQuizUrl, data, {
+    const response = await axiosInstance.post(generateQuizUrl, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
+        RefreshToken: refreshToken, // Include the RefreshToken in the headers
       },
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data?.detail);
+      console.log("Axios error:", error.response?.data); // Log server error response
+      throw error;
     } else {
+      console.log("Unexpected error:", error.message); // Log unexpected error
       throw new Error("An unexpected error occurred");
     }
   }

@@ -31,7 +31,7 @@ const PromptForm = () => {
   const onSubmit = (data: FormValue) => {
     router.push(routes.createQuiz[1].route);
     setGenerateQuizData({
-      content: data.prompt,
+      Content: data.prompt,
     });
   };
 

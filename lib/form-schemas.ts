@@ -56,15 +56,3 @@ export const PromptSchema = z.object({
     .min(10, { message: "Prompt field cannot be empty" })
     .max(1200, { message: "Prompt should have a maximum of 1200 characters" }),
 });
-
-const MAX_FILE_SIZE = 5000000;
-
-export const uploadSchema = z.object({
-  image: z
-    .any()
-    .refine((file: File) => {
-      if (file.size === 0 && file.name === undefined) return false;
-      else return true;
-    }, "Please update or add new image.")
-    .refine((file: File) => file.size <= MAX_FILE_SIZE, "Max file size is 5MB"),
-});

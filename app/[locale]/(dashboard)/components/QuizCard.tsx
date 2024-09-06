@@ -61,7 +61,7 @@ export default function Component({
       onConfirmDelete: () => {
         handleDeleteQuiz(id);
       },
-      isPending,
+      isPending: isPending,
     });
   };
 

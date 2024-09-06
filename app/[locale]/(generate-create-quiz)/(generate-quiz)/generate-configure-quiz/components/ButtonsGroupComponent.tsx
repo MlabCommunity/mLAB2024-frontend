@@ -19,7 +19,7 @@ function ButtonGroupComponent() {
   const t = useTranslations("ConfigureQuiz");
   const router = useRouter();
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
-  const { content } = generateQuizData;
+  const { Content } = generateQuizData;
 
   const [selectedType, setSelectedType] =
     useState<QuestionTypeT>("MultipleChoice");
@@ -28,9 +28,11 @@ function ButtonGroupComponent() {
   const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
     onError: (error) => {
+      console.log(error);
       toast.error(error.message);
     },
     onSuccess: (data) => {
+      console.log(data);
       setGeneratedQuizData(data);
       router.push(routes.createQuiz[2].route);
       toast.success(t("generatedSuccessfullyMsg"));
@@ -44,6 +46,7 @@ function ButtonGroupComponent() {
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { Attachments } = generateQuizData;
     e.preventDefault();
     const numberOfQuestions = {
       low: 5,
@@ -51,13 +54,19 @@ function ButtonGroupComponent() {
       high: 15,
     }[selectedQuantity];
 
-    if (content && numberOfQuestions && selectedType) {
-      mutate({
-        content: content,
-        numberOfQuestions: numberOfQuestions,
-        questionTypes: [selectedType],
-      });
-    }
+    const payload = {
+      Content: Content,
+      NumberOfQuestions: numberOfQuestions,
+      QuestionTypes: [selectedType],
+      Attachments: Attachments || [],
+    };
+    mutate({
+      Content: Content,
+      NumberOfQuestions: numberOfQuestions,
+      QuestionTypes: [selectedType],
+      Attachments: Attachments || [],
+    });
+    console.log(payload);
   };
 
   const questionTypes = [

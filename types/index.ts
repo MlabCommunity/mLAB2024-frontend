@@ -28,9 +28,10 @@ export type GenerateQuizResponse = {
 export type QuestionTypeT = "MultipleChoice" | "TrueFalse" | "";
 
 export type GenerateQuizT = {
-  content?: string;
-  numberOfQuestions?: number;
-  questionTypes?: QuestionTypeT[];
+  Content?: string;
+  NumberOfQuestions?: number;
+  QuestionTypes?: QuestionTypeT[];
+  Attachments?: File[];
 };
 
 export type GeneratedQuizT = {

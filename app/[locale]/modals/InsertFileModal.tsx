@@ -2,7 +2,6 @@
 import { useModalStore } from "@/store/modalStore";
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,23 +9,23 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import React, { useRef } from "react";
-import ImagePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
-import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
-
+import React, { useState } from "react";
+import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker"; // Assuming this is the correct import
+import { useMutation } from "@tanstack/react-query";
+import { uploadFileAction } from "@/utils/actions/quiz/uploadFileAction";
+import toast from "react-hot-toast";
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
 function InsertFileModal() {
   const { isOpen, closeModal, type } = useModalStore();
   const t = useTranslations("CreateQuiz");
   const isModalOpen = isOpen && type === "uploadFile";
-
-  // Server action needs to be provided to integrate with APi
 
   return (
     <Modal
       isOpen={isModalOpen}
       onOpenChange={closeModal}
       size="5xl"
-      className="bg-content2 "
+      className="bg-content2"
       closeButton={
         <button
           style={{
@@ -49,36 +48,30 @@ function InsertFileModal() {
       }
     >
       <ModalContent className="bg-content2">
-        <form action="">
-          <ModalHeader>
-            <div className="flex flex-col justify-start">
-              <p className="text-lg text-foreground-700 font-semibold">
-                {t("uploadFile")}
+        <ModalHeader>
+          <div className="flex flex-col justify-start">
+            <p className="text-lg text-foreground-700 font-semibold">
+              {t("uploadFile")}
+            </p>
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <div className="w-full h-full">
+            <FilePicker id={"file"} name={"filePicker"} onClose={closeModal} />
+          </div>
+          <aside className="flex justify-between">
+            <div className="">
+              <p className="text-foreground-600">
+                {t("uploadFileSupportedFormats")}
               </p>
             </div>
-          </ModalHeader>
-          <ModalBody>
-            <div className="w-full h-full">
-              <FilePicker id={"file"} name={"filePicker"} />
+            <div className="">
+              <p className="text-medim text-foreground-600">
+                {t("uploadFileMaximumSize")}
+              </p>
             </div>
-            <aside className="flex justify-between">
-              <div className="">
-                <p className="text-foreground-600">
-                  {t("uploadFileSupportedFormats")}
-                </p>
-              </div>
-              <div className="">{t("uploadFileMaximumSize")}</div>
-            </aside>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="flat" color="primary" onPress={closeModal}>
-              {t("cancelButton")}
-            </Button>
-            <Button onPress={closeModal} color="primary">
-              {t("nextButton")}
-            </Button>
-          </ModalFooter>
-        </form>
+          </aside>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

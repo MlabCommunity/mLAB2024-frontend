@@ -1,121 +1,147 @@
-import { Button, Input } from "@nextui-org/react";
+"use client";
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { useRef, useState } from "react";
-
-function generateFileUrl(file: File, callback: (fileUrl: string) => void) {
-  const reader = new FileReader();
-  reader.onload = () => callback(reader.result as string);
-  reader.readAsDataURL(file);
-}
+import React, { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
+import { z } from "zod";
 
 interface FilePickerProps {
   id: string;
   name: string;
-  defaultValue?: string;
+  onClose: () => void;
 }
 
-function FilePreview({
-  fileName,
-  fileUrl,
-}: {
-  fileName: string;
-  fileUrl: string;
-}) {
-  return (
-    <div className="file-preview mb-4 flex items-center flex-col">
-      <p className="text-medium">{fileName}</p>
-    </div>
-  );
-}
+const MAX_FILE_SIZE = 1000000; // 1MB
 
-function FileCard({
-  fileName,
-  fileUrl,
-  fileInput,
-}: {
-  fileName: string;
-  fileUrl: string;
-  fileInput: React.RefObject<HTMLInputElement>;
-}) {
+export default function FilePicker({ id, name, onClose }: FilePickerProps) {
   const t = useTranslations("CreateQuiz");
-  return (
-    <div className="border border-slate-500 border-dashed h-[200px] flex flex-col items-center justify-center">
-      <div className="text-foreground-600 md:text-2xl text-lg flex gap-2">
-        {fileUrl ? (
-          <FilePreview fileName={fileName} fileUrl={fileUrl} />
-        ) : (
-          <>
-            <div className="flex flex-col gap-4 ">
-              <span className="text-medium">{`${t("uploadFileData")} ${t(
-                "uploadFile"
-              )}`}</span>
-              <span
-                onClick={() => fileInput.current?.click()}
-                className="w-full underline cursor-pointer"
-              ></span>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="flex items-center gap-3">
-        <Link
-          href={fileUrl}
-          rel="noopener noreferrer"
-          download={!fileUrl ? false : true}
-        >
-          <Button
-            hidden={!fileUrl}
-            isDisabled={!fileUrl}
-            variant="solid"
-            color="danger"
-          >
-            {t("uploadFileDownload")}
-          </Button>
-        </Link>
-        <Button onClick={() => fileInput.current?.click()} type="button">
-          {t("uploadFile")}
-        </Button>
-      </div>
-    </div>
-  );
-}
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
-export default function FilePicker({
-  id,
-  name,
-  defaultValue,
-}: Readonly<FilePickerProps>) {
-  const fileInput = useRef<HTMLInputElement>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(defaultValue ?? null);
-  const t = useTranslations("CreateQuiz");
+  const isValidExtension = (file: File) => {
+    const fileTypes = ["docx", "pdf", "txt", "xls"];
+    if (file?.name) {
+      const fileType = file?.name.split(".").pop()?.toLowerCase();
+      return fileType && fileTypes.includes(fileType);
+    }
+    return false;
+  };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      generateFileUrl(file, setFileUrl);
+  const uploadSchema = z.object({
+    file: z
+      .any()
+      .refine((file: File) => file.size > 0, t("pleaseSelectAFile"))
+      .refine(
+        (file: File) => file.size <= MAX_FILE_SIZE,
+        t("uploadFileExceededMaximumSize")
+      )
+      .refine(
+        (file: File) => isValidExtension(file),
+        t("uploadFileInvalidFormat")
+      ),
+  });
+
+  const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const attachments = generateQuizData.Attachments || [];
+
+  const handleDeleteAttachments = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Clear the file input
+    }
+    setGenerateQuizData({ ...generateQuizData, Attachments: [] });
+  };
+
+  const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
+    useDropzone({
+      onDrop: (acceptedFiles) => validateFiles(acceptedFiles),
+      accept: ".docx,.pdf,.txt,.xls", // File extensions you want to accept
+      maxSize: MAX_FILE_SIZE, // 1MB
+    });
+
+  const validateFiles = (files: File[]) => {
+    let errorFound = false;
+    const newAttachments: any[] = [];
+    let messages: string[] = [];
+
+    files.forEach((file) => {
+      const result = uploadSchema.safeParse({ file });
+      if (!result.success) {
+        errorFound = true;
+        messages.push(result.error.errors[0]?.message);
+        toast.error(result.error.errors[0]?.message);
+      } else {
+        newAttachments.push(file);
+      }
+    });
+
+    if (errorFound) {
+      setErrorMessage(messages.join(" "));
+    } else {
+      setErrorMessage("");
+      toast.success(t("uploadFileSuccess"));
+      setGenerateQuizData({
+        Attachments: [...attachments, ...newAttachments],
+      });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!errorMessage) {
+      onClose();
+      // Proceed with submitting or other actions if there's no error
+      console.log("Form submitted with data:", generateQuizData.Attachments);
     }
   };
 
   return (
-    <>
-      <div className="flex flex-col w-full">
-        <Input
-          type="file"
-          id={id}
-          name={name}
-          onChange={handleFileChange}
-          ref={fileInput}
-          hidden // Hide the actual input
-        />
+    <form onSubmit={handleSubmit}>
+      <div
+        {...getRootProps()}
+        className={`border-dashed border-4 p-4 rounded-lg ${
+          isDragActive ? "bg-gray-100 border-blue-400" : "bg-white"
+        } cursor-pointer`}
+      >
+        <input {...getInputProps()} ref={fileInputRef} />
+        <label htmlFor={id}>
+          {attachments.length > 0 ? (
+            <div>
+              <h4>{t("file")}</h4>
+              <ul>
+                {attachments.map((file, index) => (
+                  <li key={index}>{file.name}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p>
+              {isDragActive ? t("uploadFileDragActive") : t("uploadFileData")}
+            </p>
+          )}
+        </label>
       </div>
-      <FileCard
-        fileName={fileName ?? ""}
-        fileUrl={fileUrl ?? ""}
-        fileInput={fileInput}
-      />
-    </>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}{" "}
+      {/* Display error message */}
+      <div className="flex gap-2 justify-end p-6">
+        <Button variant="flat" color="primary" onPress={onClose}>
+          {t("cancelButton")}
+        </Button>
+        <Button type="submit" color="primary">
+          {t("nextButton")}
+        </Button>
+        {attachments.length > 0 && (
+          <Button
+            variant="flat"
+            color="danger"
+            onClick={handleDeleteAttachments}
+          >
+            {t("uploadDeleteFiles")}
+          </Button>
+        )}
+      </div>
+    </form>
   );
 }

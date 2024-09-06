@@ -129,10 +129,19 @@
     "cancelQuizWarningText": "Zamierzasz opuścić proces tworzenia quizu. Wszelkie dotychczasowe postępy zostaną utracone. Tej czynności nie można cofnąć",
     "cancelQuizConfirm": "Tak, opuszczam",
     "uploadFile": "Dodaj plik",
-    "uploadFileData": "Przesuń i upuść tutaj plik albo ",
-    "uploadFileSupportedFormats": "Wspierane formaty: PDF, PPTX ",
-    "uploadFileMaximumSize": "Maksymalny rozmiar: 25 MB",
-    "uploadFileDownload": "Pobierz"
+    "uploadFileData": "Przesuń i upuść tutaj plik albo dodaj plik ",
+    "uploadFileSupportedFormats": "Wspierane formaty:.docx, .pdf, .pptx, .xls ",
+    "uploadFileMaximumSize": "Maksymalny rozmiar: 10 MB",
+    "uploadFileDownload": "Pobierz",
+    "fileUploaded": "Przesłano plik",
+    "file": "Plik:",
+    "pleaseSelectAFile": "Proszę umieścić plik",
+    "uploadFileInvalidFormat": "Nieprawidłowy typ pliku. Dozwolone są tylko pliki .xls, .docx, .txt i .pdf.",
+    "uploadFileExceededMaximumSize": "Plik nie może być większy niż 10 MB",
+    "uploadFileSuccess": "Pomyślnie umieszczono plik",
+    "uploadDeleteFiles": "Usuń pliki",
+    "uploadDeleteFilesSuccess": "Pomyślnie usunięto pliki",
+    "uploadFileDragActive": "Umieść pliki tutaj"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Konfiguracja quizu",

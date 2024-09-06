@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "./TickCircle";
 import EmptyCircle from "./EmptyCircle";
@@ -19,12 +19,14 @@ function ButtonGroupComponent() {
   const t = useTranslations("ConfigureQuiz");
   const router = useRouter();
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
-  const { Content } = generateQuizData;
+  const { Content, Attachments } = generateQuizData;
 
   const [selectedType, setSelectedType] =
     useState<QuestionTypeT>("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
-
+  useEffect(() => {
+    console.log(generateQuizData);
+  }, [generateQuizData]);
   const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
     onError: (error) => {
@@ -46,7 +48,6 @@ function ButtonGroupComponent() {
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const { Attachments } = generateQuizData;
     e.preventDefault();
     const numberOfQuestions = {
       low: 5,

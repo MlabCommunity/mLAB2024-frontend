@@ -1,6 +1,7 @@
 "use client";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { Button } from "@nextui-org/react";
+import { File } from "buffer";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -13,7 +14,7 @@ interface FilePickerProps {
   onClose: () => void;
 }
 
-const MAX_FILE_SIZE = 1000000; // 1MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 1MB
 
 export default function FilePicker({ id, name, onClose }: FilePickerProps) {
   const t = useTranslations("CreateQuiz");
@@ -53,20 +54,22 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     }
     setGenerateQuizData({ ...generateQuizData, Attachments: [] });
   };
-
+  useEffect(() => {
+    console.log(generateQuizData);
+  }, [generateQuizData]);
   const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
     useDropzone({
       onDrop: (acceptedFiles) => validateFiles(acceptedFiles),
       accept: ".docx,.pdf,.txt,.xls", // File extensions you want to accept
-      maxSize: MAX_FILE_SIZE, // 1MB
+      maxSize: MAX_FILE_SIZE,
     });
 
-  const validateFiles = (files: File[]) => {
+  const validateFiles = (acceptedFiles: File[]) => {
     let errorFound = false;
-    const newAttachments: any[] = [];
+    const newAttachments: File[] = [];
     let messages: string[] = [];
 
-    files.forEach((file) => {
+    acceptedFiles.forEach((file) => {
       const result = uploadSchema.safeParse({ file });
       if (!result.success) {
         errorFound = true;
@@ -83,7 +86,7 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
       setErrorMessage("");
       toast.success(t("uploadFileSuccess"));
       setGenerateQuizData({
-        Attachments: [...attachments, ...newAttachments],
+        Attachments: [...newAttachments],
       });
     }
   };
@@ -123,8 +126,6 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
           )}
         </label>
       </div>
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}{" "}
-      {/* Display error message */}
       <div className="flex gap-2 justify-end p-6">
         <Button variant="flat" color="primary" onPress={onClose}>
           {t("cancelButton")}

@@ -13,7 +13,7 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import InsertFileButton from "../buttons/InsertFileButton";
 
 const PromptForm = () => {
-  const { setGenerateQuizData } = useGenerateQuizStore();
+  const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
 
   const promptSchema = z.object({
@@ -31,6 +31,7 @@ const PromptForm = () => {
   const onSubmit = (data: FormValue) => {
     router.push(routes.createQuiz[1].route);
     setGenerateQuizData({
+      ...generateQuizData,
       Content: data.prompt,
     });
   };

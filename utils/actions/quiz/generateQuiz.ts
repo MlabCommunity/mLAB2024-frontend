@@ -21,10 +21,11 @@ export const generateQuiz = async (data: GenerateQuizT) => {
     const response = await axiosInstance.post(generateQuizUrl, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
-        RefreshToken: refreshToken, // Include the RefreshToken in the headers
       },
     });
     console.log(response.data);
+    console.log(payload);
+
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

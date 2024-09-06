@@ -1,6 +1,4 @@
 "use server";
-
-import { uploadSchema } from "@/lib/form-schemas";
 import { image } from "@nextui-org/react";
 import axios, { Axios, AxiosError } from "axios";
 import { cookies } from "next/headers";

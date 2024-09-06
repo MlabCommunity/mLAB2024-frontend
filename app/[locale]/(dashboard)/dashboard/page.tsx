@@ -76,7 +76,7 @@ const DashboardPage = () => {
           </div>
         </div>
         <Pagination
-          className="flex justify-center w-full pt-12"
+          className="flex absolute bottom-14 right-14 justify-center w-full p-6 "
           total={totalPages}
           initialPage={page}
           onChange={(pageNumber) => setPage(pageNumber)}

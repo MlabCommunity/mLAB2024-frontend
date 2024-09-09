@@ -5,6 +5,7 @@ type ModalDataT = {
   status: string;
   questions: number;
   onConfirmDelete?: () => void;
+  isPending: boolean;
 };
 
 interface ModalStore {
@@ -16,7 +17,12 @@ interface ModalStore {
   setModalData: (data: ModalDataT) => void;
 }
 
-export type ModalType = "deleteQuizz" | "cancelCreateQuizz" | "finishQuiz" | "";
+export type ModalType =
+  | "deleteQuizz"
+  | "cancelCreateQuizz"
+  | "finishQuiz"
+  | "uploadFile"
+  | "";
 
 export const useModalStore = create<ModalStore>((set) => ({
   type: "",
@@ -29,6 +35,7 @@ export const useModalStore = create<ModalStore>((set) => ({
     status: "",
     questions: 0,
     onConfirmDelete: () => {},
+    isPending: false,
   },
   setModalData: (data: ModalDataT) => set({ modalData: data }),
 }));

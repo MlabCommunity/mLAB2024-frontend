@@ -10,9 +10,10 @@ import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import InsertFileButton from "../buttons/InsertFileButton";
 
 const PromptForm = () => {
-  const { setGenerateQuizData } = useGenerateQuizStore();
+  const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
 
   const promptSchema = z.object({
@@ -30,7 +31,8 @@ const PromptForm = () => {
   const onSubmit = (data: FormValue) => {
     router.push(routes.createQuiz[1].route);
     setGenerateQuizData({
-      content: data.prompt,
+      ...generateQuizData,
+      Content: data.prompt,
     });
   };
 
@@ -50,6 +52,7 @@ const PromptForm = () => {
       )}
       <NavigationControls>
         <NextButton />
+        <InsertFileButton />
       </NavigationControls>
     </form>
   );

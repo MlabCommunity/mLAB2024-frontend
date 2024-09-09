@@ -10,9 +10,10 @@ interface GenerateQuizStore {
 
 export const useGenerateQuizStore = create<GenerateQuizStore>((set) => ({
   generateQuizData: {
-    content: "",
-    numberOfQuestions: 0,
-    questionTypes: [""],
+    Content: "",
+    NumberOfQuestions: 0,
+    QuestionTypes: [""],
+    Attachments: [],
   },
   setGenerateQuizData: (data: GenerateQuizT) => set({ generateQuizData: data }),
   generatedQuizData: [],

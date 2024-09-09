@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getQuizList } from "../actions/quiz/getQuizList";
-export const useGetQuizList = () => {
+export const useGetQuizList = (page: number) => {
   return useQuery({
-    queryKey: ["quizList"],
-    queryFn: () => getQuizList(),
+    queryKey: ["quizList", page],
+    queryFn: () => getQuizList(page),
+    placeholderData: keepPreviousData,
   });
 };

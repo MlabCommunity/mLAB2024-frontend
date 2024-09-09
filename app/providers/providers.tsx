@@ -3,16 +3,21 @@
 import { NextUIProvider } from "@nextui-org/react";
 import ModalProvider from "./modalProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <NextUIProvider>
-        {children}
-        <ModalProvider />
-      </NextUIProvider>
+      <DndProvider backend={HTML5Backend}>
+        <NextUIProvider>
+          {children}
+          <ModalProvider />
+        </NextUIProvider>
+      </DndProvider>
     </QueryClientProvider>
   );
 }

@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     } catch (refreshError) {
-      console.error("Token refresh failed:", refreshError);
+      // console.error("Token refresh failed:", refreshError);
       Cookies.remove("AccessToken");
       Cookies.remove("RefreshToken");
       return Promise.reject(refreshError);

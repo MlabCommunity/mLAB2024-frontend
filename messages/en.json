@@ -135,7 +135,20 @@
     "contentLabel": "Content",
     "cancelQuizWarning": "Are you sure?",
     "cancelQuizWarningText": "You are about to quit the quiz creation process. Any progress made so far will be lost. The action cannot be undone",
-    "cancelQuizConfirm": "Yes, I quit"
+    "cancelQuizConfirm": "Yes, I quit",
+    "uploadFile": "Upload file",
+    "uploadFileData": "Drag and drop file here or insert file",
+    "uploadFileSupportedFormats": "Supported formats: PDF, PPTX ",
+    "uploadFileMaximumSize": "Maximum size: 10 MB",
+    "uploadFileDownload": "Download",
+    "fileUploaded": "Uploaded file",
+    "file": "File:",
+    "uploadFileInvalidFormat": "Invalid file type. Only .xls, .docx, .txt, and .pdf files are allowed.",
+    "uploadFileExceededMaximumSize": "File cannot be larger than 10 MB",
+    "uploadFileSuccess": "File uploaded successfully",
+    "uploadDeleteFiles": "Delete files",
+    "uploadDeleteFilesSuccess": "Deleted files successfully",
+    "uploadFileDragActive": "Drag files here..."
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Configure Quiz",

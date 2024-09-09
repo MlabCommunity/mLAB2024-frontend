@@ -28,6 +28,22 @@ function AddQuestionModal() {
     number | null
   >(null);
 
+  const { mutate } = useMutation({
+    mutationFn: createNewQuestion,
+    onSuccess: () => {
+      toast.success(t("addedQuestionSuccess"));
+      closeModal();
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["singleQuiz"],
+      });
+    },
+  });
+
   const samplePlaceholder =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
@@ -73,22 +89,6 @@ function AddQuestionModal() {
     modalValues.title.length > 0 &&
     allQuestionsFilled &&
     selectedQuestionIndex !== null;
-
-  const { mutate } = useMutation({
-    mutationFn: createNewQuestion,
-    onSuccess: () => {
-      toast.success(t("addedQuestionSuccess"));
-      closeModal();
-    },
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-    onSettled: (_data, _error, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ["singleQuiz"],
-      });
-    },
-  });
 
   const handleSubmit = () => {
     const newQuestion = {

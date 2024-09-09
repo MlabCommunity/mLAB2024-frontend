@@ -15,8 +15,8 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
-import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
-import { GeneratedQuizT } from "@/types";
+import AddQuestionModal from "@/app/[locale]/(quiz-details)/modals/AddQuestionModal";
+import { GeneratedQuestionT } from "../../../types";
 
 function Preview() {
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
@@ -24,9 +24,10 @@ function Preview() {
   const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
 
-  const [questions, setQuestions] = useState<GeneratedQuizT[]>(
+  const [questions, setQuestions] = useState<GeneratedQuestionT[]>(
     generatedQuizData?.createQuestionsDto
   );
+  console.log(questions);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null

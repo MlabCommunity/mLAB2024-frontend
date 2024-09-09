@@ -5,8 +5,8 @@ import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGetQuizList } from "@/utils/hooks/useGetQuizList";
-import { DashboardQuizT } from "@/types";
 import { Skeleton } from "@nextui-org/react";
+import { DashboardQuizItemT, DashboardQuizT } from "../types";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
@@ -31,7 +31,7 @@ const DashboardPage = () => {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
         {(isPending || isFetching ? skeletonItems : data?.items).map(
-          (quiz: DashboardQuizT , index: number) =>
+          (quiz: DashboardQuizItemT, index: number) =>
             quiz ? (
               <QuizCard
                 key={quiz.id}

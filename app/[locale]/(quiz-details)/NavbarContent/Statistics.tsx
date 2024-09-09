@@ -14,9 +14,7 @@ import DetailsButton from "../components/statistics/buttons/DetailsButton";
 import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import EventDuration from "../components/statistics/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
-import { getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
-import { Button } from "@nextui-org/react";
 
 function Statistics() {
   const date = new Date();

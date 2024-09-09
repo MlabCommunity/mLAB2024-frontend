@@ -4,24 +4,17 @@ import React from "react";
 import { Button, Checkbox, Switch } from "@nextui-org/react";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
+import { useQuizDetailStore } from "@/store/quizDetailsStore";
 
-interface SettingsProps {
-  availability: string;
-  setAvailability: React.Dispatch<React.SetStateAction<string>>;
-  status: string;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
-}
-
-function Settings({
-  availability,
-  setAvailability,
-  setStatus,
-  status,
-}: SettingsProps) {
+function Settings() {
+  const { setAvailability, setStatus, availability, status } =
+    useQuizDetailStore();
   const handleCheckboxChange = (e: React.BaseSyntheticEvent) => {
     const { name } = e.target;
     setAvailability(name);
   };
+
+  console.log(status, availability)
 
   const t = useTranslations("QuestionsOnAnswers");
   return (
@@ -48,7 +41,7 @@ function Settings({
             size="lg"
             radius="full"
             name="Public"
-            isSelected={availability === "Public"}
+            isSelected={availability=== "Public"}
             onChange={handleCheckboxChange}
           >
             <span className="text-foreground-500"> {t("public")}</span>

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import closeIcon from "/public/assets/closeIcon.svg";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import {
@@ -17,11 +16,11 @@ interface DeleteQuestionModalProps {
   questionDescription: string;
 }
 
-const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
+const DeleteQuestionModal = ({
   onConfirmDelete,
   questionTitle,
   questionDescription,
-}) => {
+}: DeleteQuestionModalProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 

@@ -30,6 +30,7 @@ const QuizCard = ({
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
   const router = useRouter();
+  
 
   const { mutate } = useMutation({
     mutationFn: deleteQuiz,
@@ -42,7 +43,7 @@ const QuizCard = ({
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["quizList"],
+        queryKey: ["singleQuiz"],
       });
     },
   });

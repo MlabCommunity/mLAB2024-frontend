@@ -1,11 +1,16 @@
 "use client";
 import { Button } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateQuizData } from "@/utils/actions/quiz/updateQuizData";
+import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import { GeneratedQuestionsT } from "../types";
 
 interface GeneralProps {
   title: string;
@@ -13,7 +18,13 @@ interface GeneralProps {
 }
 
 const General = ({ title, description }: GeneralProps) => {
+  const queryClient = useQueryClient();
+  const { quizId } = useParams();
   const t = useTranslations("QuestionsOnAnswers");
+
+  const [isModified, setIsModified] = useState(false);
+  const initialValues = { title, description };
+
   const generalSchema = z.object({
     title: z.string().min(1, { message: t("titleRequired") }),
     description: z.string().optional(),
@@ -23,6 +34,7 @@ const General = ({ title, description }: GeneralProps) => {
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(generalSchema),
@@ -32,7 +44,43 @@ const General = ({ title, description }: GeneralProps) => {
     },
   });
 
-  const onSubmit = () => {};
+  const watchedValues = watch();
+
+  useEffect(() => {
+    const isFormChanged =
+      watchedValues.title !== initialValues.title ||
+      watchedValues.description !== initialValues.description;
+
+    setIsModified(isFormChanged);
+  }, [watchedValues, initialValues]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateQuizData,
+    onSuccess: () => {
+      toast.success(t("dataUpdated"));
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSettled: (data, error, variables) => {
+      queryClient.setQueryData(
+        ["singleQuiz"],
+        (oldData: GeneratedQuestionsT) => {
+          if (!oldData) return;
+
+          return {
+            ...oldData,
+            title: variables.title,
+            description: variables.description,
+          };
+        }
+      );
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    mutate({ title: data.title, description: data.description, id: quizId });
+  };
 
   return (
     <NavbarContentContainer>
@@ -74,12 +122,13 @@ const General = ({ title, description }: GeneralProps) => {
           </span>
         </div>
         <Button
-          className="flex self-end cursor-pointer"
+          className="flex self-end cursor-pointer disabled:bg-primary/50"
           variant="solid"
           color="primary"
           radius="sm"
           size="lg"
           type="submit"
+          isDisabled={isPending || !isModified}
         >
           {t("save")}
         </Button>

@@ -1,6 +1,6 @@
 "use client";
 import { useModalStore } from "@/store/modalStore2";
-import { GeneratedQuizT, QuizDataT } from "@/types";
+import { createNewQuestion } from "@/utils/actions/quiz/createQuestion";
 import {
   Button,
   Checkbox,
@@ -11,18 +11,16 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { useParams } from "next/navigation";
+import React, { ChangeEvent, useState } from "react";
+import toast from "react-hot-toast";
 
-interface AddQuestionModal {
-  setQuestions?: Dispatch<SetStateAction<QuizDataT[]>>;
-}
-
-function AddQuestionModal({ setQuestions }: AddQuestionModal) {
-  const [modalValues, setModalValues] = useState({
-    title: "",
-    description: "",
-  });
+function AddQuestionModal() {
+  const { quizId } = useParams();
+  const queryClient = useQueryClient();
+  const [modalValues, setModalValues] = useState({ title: "" });
   const t = useTranslations("AddQuestionModal");
   const { closeModal, isOpen, type } = useModalStore();
   const [answers, setAnswers] = useState([{ id: 1, value: "" }]);
@@ -55,7 +53,7 @@ function AddQuestionModal({ setQuestions }: AddQuestionModal) {
 
   const handleInputChange = (
     index: number,
-    event: React.ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>
   ) => {
     const newQuestions = [...answers];
     newQuestions[index].value = event.target.value;
@@ -71,20 +69,39 @@ function AddQuestionModal({ setQuestions }: AddQuestionModal) {
   );
 
   const isReadyToSubmit =
-    answers.length >= 2 && modalValues.title.length > 0 && allQuestionsFilled;
+    answers.length >= 2 &&
+    modalValues.title.length > 0 &&
+    allQuestionsFilled &&
+    selectedQuestionIndex !== null;
+
+  const { mutate } = useMutation({
+    mutationFn: createNewQuestion,
+    onSuccess: () => {
+      toast.success(t("addedQuestionSuccess"));
+      closeModal();
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["singleQuiz"],
+      });
+    },
+  });
 
   const handleSubmit = () => {
     const newQuestion = {
+      quizId,
       title: modalValues.title,
-      description: modalValues.description,
-      answers: answers.map((answer, index) => {
+      createAnswers: answers.map((answer, index) => {
         return {
           content: answer.value,
           isCorrect: index === selectedQuestionIndex,
         };
       }),
     };
-    setQuestions!((prev) => [...prev, newQuestion]);
+    mutate(newQuestion);
     closeModal();
   };
 
@@ -118,19 +135,7 @@ function AddQuestionModal({ setQuestions }: AddQuestionModal) {
                   }
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <h3>{t("questionDescription")}</h3>
-                <Input
-                  placeholder={samplePlaceholder}
-                  value={modalValues.description}
-                  onChange={(event) =>
-                    setModalValues({
-                      ...modalValues,
-                      description: event.target.value,
-                    })
-                  }
-                />
-              </div>
+
               <div className="flex flex-col gap-2">
                 <h3>{t("answers")}</h3>
                 <div className="flex flex-col gap-2">

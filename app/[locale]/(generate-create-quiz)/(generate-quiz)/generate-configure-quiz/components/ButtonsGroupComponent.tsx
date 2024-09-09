@@ -9,8 +9,6 @@ import NavigationControls from "../../generate-quiz/components/buttons/Navigatio
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
-
-import { QuestionTypeT } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
@@ -21,8 +19,7 @@ function ButtonGroupComponent() {
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const { content } = generateQuizData;
 
-  const [selectedType, setSelectedType] =
-    useState<QuestionTypeT>("MultipleChoice");
+  const [selectedType, setSelectedType] = useState("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
 
   const { mutate, isPending } = useMutation({
@@ -97,7 +94,7 @@ function ButtonGroupComponent() {
                 }
                 name={type.value}
                 aria-pressed={selectedType === type.value}
-                onClick={() => setSelectedType(type.value as QuestionTypeT)}
+                onClick={() => setSelectedType(type.value)}
                 isDisabled={isPending}
               >
                 <span>{type.label}</span>

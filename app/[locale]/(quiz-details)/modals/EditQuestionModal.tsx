@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import closeIcon from "/public/assets/closeIcon.svg";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import {
+  Button,
   Input,
   Modal,
   ModalBody,
@@ -11,47 +10,102 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
+import { AnswerT, GeneratedQuestionsT } from "../types";
 
-interface QuestionData {
-  question: string;
-  description: string;
-  options: string[];
-  selected: string;
-}
+type QuestionEditT = {
+  questionTitle: string;
+  questionId: string;
+  options: AnswerT[];
+};
 
-interface EditQuestionModalProps {
-  questionData: QuestionData;
-  onSave: (updatedQuestion: QuestionData) => void;
-}
-
-const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
+const EditQuestionModal = ({
   questionData,
-  onSave,
+}: {
+  questionData: QuestionEditT;
 }) => {
+  const queryClient = useQueryClient();
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 
-  const [question, setQuestion] = useState(questionData.question);
-  const [description, setDescription] = useState(questionData.description);
+  const [question, setQuestion] = useState(questionData.questionTitle);
   const [options, setOptions] = useState(questionData.options);
-  const [selectedOption, setSelectedOption] = useState(questionData.selected);
+  const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {
-    setQuestion(questionData.question);
-    setDescription(questionData.description);
+    setQuestion(questionData.questionTitle);
     setOptions(questionData.options);
-    setSelectedOption(questionData.selected);
   }, [questionData]);
 
+  useEffect(() => {
+    const hasTitleChanged = question !== questionData.questionTitle;
+    const haveOptionsChanged =
+      JSON.stringify(options) !== JSON.stringify(questionData.options);
+
+    setIsFormChanged(hasTitleChanged || haveOptionsChanged);
+  }, [question, options, questionData]);
+
+  const { mutate } = useMutation({
+    mutationFn: updateQuizQuestions,
+    onSuccess: () => {
+      toast.success(t("changedQuestionSuccessfully"));
+      closeModal();
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+    onSettled: (_data, _error, variables) => {
+      queryClient.setQueryData(
+        ["singleQuiz"],
+        (oldData: GeneratedQuestionsT) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            questions: oldData.questions.map((question) =>
+              question.id === variables.id
+                ? {
+                    ...question,
+                    title: variables.title,
+                    answers: variables.updateAnswers,
+                  }
+                : question
+            ),
+          };
+        }
+      );
+    },
+  });
+
   const handleSave = () => {
-    const updatedQuestion: QuestionData = {
-      question,
-      description,
-      options,
-      selected: selectedOption,
+    const updatedQuestion = {
+      title: question,
+      id: questionData.questionId,
+      updateAnswers: options,
     };
-    onSave(updatedQuestion);
+    mutate(updatedQuestion);
     closeModal();
+  };
+
+  const handleOptionSelect = (index: number) => {
+    const newOptions = options.map((option, i) => ({
+      ...option,
+      isCorrect: i === index,
+    }));
+    setOptions(newOptions);
+  };
+
+  const handleOptionChange = (index: number, newContent: string) => {
+    setOptions((prevOptions) => {
+      const newOptions = [...prevOptions];
+      newOptions[index] = {
+        ...newOptions[index],
+        content: newContent,
+      };
+      return newOptions;
+    });
   };
 
   if (!(isOpen && type === "editQuestion")) return null;
@@ -97,22 +151,6 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
               className="w-full py-2 rounded-lg"
             />
           </div>
-          <div>
-            <label
-              className="text-lg text-foreground-700 font-semibold"
-              htmlFor="desc"
-            >
-              {t("questionDescription")} ({t("optional")}):
-            </label>
-            <Input
-              variant="bordered"
-              id="desc"
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-lg py-2"
-            />
-          </div>
         </ModalHeader>
         <ModalBody className="-mt-3">
           <label className="text-lg text-foreground-700 font-semibold">
@@ -123,18 +161,14 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
               <li key={index} className="flex items-center space-x-2 mb-2">
                 <div
                   className={`custom-radio ${
-                    selectedOption === option ? "custom-radio-checked" : ""
+                    option.isCorrect ? "custom-radio-checked" : ""
                   }`}
-                  onClick={() => setSelectedOption(option)}
+                  onClick={() => handleOptionSelect(index)}
                 />
                 <input
                   type="text"
-                  value={option}
-                  onChange={(e) => {
-                    const newOptions = [...options];
-                    newOptions[index] = e.target.value;
-                    setOptions(newOptions);
-                  }}
+                  value={option.content}
+                  onChange={(e) => handleOptionChange(index, e.target.value)}
                   className="w-full px-3 py-2 rounded-lg outline-black"
                 />
               </li>
@@ -143,18 +177,22 @@ const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
         </ModalBody>
         <ModalFooter>
           <div className="flex justify-end space-x-2">
-            <button
+            <Button
               onClick={closeModal}
-              className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md "
+              className="bg-primary-200 text-primary-600 py-2 px-4"
+              radius="md"
             >
               {t("cancel")}
-            </button>
-            <button
+            </Button>
+            <Button
+              color="primary"
               onClick={handleSave}
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg"
+              className="disabled:bg-primary/50"
+              radius="md"
+              isDisabled={!isFormChanged}
             >
               {t("save")}
-            </button>
+            </Button>
           </div>
         </ModalFooter>
       </ModalContent>

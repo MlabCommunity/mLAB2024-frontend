@@ -14,9 +14,9 @@ import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
 import { GeneratedQuestionT } from "../../../types";
-import DeleteQuestionModal from "../../../(generate-quiz)/modals/DeleteQuestionModal";
-import EditQuestionModal from "../../../(generate-quiz)/modals/EditQuestionModal";
-import AddQuestionModal from "../../../(generate-quiz)/modals/AddQuestionModal";
+import AddQuestionGenerateModal from "../../../(generate-quiz)/modals/AddQuestionGenerateModal";
+import DeleteQuestionGenerateModal from "../../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
+import EditQuestionGenerateModal from "../../../(generate-quiz)/modals/EditQuestionGenerateModal";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -116,19 +116,18 @@ function Preview() {
 
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
-      <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
-        <div className="flex gap-3 sm:gap-2 md:gap-0 justify-between items-center">
-          <Chip color="primary" size="md" radius="sm">
-            Total {questions?.length} questions
-          </Chip>
-          <div className="flex items-center flex-col sm:flex-row gap-2">
-            <label className="text-sm order-1" htmlFor="answers">
-              {t("answers")}
-            </label>
+      <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">
+        <div className="flex justify-between items-center mb-6 mt-2 px-2">
+          <div className="flex justify-end items-center">
+            <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
+              {t("total")} {questions?.length} {t("questions")}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="text-black text-sm">{t("answers")}</span>
             <Switch
               className="order-0"
-              size="lg"
-              color="default"
+              size="md"
               checked={showCorrectAnswers}
               onChange={(e) => setShowCorrectAnswers(e.target.checked)}
               isDisabled={!questions}
@@ -136,10 +135,8 @@ function Preview() {
           </div>
         </div>
         <Button
-          className="self-end pr-6 pl-6"
-          variant="flat"
           color="primary"
-          size="sm"
+          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50"
           radius="md"
           onClick={handleOpenAddQuestion}
           isDisabled={!questions}
@@ -163,15 +160,15 @@ function Preview() {
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (
-        <AddQuestionModal setQuestions={setQuestions} />
+        <AddQuestionGenerateModal setQuestions={setQuestions} />
       )}
       {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
         <>
-          <DeleteQuestionModal
+          <DeleteQuestionGenerateModal
             questionTitle={questions[currentQuestionIndex]?.title}
             onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}
           />
-          <EditQuestionModal
+          <EditQuestionGenerateModal
             questionData={{
               questionTitle: questions[currentQuestionIndex].title,
               options: questions[currentQuestionIndex].generateAnswers,

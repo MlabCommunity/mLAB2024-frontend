@@ -1,3 +1,5 @@
+import { cn } from "@/lib";
+import { routes } from "@/routes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -15,13 +17,13 @@ const Dot = ({
   return (
     <section className="flex items-center">
       <div
-        className={`size-8 ${
+        className={cn(
+          "size-8 rounded-full flex items-center justify-center pointer-events-none",
           visited ? "bg-black" : "bg-content2"
-        } rounded-full flex items-center justify-center`}
+        )}
       >
         <div>
-          {/* Removes the possibility to return to previous steps after the quiz was created */}
-          {visited && curRoute !== "/create-quiz-success" ? (
+          {visited && curRoute !== routes.createQuiz[3].route ? (
             <Link
               className="w-full h-full flex items-center"
               href={currentRouteProp}

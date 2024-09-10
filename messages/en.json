@@ -173,7 +173,9 @@
     "answers": "Answers",
     "saveQuizButton": "Save Quiz",
     "createdSuccessfullyMsg": "Quiz created successfully",
-    "creating": "Creating quiz..."
+    "creating": "Creating quiz...",
+    "questions": "questions",
+    "total": "Total"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",

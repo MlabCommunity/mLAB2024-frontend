@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import {
@@ -10,15 +9,15 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 
-interface DeleteQuestionModalProps {
+interface DeleteQuestionModalGenerateProps {
   onConfirmDelete: () => void;
   questionTitle: string;
 }
 
-const DeleteQuestionModal = ({
+const DeleteQuestionGenerateModal = ({
   onConfirmDelete,
   questionTitle,
-}: DeleteQuestionModalProps) => {
+}: DeleteQuestionModalGenerateProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 
@@ -91,4 +90,4 @@ const DeleteQuestionModal = ({
   );
 };
 
-export default DeleteQuestionModal;
+export default DeleteQuestionGenerateModal;

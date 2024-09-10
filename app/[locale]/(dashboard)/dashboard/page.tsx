@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import { useGetQuizList } from "@/utils/hooks/useGetQuizList";
 import { Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT, DashboardQuizT } from "../types";
-import { useQuizDetailStore } from "@/store/quizDetailsStore";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
@@ -63,12 +62,14 @@ const DashboardPage = () => {
         )}
       </div>
       <div className="w-full">
-        <Pagination
-          className="flex justify-center w-full py-10"
-          total={totalPages}
-          initialPage={page}
-          onChange={(pageNumber) => setPage(pageNumber)}
-        />
+        {data?.items.length != 0 && (
+          <Pagination
+            className="flex justify-center w-full py-10"
+            total={totalPages}
+            initialPage={page}
+            onChange={(pageNumber) => setPage(pageNumber)}
+          />
+        )}
         <div className="border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
           <Link href={routes.createQuiz[0].route}>
             <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">

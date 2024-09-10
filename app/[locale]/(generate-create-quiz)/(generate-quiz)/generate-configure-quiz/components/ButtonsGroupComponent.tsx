@@ -52,36 +52,19 @@ function ButtonGroupComponent() {
       medium: 10,
       high: 15,
     }[selectedQuantity];
-
+    const payload: GenerateQuizT = {
+      Content: Content,
+      NumberOfQuestions: numberOfQuestions,
+      QuestionTypes: [selectedType],
+      Attachments: structuredClone(Attachments) || [],
+    };
     const formData = new FormData();
-    // Check if Content is a string
-    if (typeof Content === "string") {
-      formData.append("Content", Content);
-    }
-
-    // Ensure numberOfQuestions is defined and is a number
-    if (numberOfQuestions !== undefined) {
-      formData.append("NumberOfQuestions", numberOfQuestions.toString()); // Ensure it's a string
-    } else {
-      console.error("numberOfQuestions is undefined");
-    }
-
-    // If selectedType is a string, append it directly
-    if (typeof selectedType === "string") {
-      formData.append("QuestionTypes", selectedType); // Append the string directly
-    } else {
-      console.error("selectedType is not a string");
-    }
-    // Append each attachment if Attachments is defined and is an array
-    if (Array.isArray(Attachments)) {
-      Attachments.forEach((attachment) => {
-        formData.append("Attachments", attachment);
-      });
-    } else {
-      console.error("Attachments is not an array");
-    }
-
-    // Log each key-value pair in formData for debugging
+    formData.append("Content", Content as string);
+    formData.append("NumberOfQuestions", numberOfQuestions.toString()); // Ensure it's a string
+    formData.append("QuestionTypes", JSON.stringify([selectedType])); // Stringify array
+    Attachments?.forEach((attachement) => {
+      formData.append("Attachments", attachement);
+    });
     formData.forEach((value, key) => {
       console.log([key, value]);
     });
@@ -100,7 +83,6 @@ function ButtonGroupComponent() {
     { label: t("high"), value: "high" },
   ];
 
-  console.log(Attachments);
   return (
     <form
       onSubmit={handleSubmit}

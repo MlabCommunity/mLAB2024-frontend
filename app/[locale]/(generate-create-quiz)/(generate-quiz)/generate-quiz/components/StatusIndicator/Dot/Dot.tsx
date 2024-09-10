@@ -24,12 +24,7 @@ const Dot = ({
       >
         <div>
           {visited && curRoute !== routes.createQuiz[3].route ? (
-            <Link
-              className="w-full h-full flex items-center"
-              href={currentRouteProp}
-            >
-              <span className="text-foreground-300">{step + 1}</span>
-            </Link>
+            <span className="text-foreground-300">{step + 1}</span>
           ) : (
             <span className="text-foreground-300">{step + 1}</span>
           )}

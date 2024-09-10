@@ -11,7 +11,7 @@ async function SignUp() {
         <picture>
           <Image alt="learngo" className="mx-auto" src={learnGO} />
         </picture>
-        <h1 className="p-5 text-sm font-semibold">{t("signUpEnterText")}</h1>
+        <h2 className="p-5 text-sm font-semibold">{t("signUpEnterText")}</h2>
         <SignUpForm />
       </div>
     </main>

@@ -13,7 +13,7 @@ import {
 import { AnswerT } from "@/app/[locale]/(quiz-details)/types";
 import { GeneratedQuestionT } from "../../types";
 
-type EditQuestionModalProps = {
+type EditQuestionGenerateModalProps = {
   questionData: {
     questionTitle: string;
     options: AnswerT[];
@@ -22,11 +22,11 @@ type EditQuestionModalProps = {
   questions: GeneratedQuestionT[];
 };
 
-const EditQuestionModal = ({
+const EditQuestionGenerateModal = ({
   questionData,
   setQuestions,
   questions,
-}: EditQuestionModalProps) => {
+}: EditQuestionGenerateModalProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 
@@ -182,4 +182,4 @@ const EditQuestionModal = ({
   );
 };
 
-export default EditQuestionModal;
+export default EditQuestionGenerateModal;

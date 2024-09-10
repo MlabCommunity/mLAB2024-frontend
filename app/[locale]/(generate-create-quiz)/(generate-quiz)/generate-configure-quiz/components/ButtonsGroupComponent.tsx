@@ -74,6 +74,7 @@ function ButtonGroupComponent() {
     { label: t("high"), value: "high" },
   ];
 
+  console.log(Attachments);
   return (
     <form
       onSubmit={handleSubmit}

@@ -7,7 +7,7 @@ const PreviewPage = () => {
 
   return (
     <section className="p-3">
-      <h2 className="text-4xl font-semibold pt-5 pb-5">
+      <h2 className="text-4xl font-semibold pt-5 pb-2">
         {t("quizPreviewHeading")}
       </h2>
       <p

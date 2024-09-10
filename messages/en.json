@@ -103,8 +103,8 @@
     "quizDetails": "Quiz details",
     "titleRequired": "Title is required.",
     "dataUpdated": "Data updated successfully",
-    "changedQuestionSuccessfully":"Changed question successfully",
-    "deletedQuestionSuccess":"Deleted question succesfully"
+    "changedQuestionSuccessfully": "Changed question successfully",
+    "deletedQuestionSuccess": "Deleted question succesfully"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -173,7 +173,9 @@
     "answers": "Answers",
     "saveQuizButton": "Save Quiz",
     "createdSuccessfullyMsg": "Quiz created successfully",
-    "creating": "Creating quiz..."
+    "creating": "Creating quiz...",
+    "questions": "questions",
+    "total": "Total"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",

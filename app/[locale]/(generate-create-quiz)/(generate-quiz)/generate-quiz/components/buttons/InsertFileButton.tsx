@@ -14,7 +14,7 @@ const InsertFileButton = () => {
   return (
     <Button
       onClick={handleOpenModal}
-      color="danger"
+      color="success"
       variant="solid"
       radius="sm"
       size="lg"

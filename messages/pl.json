@@ -171,7 +171,9 @@
     "answers": "Odpowiedzi",
     "saveQuizButton": "Zapisz quiz",
     "createdSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
-    "creating": "Tworzenie quizu..."
+    "creating": "Tworzenie quizu...",
+    "questions": "pytań",
+    "total": "Razem"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Sukces",

@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [nameValue, setNameValue] = useState<string>(
     currentProfile?.userName || ""
   );
+  const [isChanged, setIsChanged] = useState<boolean>(false);
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
@@ -32,8 +33,12 @@ const ProfilePage = () => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
       toast.success(t("profileUpdated"));
+      setIsChanged(false);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
     },
   });
 
@@ -48,6 +53,11 @@ const ProfilePage = () => {
       console.log("Delete account");
       router.push(routes.signIn);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNameValue(e.target.value);
+    setIsChanged(e.target.value !== currentProfile?.userName);
   };
 
   return (
@@ -68,7 +78,7 @@ const ProfilePage = () => {
             id="name"
             type="text"
             value={nameValue}
-            onChange={(e) => setNameValue(e.target.value)}
+            onChange={handleChange}
             className="p-3 rounded-lg shadow-sm"
           />
           <p className="text-foreground-500 text-sm">{t("displayName")}</p>
@@ -76,7 +86,7 @@ const ProfilePage = () => {
             variant="solid"
             className="bg-base-primary text-white w-min py-5 disabled:bg-base-primary/50"
             onClick={handleUpdate}
-            disabled={isPending || !nameValue}
+            disabled={isPending || !nameValue || !isChanged}
           >
             {t("updateButton")}
           </Button>

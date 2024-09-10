@@ -15,11 +15,11 @@ import { useParams } from "next/navigation";
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { GeneratedQuestionT } from "../../types";
 
-interface AddQuestionModalProps {
+interface AddQuestionGenerateModalProps {
   setQuestions: Dispatch<SetStateAction<GeneratedQuestionT[]>>;
 }
 
-function AddQuestionModal({ setQuestions }: AddQuestionModalProps) {
+function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProps) {
   const { quizId } = useParams();
   const [modalValues, setModalValues] = useState({ title: "" });
   const t = useTranslations("AddQuestionModal");
@@ -173,4 +173,4 @@ function AddQuestionModal({ setQuestions }: AddQuestionModalProps) {
   );
 }
 
-export default AddQuestionModal;
+export default AddQuestionGenerateModal;

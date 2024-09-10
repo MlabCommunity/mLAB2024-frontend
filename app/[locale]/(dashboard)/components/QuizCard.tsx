@@ -44,7 +44,7 @@ const QuizCard = ({
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["singleQuiz"],
+        queryKey: ["quizList"],
       });
     },
   });

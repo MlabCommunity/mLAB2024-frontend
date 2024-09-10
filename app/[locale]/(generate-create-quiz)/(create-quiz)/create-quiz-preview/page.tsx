@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Preview from "./components/Preview";
 import { useTranslations } from "next-intl";
+import PreviewSkeleton from "./components/skeletons/PreviewSkeleton";
 const PreviewPage = () => {
   const t = useTranslations("QuizPreview");
 
@@ -15,7 +16,9 @@ const PreviewPage = () => {
       >
         {t("quizPreviewMessage")}
       </p>
-      <Preview />
+      <Suspense fallback={<PreviewSkeleton />}>
+        <Preview />
+      </Suspense>
     </section>
   );
 };

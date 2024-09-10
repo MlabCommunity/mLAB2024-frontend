@@ -6,9 +6,9 @@ export type QuestionsT = {
 };
 
 export type AnswerT = {
-  id: string;
   content: string;
   isCorrect: boolean;
+  id?: string;
 };
 
 export type GeneratedQuestionsT = {

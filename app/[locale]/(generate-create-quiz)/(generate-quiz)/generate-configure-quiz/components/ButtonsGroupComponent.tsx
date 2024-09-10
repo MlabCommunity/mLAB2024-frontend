@@ -1,19 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "./TickCircle";
 import EmptyCircle from "./EmptyCircle";
 import NextButton from "../../generate-quiz/components/buttons/NextButton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import NavigationControls from "../../generate-quiz/components/buttons/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { GenerateQuizT } from "@/types";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
 
 function ButtonGroupComponent() {
+  const searchParams = useSearchParams();
   const t = useTranslations("ConfigureQuiz");
   const router = useRouter();
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
@@ -21,9 +23,7 @@ function ButtonGroupComponent() {
 
   const [selectedType, setSelectedType] = useState("MultipleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
-  useEffect(() => {
-    console.log(generateQuizData);
-  }, [generateQuizData]);
+
   const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
     onError: (error) => {
@@ -31,9 +31,10 @@ function ButtonGroupComponent() {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      console.log(data);
+      const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
-      router.push(routes.createQuiz[2].route);
+      params.set("selectedType", selectedType);
+      router.push(`${routes.createQuiz[2].route}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
     onMutate: () => {
@@ -44,7 +45,7 @@ function ButtonGroupComponent() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const numberOfQuestions = {
       low: 5,
@@ -52,12 +53,14 @@ function ButtonGroupComponent() {
       high: 15,
     }[selectedQuantity];
 
-    mutate({
+    const payload: GenerateQuizT = {
       Content: Content,
       NumberOfQuestions: numberOfQuestions,
-      QuestionTypes: ["MultipleChoice"],
+      QuestionTypes: [selectedType],
       Attachments: JSON.parse(JSON.stringify(Attachments)) || [],
-    });
+    };
+
+    mutate(payload);
   };
 
   const questionTypes = [

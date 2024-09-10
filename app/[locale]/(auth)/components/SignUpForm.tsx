@@ -43,7 +43,6 @@ function SignUpForm() {
   });
   const onSubmit = async (data: FormData) => {
     mutate(data);
-    console.log(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">

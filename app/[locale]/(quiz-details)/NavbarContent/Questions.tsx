@@ -15,6 +15,7 @@ import { deleteQuestion } from "@/utils/actions/quiz/deleteQuestion";
 import toast from "react-hot-toast";
 import { GeneratedQuestionsT, QuestionsT } from "../types";
 import { useQuizDetailStore } from "@/store/quizDetailsStore";
+import QuestionsSkeleton from "../components/skeletons/QuestionsSkeleton";
 
 const Questions = () => {
   const { questions, setQuestionsData } = useQuizDetailStore();
@@ -35,7 +36,7 @@ const Questions = () => {
     onError: (error: any) => {
       toast.error(error.message);
     },
-    onSettled: (data, error, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.setQueryData(
         ["singleQuiz"],
         (oldData: GeneratedQuestionsT) => {
@@ -90,6 +91,10 @@ const Questions = () => {
     openModal("addQuestion");
   };
 
+  if (questions?.length === 0) {
+    return <QuestionsSkeleton />;
+  }
+
   return (
     <>
       <section data-navbar-item="questions">
@@ -102,10 +107,7 @@ const Questions = () => {
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-black text-sm">{t("answers")}</span>
-              <Switch
-                checked={enabled}
-                onValueChange={setEnabled}
-              />
+              <Switch checked={enabled} onValueChange={setEnabled} />
             </div>
           </div>
           <div className="flex justify-end items-center mb-4">
@@ -118,7 +120,7 @@ const Questions = () => {
             </Button>
           </div>
           <ul>
-            {questions.map((data, index) => (
+            {questions?.map((data, index) => (
               <li
                 key={index}
                 className="bg-default-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
@@ -190,7 +192,6 @@ const Questions = () => {
                 )
               }
               questionTitle={questions[currentQuestionIndex]?.title}
-              questionDescription={questions[currentQuestionIndex]?.description}
             />
           </>
         )}

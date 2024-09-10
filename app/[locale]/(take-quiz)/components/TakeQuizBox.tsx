@@ -36,7 +36,6 @@ const TakeQuizBox = ({
   });
 
   async function onSubmit(data: FormData) {
-    console.log(data);
     setIsTakeQuizBoxVisible(false);
   }
 

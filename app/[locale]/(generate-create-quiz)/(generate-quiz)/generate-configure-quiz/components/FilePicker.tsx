@@ -99,8 +99,6 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     }
   };
 
-  console.log(attachments);
-
   return (
     <form onSubmit={handleSubmit}>
       <div

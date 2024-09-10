@@ -14,8 +14,6 @@ function Settings() {
     setAvailability(name);
   };
 
-  console.log(status, availability)
-
   const t = useTranslations("QuestionsOnAnswers");
   return (
     <NavbarContentContainer className="bg-content2 p-6 flex flex-col gap-2 rounded-lg">
@@ -41,7 +39,7 @@ function Settings() {
             size="lg"
             radius="full"
             name="Public"
-            isSelected={availability=== "Public"}
+            isSelected={availability === "Public"}
             onChange={handleCheckboxChange}
           >
             <span className="text-foreground-500"> {t("public")}</span>

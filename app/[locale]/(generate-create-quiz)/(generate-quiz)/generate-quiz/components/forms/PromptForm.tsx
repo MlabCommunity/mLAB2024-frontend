@@ -17,8 +17,14 @@ const PromptForm = () => {
   const t = useTranslations("CreateQuiz");
 
   const promptSchema = z.object({
-    prompt: z.string().min(10, { message: t("promptRequiredField") }),
+    prompt: z
+      .string()
+      .refine(
+        (val) => generateQuizData.Attachments!.length > 0 || val.length >= 10,
+        { message: t("promptRequiredField") }
+      ),
   });
+
   type FormValue = z.infer<typeof promptSchema>;
 
   const {

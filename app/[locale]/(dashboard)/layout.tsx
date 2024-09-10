@@ -2,7 +2,6 @@ import Header from "@/components/shared/Header";
 import "@/app/globals.css";
 import Container from "@/components/shared/Container";
 import Navbar from "./components/Navbar";
-import { Pagination } from "@nextui-org/react";
 
 export default function DashboardLayout({
   children,

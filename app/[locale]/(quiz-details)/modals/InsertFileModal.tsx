@@ -3,7 +3,7 @@ import { useModalStore } from "@/store/modalStore";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import FilePicker from "../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
+import FilePicker from "../../(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/FilePicker";
 function InsertFileModal() {
   const { isOpen, closeModal, type } = useModalStore();
   const t = useTranslations("CreateQuiz");

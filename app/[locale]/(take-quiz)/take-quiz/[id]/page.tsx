@@ -6,8 +6,8 @@ import QuizResults from "../../components/QuizResults";
 import HistoryResults from "../../components/HistoryResults";
 import TakeQuizBox from "../../components/TakeQuizBox";
 import Quiz from "../../components/Quiz";
-import {  AnswerMapItemT, HistoryItemT } from "@/types";
 import { quizData } from "@/constants";
+import { AnswerMapItemT, HistoryItemT } from "../../types";
 
 
 const TakeQuiz = () => {

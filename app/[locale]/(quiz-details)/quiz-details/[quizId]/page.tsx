@@ -1,29 +1,61 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import General from "../../NavbarContent/General";
-import Questions from "../../NavbarContent/Questions";
-import Statistics from "../../NavbarContent/Statistics";
-import Settings from "../../NavbarContent/Settings";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslations } from "next-intl";
 import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
 import Link from "next/link";
 import { Button, Skeleton } from "@nextui-org/react";
 import { cn } from "@/lib";
+import dynamic from "next/dynamic";
+import QuestionsSkeleton from "../../components/skeletons/QuestionsSkeleton";
+import SettingsSkeleton from "../../components/skeletons/SettingsSkeleton";
+import StatisticsSkeleton from "../../components/skeletons/StatisticsSkeleton";
+import GeneralSkeleton from "../../components/skeletons/GeneralSkeleton";
+import QuizDetailsInfoSkeleton from "../../components/skeletons/QuizDetailsInfoSkeleton";
+import { useQuizDetailStore } from "@/store/quizDetailsStore";
 
-const QuizDetail = ({ params }: { params: { quizId: string } }) => {
+const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
+  ssr: false,
+  loading: () => <QuestionsSkeleton />,
+});
+const Settings = dynamic(() => import("../../NavbarContent/Settings"), {
+  ssr: false,
+  loading: () => <SettingsSkeleton />,
+});
+const Statistics = dynamic(() => import("../../NavbarContent/Statistics"), {
+  ssr: false,
+  loading: () => <StatisticsSkeleton />,
+});
+const General = dynamic(() => import("../../NavbarContent/General"), {
+  ssr: false,
+  loading: () => <GeneralSkeleton />,
+});
+
+const QuizDetailsInfo = dynamic(
+  () => import("../../components/QuizDetailsInfo"),
+  {
+    ssr: false,
+    loading: () => <QuizDetailsInfoSkeleton />,
+  }
+);
+
+const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
+  const { setStatus, setQuestionsData, setAvailability } = useQuizDetailStore();
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
-  const [questions, setQuestions] = useState(singleQuizData?.questions || []);
-  const [status, setStatus] = useState(singleQuizData?.status || "Active");
-  const [availability, setAvailability] = useState(
-    singleQuizData?.status || "Public"
-  );
   const [activeTab, setActiveTab] = useState("Questions");
-  const navRef = useRef(null);
   const t = useTranslations("QuestionsOnAnswers");
 
   useEffect(() => {
     if (singleQuizData) {
-      setQuestions(singleQuizData?.questions || []);
+      setQuestionsData(singleQuizData?.questions || []);
+      setStatus(singleQuizData?.status || "Active");
+      setAvailability(singleQuizData?.availability || "Public");
+      setActiveTab("Questions");
     }
   }, [singleQuizData]);
 
@@ -41,38 +73,26 @@ const QuizDetail = ({ params }: { params: { quizId: string } }) => {
     { label: t("general"), value: "General" },
   ];
 
-  console.log(isFetching);
-
-  const renderTabContent = (activeTab: string) => {
-    switch (activeTab) {
-      case "Questions":
-        return (
-          <Questions
-            questions={questions}
-            setQuestions={setQuestions}
-            isFetching={isFetching}
-          />
-        );
-      case "Settings":
-        return (
-          <Settings
-            status={status}
-            setStatus={setStatus}
-            availability={availability}
-            setAvailability={setAvailability}
-          />
-        );
-      case "Statistics":
-        return <Statistics />;
-      case "General":
-        return (
-          <General
-            title={singleQuizData.title}
-            description={singleQuizData.description}
-          />
-        );
-    }
-  };
+  const renderTabContent = useCallback(
+    (activeTab: string) => {
+      switch (activeTab) {
+        case "Questions":
+          return <Questions />;
+        case "Settings":
+          return <Settings />;
+        case "Statistics":
+          return <Statistics />;
+        case "General":
+          return (
+            <General
+              title={singleQuizData.title}
+              description={singleQuizData.description}
+            />
+          );
+      }
+    },
+    [activeTab, singleQuizData, isFetching]
+  );
 
   return (
     <div className="bg-white w-full md:max-w-7xl">
@@ -84,22 +104,12 @@ const QuizDetail = ({ params }: { params: { quizId: string } }) => {
           </Button>
         </div>
         <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
-          {isFetching ? (
-            <Skeleton className="w-1/2 h-10 rounded-lg" />
-          ) : (
-            <h3 className="font-bold text-lg text-foreground-800">
-              {singleQuizData?.title}
-            </h3>
-          )}
-
-          {isFetching ? (
-            <Skeleton className="w-full h-7 mt-2 rounded-lg" />
-          ) : (
-            <p className="text-foreground-600">{singleQuizData?.description}</p>
-          )}
+          <QuizDetailsInfo
+            title={singleQuizData?.title}
+            description={singleQuizData?.description}
+          />
         </div>
         <nav
-          ref={navRef}
           onClick={handleNavbarChange}
           className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
         >
@@ -126,4 +136,4 @@ const QuizDetail = ({ params }: { params: { quizId: string } }) => {
   );
 };
 
-export default QuizDetail;
+export default QuizDetailsPage;

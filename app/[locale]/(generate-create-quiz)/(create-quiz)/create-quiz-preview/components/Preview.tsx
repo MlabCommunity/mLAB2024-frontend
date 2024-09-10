@@ -2,38 +2,40 @@
 import React, { useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
-import { Button, Chip, Skeleton } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import SaveQuiz from "../../../(generate-quiz)/generate-quiz/components/buttons/SaveQuiz";
 import NavigationControls from "../../../(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
-
-import DeleteQuestionModal from "@/app/[locale]/(quiz-details)/modals/DeleteQuestionModal";
-import EditQuestionModal from "@/app/[locale]/(quiz-details)/modals/EditQuestionModal";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
-import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
-import { GeneratedQuizT } from "@/types";
+import { GeneratedQuestionT } from "../../../types";
+import DeleteQuestionModal from "../../../(generate-quiz)/modals/DeleteQuestionModal";
+import EditQuestionModal from "../../../(generate-quiz)/modals/EditQuestionModal";
+import AddQuestionModal from "../../../(generate-quiz)/modals/AddQuestionModal";
 
 function Preview() {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const selectedType = params.get("selectedType");
+  console.log(selectedType);
+
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const t = useTranslations("QuizPreview");
   const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
 
-  const [questions, setQuestions] = useState<GeneratedQuizT[]>(
-    generatedQuizData?.createQuestionsDto
+  const [questions, setQuestions] = useState<GeneratedQuestionT[]>(
+    generatedQuizData?.generateQuestions
   );
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
   >(null);
-
-  const skeletonItems = Array.from({ length: 6 });
 
   const { mutate } = useMutation({
     mutationFn: createQuiz,
@@ -53,14 +55,24 @@ function Preview() {
     },
   });
 
-  console.log(questions);
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(generatedQuizData);
     mutate({
-      quizDto: {
-        ...generatedQuizData,
-        createQuestionsDto: questions,
-      },
+      title: generatedQuizData.title,
+      description: generatedQuizData.description,
+      questionType: selectedType,
+      createQuizQuestions: questions.map((question) => {
+        return {
+          title: question.title,
+          createQuizAnswers: question.generateAnswers.map((answer) => {
+            return {
+              content: answer.content,
+              isCorrect: answer.isCorrect,
+            };
+          }),
+        };
+      }),
     });
   };
 
@@ -98,25 +110,6 @@ function Preview() {
     }
   };
 
-  const handleSaveEdit = (updatedQuestion: any) => {
-    if (
-      currentQuestionIndex !== null &&
-      currentQuestionIndex < questions.length
-    ) {
-      const updatedQuizData = [...questions];
-      updatedQuizData[currentQuestionIndex] = {
-        ...updatedQuizData[currentQuestionIndex],
-        title: updatedQuestion.question,
-        createAnswersDto: updatedQuestion.options.map((option: string) => ({
-          content: option,
-          isCorrect: updatedQuestion.selected === option,
-        })),
-      };
-      setQuestions(updatedQuizData);
-      closeModal();
-    }
-  };
-
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
@@ -125,13 +118,9 @@ function Preview() {
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
       <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
         <div className="flex gap-3 sm:gap-2 md:gap-0 justify-between items-center">
-          {!questions ? (
-            <Skeleton className="h-8 w-1/4 rounded-lg" />
-          ) : (
-            <Chip color="primary" size="md" radius="sm">
-              Total {questions?.length} questions
-            </Chip>
-          )}
+          <Chip color="primary" size="md" radius="sm">
+            Total {questions?.length} questions
+          </Chip>
           <div className="flex items-center flex-col sm:flex-row gap-2">
             <label className="text-sm order-1" htmlFor="answers">
               {t("answers")}
@@ -157,56 +146,38 @@ function Preview() {
         >
           {t("addNewQuestionBtn")}
         </Button>
-        <div>
-          {questions
-            ? questions.map((question, index) => (
-                <QuizItem
-                  key={index}
-                  questionId={index + 1}
-                  number={index + 1}
-                  question={question.title}
-                  options={question.createAnswersDto}
-                  showCorrectAnswers={showCorrectAnswers}
-                  handleDelete={() => handleDeleteQuestion(index)}
-                  handleEdit={() => handleEditQuestion(index)}
-                />
-              ))
-            : skeletonItems.map((_, index) => (
-                <div key={index} className="flex flex-col gap-2 mb-4">
-                  <Skeleton className="h-6 w-3/4 rounded-lg" />
-                  <Skeleton className="h-4 w-5/6 rounded-lg" />
-                  <div className="flex gap-2">
-                    <Skeleton className="h-8 w-20 rounded-lg" />
-                    <Skeleton className="h-8 w-20 rounded-lg" />
-                  </div>
-                </div>
-              ))}
-        </div>
+        {questions?.map((question, index) => (
+          <QuizItem
+            key={index}
+            questionId={index + 1}
+            number={index + 1}
+            question={question.title}
+            generateAnswers={question.generateAnswers}
+            showCorrectAnswers={showCorrectAnswers}
+            handleDelete={() => handleDeleteQuestion(index)}
+            handleEdit={() => handleEditQuestion(index)}
+          />
+        ))}
       </aside>
       <NavigationControls>
         <SaveQuiz />
       </NavigationControls>
-      {type === "addQuestion" && <AddQuestionModal />}
+      {type === "addQuestion" && (
+        <AddQuestionModal setQuestions={setQuestions} />
+      )}
       {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
         <>
           <DeleteQuestionModal
             questionTitle={questions[currentQuestionIndex]?.title}
             onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}
-            questionDescription={questions[currentQuestionIndex].title}
           />
           <EditQuestionModal
             questionData={{
-              question: questions[currentQuestionIndex].title,
-              description: questions[currentQuestionIndex].title,
-              options: questions[currentQuestionIndex].createAnswersDto.map(
-                (ans) => ans.content
-              ),
-              selected:
-                questions[currentQuestionIndex].createAnswersDto.find(
-                  (ans) => ans.isCorrect
-                )?.content || "",
+              questionTitle: questions[currentQuestionIndex].title,
+              options: questions[currentQuestionIndex].generateAnswers,
             }}
-            onSave={handleSaveEdit}
+            setQuestions={setQuestions}
+            questions={questions}
           />
         </>
       )}

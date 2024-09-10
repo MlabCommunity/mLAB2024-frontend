@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import {
@@ -10,23 +10,23 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
-import { AnswerT, GeneratedQuestionsT } from "../types";
+import { AnswerT } from "@/app/[locale]/(quiz-details)/types";
+import { GeneratedQuestionT } from "../../types";
 
-type QuestionEditT = {
-  questionTitle: string;
-  questionId: string;
-  options: AnswerT[];
+type EditQuestionModalProps = {
+  questionData: {
+    questionTitle: string;
+    options: AnswerT[];
+  };
+  setQuestions: Dispatch<SetStateAction<GeneratedQuestionT[]>>;
+  questions: GeneratedQuestionT[];
 };
 
 const EditQuestionModal = ({
   questionData,
-}: {
-  questionData: QuestionEditT;
-}) => {
-  const queryClient = useQueryClient();
+  setQuestions,
+  questions,
+}: EditQuestionModalProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 
@@ -47,45 +47,27 @@ const EditQuestionModal = ({
     setIsFormChanged(hasTitleChanged || haveOptionsChanged);
   }, [question, options, questionData]);
 
-  const { mutate } = useMutation({
-    mutationFn: updateQuizQuestions,
-    onSuccess: () => {
-      toast.success(t("changedQuestionSuccessfully"));
-      closeModal();
-    },
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-    onSettled: (_data, _error, variables) => {
-      queryClient.setQueryData(
-        ["singleQuiz"],
-        (oldData: GeneratedQuestionsT) => {
-          if (!oldData) return oldData;
-
-          return {
-            ...oldData,
-            questions: oldData.questions.map((question) =>
-              question.id === variables.id
-                ? {
-                    ...question,
-                    title: variables.title,
-                    answers: variables.updateAnswers,
-                  }
-                : question
-            ),
-          };
-        }
-      );
-    },
-  });
-
   const handleSave = () => {
-    const updatedQuestion = {
+    const updatedQuestion2 = {
       title: question,
-      id: questionData.questionId,
-      updateAnswers: options,
+      generateAnswers: options,
     };
-    mutate(updatedQuestion);
+
+    setQuestions((prevQuestions: GeneratedQuestionT[]) => {
+      const updatedQuestion = prevQuestions.find(
+        (question) => question.title === updatedQuestion2.title
+      );
+
+      if (updatedQuestion) {
+        return prevQuestions.map((question) =>
+          question.title === updatedQuestion2.title
+            ? updatedQuestion2
+            : question
+        );
+      }
+
+      return [...prevQuestions, updatedQuestion2];
+    });
     closeModal();
   };
 

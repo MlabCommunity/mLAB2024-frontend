@@ -2,37 +2,26 @@
 import { cookies } from "next/headers";
 import { AxiosError } from "axios";
 import axiosInstance from "../../axiosInstance";
-import { GenerateQuizT } from "@/types";
 import { generateQuizUrl } from "@/constants/api";
 
-export const generateQuiz = async (data: GenerateQuizT) => {
+export const generateQuiz = async (data: any) => {
   const token = cookies().get("AccessToken")?.value;
-  const refreshToken = cookies().get("RefreshToken")?.value; // Get the RefreshToken
+  const { Content, NumberOfQuestions, QuestionTypes, Attachments } = data;
 
-  // Check if the RefreshToken is available
-  if (!refreshToken) {
-    throw new Error("RefreshToken is missing");
-  }
-  const payload = {
-    ...data,
-    RefreshToken: refreshToken,
-  };
+  console.log(Attachments);
+
   try {
-    const response = await axiosInstance.post(generateQuizUrl, payload, {
+    const response = await axiosInstance.post(generateQuizUrl, data, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response.data);
-    console.log(payload);
-
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log("Axios error:", error.response?.data); // Log server error response
-      throw error;
+      throw new Error(error.response?.data?.detail);
     } else {
-      console.log("Unexpected error:", error); // Log unexpected error
       throw new Error("An unexpected error occurred");
     }
   }

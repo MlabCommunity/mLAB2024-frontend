@@ -3,10 +3,9 @@ import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { currentProfileUrl, signInUrl } from "@/constants/api";
 import { revalidatePath } from "next/cache";
-import { UpdateProfileT } from "@/types";
 import axiosInstance from "../../axiosInstance";
 
-export const updateProfile = async (values: UpdateProfileT) => {
+export const updateProfile = async (values: { userName: string }) => {
   const token = cookies().get("AccessToken")?.value;
   try {
     const response = await axiosInstance.put(currentProfileUrl, values, {

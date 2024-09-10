@@ -1,14 +1,14 @@
 "use server";
 
-import { cookies } from "next/headers";
-import { createQuizUrl } from "@/constants/api";
+import { createQuestionUrl, updateQuizDataUrl } from "@/constants/api";
 import axiosInstance from "../../axiosInstance";
 import { AxiosError } from "axios";
+import { cookies } from "next/headers";
 
-export const createQuiz = async (data: any) => {
+export const createNewQuestion = async (data: any) => {
   const token = cookies().get("AccessToken")?.value;
   try {
-    const response = await axiosInstance.post(createQuizUrl, data, {
+    const response = await axiosInstance.post(createQuestionUrl, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

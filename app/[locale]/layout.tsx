@@ -7,7 +7,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@/utils";
 import { Suspense } from "react";
-import Loading from "./(dashboard)/loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,16 +23,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <Suspense fallback={<Loading />}>
-          <NextIntlClientProvider messages={messages}>
-            <Providers>
-              <main className="flex-1">
-                {children}
-                <Toaster position="top-center" />
-              </main>
-            </Providers>
-          </NextIntlClientProvider>
-        </Suspense>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            <main className="flex-1">
+              {children}
+              <Toaster position="top-center" />
+            </main>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

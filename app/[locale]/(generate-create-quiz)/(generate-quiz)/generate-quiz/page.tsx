@@ -1,7 +1,7 @@
 import React from "react";
 import PromptForm from "./components/forms/PromptForm";
 import { getTranslations } from "next-intl/server";
-import InsertFileModal from "@/app/[locale]/modals/InsertFileModal";
+import InsertFileModal from "@/app/[locale]/(quiz-details)/modals/InsertFileModal";
 
 const GenerateQuizPage = async () => {
   const t = await getTranslations("CreateQuiz");

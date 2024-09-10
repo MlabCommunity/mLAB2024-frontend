@@ -98,8 +98,11 @@
     "areYouSure": "Czy  jesteś pewien?",
     "delete": "Usuń",
     "cannotUndo": "Wprowadzone zmiany nie można będzie cofnąć",
-    "quizDetails":"Szczegóły quizu",
-    "titleRequired": "Tytuł quizu jest wymagany"
+    "quizDetails": "Szczegóły quizu",
+    "titleRequired": "Tytuł quizu jest wymagany",
+    "dataUpdated": "Dane zostały zaktualizowane",
+    "changedQuestionSuccessfully": "Pytanie zostało zmienione",
+    "deletedQuestionSuccess": "Usunięto pytanie"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",
@@ -213,6 +216,7 @@
     "manual": "Manualnie",
     "ai": "Generowanie AI",
     "addQuestion": "Dodaj pole pytania",
-    "remove": "Usuń"
+    "remove": "Usuń",
+    "addedQuestionSuccess": "Dodano pytanie do quizu"
   }
 }

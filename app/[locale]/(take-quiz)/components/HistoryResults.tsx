@@ -7,8 +7,8 @@ import cancelCircle from "@/public/assets/circle-cancel.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/routes";
-import { HistoryItemT } from "@/types";
 import { useTranslations } from "next-intl";
+import { HistoryItemT } from "../types";
 
 interface HistoryResultsProps {
   correctAnswers: number;

@@ -17,8 +17,7 @@ export const generateQuiz = async (data: any) => {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error?.response?.data);
-      throw new Error(error.response?.data?.detail);
+      throw new Error(error.response?.data?.details);
     } else {
       throw new Error("An unexpected error occurred");
     }

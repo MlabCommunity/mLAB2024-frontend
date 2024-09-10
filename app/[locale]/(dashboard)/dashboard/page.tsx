@@ -62,7 +62,7 @@ const DashboardPage = () => {
         )}
       </div>
       <div className="w-full">
-        {data?.items.length != 0 && (
+        {data?.items.length !== 0 && (
           <Pagination
             className="flex justify-center w-full py-10"
             total={totalPages}

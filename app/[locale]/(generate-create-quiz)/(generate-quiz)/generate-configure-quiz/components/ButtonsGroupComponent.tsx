@@ -47,21 +47,16 @@ function ButtonGroupComponent() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const numberOfQuestions = {
-      low: 5,
-      medium: 10,
-      high: 15,
-    }[selectedQuantity];
-    const payload: GenerateQuizT = {
-      Content: Content,
-      NumberOfQuestions: numberOfQuestions,
-      QuestionTypes: [selectedType],
-      Attachments: structuredClone(Attachments) || [],
-    };
+    const numberOfQuestions =
+      {
+        low: 5,
+        medium: 10,
+        high: 15,
+      }[selectedQuantity] ?? 0;
     const formData = new FormData();
     formData.append("Content", Content as string);
-    formData.append("NumberOfQuestions", numberOfQuestions.toString()); // Ensure it's a string
-    formData.append("QuestionTypes", JSON.stringify([selectedType])); // Stringify array
+    formData.append("NumberOfQuestions", numberOfQuestions.toString()); //
+    formData.append("QuestionTypes", selectedType); //
     Attachments?.forEach((attachement) => {
       formData.append("Attachments", attachement);
     });

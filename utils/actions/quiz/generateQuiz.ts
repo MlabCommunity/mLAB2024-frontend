@@ -6,7 +6,6 @@ import { generateQuizUrl } from "@/constants/api";
 
 export const generateQuiz = async (data: any) => {
   const token = cookies().get("AccessToken")?.value;
-  const { Content, NumberOfQuestions, QuestionTypes, Attachments } = data;
 
   try {
     const response = await axiosInstance.post(generateQuizUrl, data, {

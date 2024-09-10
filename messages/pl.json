@@ -127,7 +127,7 @@
     "saveQuizzButton": "Zapisz quiz",
     "cancelButton": "Anuluj",
     "nextButton": "Dalej",
-    "promptRequiredField": "To pole powinno zawierać co najmniej 10 znaków",
+    "requiredFields": "Jedno z dwóch pól musi być wypełnione. Proszę uzupełnić pole tekstowe lub dodać plik",
     "promptForm": "Wpisz swój tekst",
     "contentLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",

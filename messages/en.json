@@ -103,8 +103,8 @@
     "quizDetails": "Quiz details",
     "titleRequired": "Title is required.",
     "dataUpdated": "Data updated successfully",
-    "changedQuestionSuccessfully":"Changed question successfully",
-    "deletedQuestionSuccess":"Deleted question succesfully"
+    "changedQuestionSuccessfully": "Changed question successfully",
+    "deletedQuestionSuccess": "Deleted question succesfully"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -130,7 +130,7 @@
     "saveQuizzButton": "Save quiz",
     "cancelButton": "Cancel",
     "nextButton": "Next",
-    "promptRequiredField": "Prompt field should have at least 10 characters",
+    "requiredFields": "One of the required fields mustn't be empty",
     "promptForm": "Enter your prompt",
     "contentLabel": "Content",
     "cancelQuizWarning": "Are you sure?",

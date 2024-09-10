@@ -52,15 +52,25 @@ function ButtonGroupComponent() {
       medium: 10,
       high: 15,
     }[selectedQuantity];
-
     const payload: GenerateQuizT = {
       Content: Content,
       NumberOfQuestions: numberOfQuestions,
       QuestionTypes: [selectedType],
       Attachments: JSON.parse(JSON.stringify(Attachments)) || [],
     };
-
-    mutate(payload);
+    const formData = new FormData();
+    Object.entries(payload).forEach(([key, value]) => {
+      console.log(key, value);
+      if (key === "Attachments" && Array.isArray(value)) {
+        // If it's an array of files (or attachments), loop through it
+        value.forEach((attachment, index) => {
+          formData.append(`Attachments[${index}]`, attachment);
+        });
+      } else {
+        formData.append(key, JSON.stringify(value));
+      }
+    });
+    mutate(formData);
   };
 
   const questionTypes = [

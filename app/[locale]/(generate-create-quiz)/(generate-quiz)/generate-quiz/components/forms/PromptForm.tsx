@@ -20,8 +20,9 @@ const PromptForm = () => {
     prompt: z
       .string()
       .refine(
-        (val) => generateQuizData.Attachments!.length > 0 || val.length >= 10,
-        { message: t("promptRequiredField") }
+        (val) =>
+          generateQuizData.Attachments!.length > 0 || val.trim().length > 0,
+        { message: t("requiredFields") }
       ),
   });
 

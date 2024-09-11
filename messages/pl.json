@@ -49,9 +49,15 @@
     "updateButton": "Zaktualizuj",
     "deleteAccount": "Usuń konto",
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
-    "profileUpdated": "Twoje dane zostały zaktualizowane."
+    "profileUpdated": "Twoje dane zostały zaktualizowane.",
+    "statusUpdateSuccess": "Status został zaktualizowany.",
+    "statusUpdateError": "Bład podczas aktualizacji statusu"
   },
   "QuestionsOnAnswers": {
+    "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
+    "availabilityUpdateError": "Bład podczas aktualizacji dostępności",
+    "statusUpdateSuccess": "Status został zaktualizowany.",
+    "statusUpdateError": "Bład podczas aktualizacji statusu",
     "detailQuizzHeading": "Szczegóły Quizu",
     "shareQuizzButton": "Udostępnij ten quiz",
     "questions": "Pytania",

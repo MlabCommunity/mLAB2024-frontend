@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
-import { updateQuizStatus } from "@/utils/actions/api/updateQuizStatus";
+import { updateQuizStatus } from "@/utils/actions/quiz/updateQuizStatus";
 
 interface QuizCardProps {
   title: string;
@@ -52,23 +52,7 @@ const QuizCard = ({
   const handleDeleteQuiz = async (id: string) => {
     mutate(id);
   };
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deleteQuiz,
-    onSuccess: () => {
-      toast.success(t("deletedQuizSuccess"));
-      closeModal();
-    },
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["quizList"],
-      });
-    },
-  });
 
-  // Mutation for updating quiz status
   const { mutate: updateStatusMutate } = useMutation({
     mutationFn: ({
       id,
@@ -110,9 +94,9 @@ const QuizCard = ({
     setIsUpdating(true);
     try {
       updateStatusMutate({ id, newStatus });
-      setCurrentStatus(newStatus); // Update the local status state
+      setCurrentStatus(newStatus);
     } catch (error) {
-      console.error(error); // Log the error for debugging purposes
+      console.error(error);
       toast.error(t("statusUpdateError"));
     } finally {
       setIsUpdating(false);

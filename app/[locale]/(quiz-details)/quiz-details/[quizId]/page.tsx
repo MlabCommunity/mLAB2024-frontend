@@ -46,8 +46,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     }
   }, [singleQuizData]);
 
-  console.log(isFetching);
-
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
     const target = e.target.getAttribute("data-navbar-item");
     if (target && target !== activeTab) {
@@ -62,6 +60,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("general"), value: "General" },
   ];
 
+
   const renderTabContent = useCallback(
     (activeTab: string) => {
       if (isFetching) {
@@ -71,7 +70,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings />;
+          return <Settings quizId={singleQuizData?.id} />;
         case "Statistics":
           return <Statistics />;
         case "General":

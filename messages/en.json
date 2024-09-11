@@ -50,9 +50,15 @@
     "deletedQuizSuccess": "Deleted quiz succesfully",
     "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
-    "profileUpdated": "Profile updated succesfully!"
+    "profileUpdated": "Profile updated succesfully!",
+    "statusUpdateSuccess": "Status updated succesfully!",
+    "statusUpdateError": "Error while updating status"
   },
   "QuestionsOnAnswers": {
+    "availabilityUpdateSuccess": "Availability updated succesfully!",
+    "availabilityUpdateError": "Error while updating availability",
+    "statusUpdateSuccess": "Status updated succesfully!",
+    "statusUpdateError": "Error while updating status",
     "detailQuizzHeading": "Quiz Detail",
     "shareQuizzButton": "Share this quiz",
     "questions": "Questions",

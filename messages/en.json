@@ -50,7 +50,8 @@
     "deletedQuizSuccess": "Deleted quiz succesfully",
     "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
-    "profileUpdated": "Profile updated succesfully!"
+    "profileUpdated": "Profile updated succesfully!",
+    "statusUpdateSuccess": "Quiz status updated successfully"
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Quiz Detail",

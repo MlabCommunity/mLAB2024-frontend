@@ -49,7 +49,8 @@
     "updateButton": "Zaktualizuj",
     "deleteAccount": "Usuń konto",
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
-    "profileUpdated": "Twoje dane zostały zaktualizowane."
+    "profileUpdated": "Twoje dane zostały zaktualizowane.",
+    "statusUpdateSuccess": "Pomyślnie zaktualizowano status quizu"
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Szczegóły Quizu",

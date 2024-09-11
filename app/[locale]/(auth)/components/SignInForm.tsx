@@ -111,15 +111,16 @@ export default function LoginForm() {
       )}
 
       <Button
-        variant="solid"
+        variant={isPending ? "bordered" : "solid"}
         color="primary"
         size="lg"
         radius="sm"
         type="submit"
-        className="w-full mt-5 bg-primary text-primary-foreground cursor-pointer text-medium disabled:opacity-50"
         disabled={isPending}
+        isLoading={isPending}
+        className="mt-5 w-full"
       >
-        {t("login")}
+        {isPending ? t("pending") : t("login")}
       </Button>
       <div className="flex justify-between mt-6 gap-2">
         <Button

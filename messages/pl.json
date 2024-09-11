@@ -51,7 +51,7 @@
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
     "profileUpdated": "Twoje dane zostały zaktualizowane.",
     "statusUpdateSuccess": "Status został zaktualizowany.",
-    "statusUpdateError": "Bład podczas aktualizacji statusu"
+    "statusUpdateError": "Bład podczas aktualizacji statusu"  
   },
   "QuestionsOnAnswers": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",

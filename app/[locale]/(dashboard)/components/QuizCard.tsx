@@ -1,7 +1,3 @@
-"use client";
-
-import { cn } from "@/lib";
-import Image from "next/image";
 import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
@@ -11,6 +7,8 @@ import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { updateQuizStatus } from "@/utils/actions/quiz/updateQuizStatus";
+import { cn } from "@/lib";
+import Image from "next/image";
 
 interface QuizCardProps {
   title: string;
@@ -33,7 +31,9 @@ const QuizCard = ({
   const router = useRouter();
   const [currentStatus, setCurrentStatus] = useState(initialStatus);
   const [isUpdating, setIsUpdating] = useState(false);
-  const { mutate } = useMutation({
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
       toast.success(t("deletedQuizSuccess"));
@@ -46,11 +46,15 @@ const QuizCard = ({
       queryClient.invalidateQueries({
         queryKey: ["quizList"],
       });
+      setIsDeleting(false);
     },
   });
 
   const handleDeleteQuiz = async (id: string) => {
-    mutate(id);
+    if (!isDeleting) {
+      setIsDeleting(true);
+      deleteMutate(id);
+    }
   };
 
   const { mutate: updateStatusMutate } = useMutation({
@@ -88,6 +92,7 @@ const QuizCard = ({
       isPending: false,
     });
   };
+
   const handleStatusChange = async () => {
     if (!id) return;
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
@@ -97,7 +102,7 @@ const QuizCard = ({
       setCurrentStatus(newStatus);
     } catch (error) {
       console.error(error);
-      toast.error(t("statusUpdateError"));
+      setCurrentStatus(newStatus);
     } finally {
       setIsUpdating(false);
     }
@@ -125,6 +130,7 @@ const QuizCard = ({
             e.stopPropagation();
             handleOpenDeleteModal(id);
           }}
+          disabled={isDeleting}
         >
           <Image
             src="/assets/bin.svg"
@@ -144,7 +150,7 @@ const QuizCard = ({
           </div>
           <button
             onClick={(e) => {
-              e.stopPropagation(); // Prevent opening the quiz details when changing status
+              e.stopPropagation();
               handleStatusChange();
             }}
             disabled={isUpdating}

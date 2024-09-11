@@ -11,11 +11,17 @@ export const createQuizUrl = `${API_BASE_URL}/api/quiz/create-quiz`;
 export const deleteQuiz = `${API_BASE_URL}/api/quiz/`;
 export const quizListUrl = `${API_BASE_URL}/api/quiz`;
 export const updateQuizStatusUrl = `${API_BASE_URL}/api/quiz/`;
-
 export const deleteQuizUrl = `${API_BASE_URL}/api/quiz/`;
+
+
+
+
+
+
 export const singleQuizUrl = `${API_BASE_URL}/api/quiz/`;
 export const updateQuizQuestionsUrl = `${API_BASE_URL}/api/questionsandanswers/update-question`;
 export const updateAvailabilityUrl = `${API_BASE_URL}/api/quiz/`;
+export const updateStatusUrl = `${API_BASE_URL}/api/quiz/status`;
 export const updateQuizDataUrl = `${API_BASE_URL}/api/quiz/`;
 export const createQuestionUrl = `${API_BASE_URL}/api/questionsandanswers/create-question`;
 export const deleteQuestionUrl = `${API_BASE_URL}/api/questionsandanswers/`;

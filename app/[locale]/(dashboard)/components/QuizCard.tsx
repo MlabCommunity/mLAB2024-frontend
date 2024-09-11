@@ -1,7 +1,3 @@
-"use client";
-
-import { cn } from "@/lib";
-import Image from "next/image";
 import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
@@ -10,8 +6,10 @@ import toast from "react-hot-toast";
 import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
-import { updateQuizStatus } from "@/utils/actions/api/updateQuizStatus";
 import { Button } from "@nextui-org/react";
+import { updateQuizStatus } from "@/utils/actions/quiz/updateQuizStatus";
+import { cn } from "@/lib";
+import Image from "next/image";
 
 interface QuizCardProps {
   title: string;
@@ -34,26 +32,9 @@ const QuizCard = ({
   const [currentStatus, setCurrentStatus] = useState<"Active" | "Inactive">(
     initialStatus
   );
+  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
-  const { mutate } = useMutation({
-    mutationFn: deleteQuiz,
-    onSuccess: () => {
-      toast.success(t("deletedQuizSuccess"));
-      closeModal();
-    },
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["quizList"],
-      });
-    },
-  });
 
-  const handleDeleteQuiz = async (id: string) => {
-    mutate(id);
-  };
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
@@ -67,35 +48,40 @@ const QuizCard = ({
       queryClient.invalidateQueries({
         queryKey: ["quizList"],
       });
+      setIsDeleting(false);
     },
   });
 
   // Mutation for updating quiz status
-  const {
-    data,
-    mutate: updateStatusMutate,
-    isPending: isPendingStatus,
-  } = useMutation({
-    mutationFn: ({
-      id,
-      newStatus,
-    }: {
-      id: string;
-      newStatus: "Active" | "Inactive";
-    }) => updateQuizStatus(id, newStatus),
-    onSuccess: (data) => {
-      setCurrentStatus(data.newStatus);
-      toast.success(t("statusUpdateSuccess"));
-    },
-    onError: (error: any) => {
-      toast.error(error.message || t("statusUpdateError"));
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["updateQuizStatus"],
-      });
-    },
-  });
+  const { mutate: updateStatusMutate, isPending: isPendingStatus } =
+    useMutation({
+      mutationFn: ({
+        id,
+        newStatus,
+      }: {
+        id: string;
+        newStatus: "Active" | "Inactive";
+      }) => updateQuizStatus(id, newStatus),
+      onSuccess: (data) => {
+        setCurrentStatus(data.newStatus);
+        toast.success(t("statusUpdateSuccess"));
+      },
+      onError: (error: any) => {
+        toast.error(error.message || t("statusUpdateError"));
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["updateQuizStatus"],
+        });
+      },
+    });
+
+  const handleDeleteQuiz = async (id: string) => {
+    if (!isDeleting) {
+      setIsDeleting(true);
+      deleteMutate(id);
+    }
+  };
 
   const handleOpenDeleteModal = (id?: string) => {
     if (!id) return;
@@ -111,21 +97,18 @@ const QuizCard = ({
       isPending: false,
     });
   };
+
   const handleStatusChange = async () => {
     if (!id) return;
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
-    try {
-      updateStatusMutate({ id, newStatus });
-    } catch (error) {
-      console.error(error); // Log the error for debugging purposes
-      toast.error(t("statusUpdateError"));
-    }
+    updateStatusMutate({ id, newStatus });
   };
 
   const goQuizDetailsPage = () => {
     router.push(routes.quizDetails + id);
   };
 
+  // Make sure to return the JSX here
   return (
     <div
       className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg cursor-pointer"
@@ -144,6 +127,7 @@ const QuizCard = ({
             e.stopPropagation();
             handleOpenDeleteModal(id);
           }}
+          disabled={isDeleting}
         >
           <Image
             src="/assets/bin.svg"
@@ -163,7 +147,7 @@ const QuizCard = ({
           </div>
           <Button
             onClick={(e) => {
-              e.stopPropagation(); // Prevent opening the quiz details when changing status
+              e.stopPropagation();
               handleStatusChange();
             }}
             disabled={isPendingStatus}

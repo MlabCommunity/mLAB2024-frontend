@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { routes } from "@/routes";

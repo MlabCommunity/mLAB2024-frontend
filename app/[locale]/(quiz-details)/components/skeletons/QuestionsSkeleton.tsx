@@ -19,6 +19,20 @@ const QuestionsSkeleton = () => {
         <div className="flex flex-col gap-2">
           <Skeleton className="w-full h-10 rounded-lg" />
           <Skeleton className="w-full h-10 rounded-lg" />
+          <Skeleton className="w-full h-10 rounded-lg" />
+          <Skeleton className="w-full h-10 rounded-lg" />
+        </div>
+      </div>
+      <div className="mt-5">
+        <div className="flex justify-between w-full py-5">
+          <Skeleton className=" w-36 lg:w-72 h-10 rounded-lg" />
+          <Skeleton className="w-36 h-10 rounded-lg" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Skeleton className="w-full h-10 rounded-lg" />
+          <Skeleton className="w-full h-10 rounded-lg" />
+          <Skeleton className="w-full h-10 rounded-lg" />
+          <Skeleton className="w-full h-10 rounded-lg" />
         </div>
       </div>
     </div>

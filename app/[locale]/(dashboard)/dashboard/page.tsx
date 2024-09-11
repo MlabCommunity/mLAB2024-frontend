@@ -1,19 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import QuizCard from "../components/QuizCard";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import { useGetQuizList } from "@/utils/hooks/useGetQuizList";
 import { Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT } from "../types";
-import {
-  QueryClient,
-  usePrefetchQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
+import QuizCard from "../components/QuizCard";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");

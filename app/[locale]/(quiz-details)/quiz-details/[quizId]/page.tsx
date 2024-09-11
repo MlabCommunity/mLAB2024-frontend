@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
 import Link from "next/link";
@@ -18,6 +12,7 @@ import StatisticsSkeleton from "../../components/skeletons/StatisticsSkeleton";
 import GeneralSkeleton from "../../components/skeletons/GeneralSkeleton";
 import QuizDetailsInfoSkeleton from "../../components/skeletons/QuizDetailsInfoSkeleton";
 import { useQuizDetailStore } from "@/store/quizDetailsStore";
+import QuizDetailsInfo from "../../components/QuizDetailsInfo";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -36,14 +31,6 @@ const General = dynamic(() => import("../../NavbarContent/General"), {
   loading: () => <GeneralSkeleton />,
 });
 
-const QuizDetailsInfo = dynamic(
-  () => import("../../components/QuizDetailsInfo"),
-  {
-    ssr: false,
-    loading: () => <QuizDetailsInfoSkeleton />,
-  }
-);
-
 const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { setStatus, setQuestionsData, setAvailability } = useQuizDetailStore();
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
@@ -59,6 +46,8 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     }
   }, [singleQuizData]);
 
+  console.log(isFetching);
+
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
     const target = e.target.getAttribute("data-navbar-item");
     if (target && target !== activeTab) {
@@ -73,13 +62,17 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("general"), value: "General" },
   ];
 
+
   const renderTabContent = useCallback(
     (activeTab: string) => {
+      if (isFetching) {
+        return <QuestionsSkeleton />;
+      }
       switch (activeTab) {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings />;
+          return <Settings quizId={singleQuizData?.id} />;
         case "Statistics":
           return <Statistics />;
         case "General":
@@ -104,10 +97,14 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           </Button>
         </div>
         <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
-          <QuizDetailsInfo
-            title={singleQuizData?.title}
-            description={singleQuizData?.description}
-          />
+          {isFetching ? (
+            <QuizDetailsInfoSkeleton />
+          ) : (
+            <QuizDetailsInfo
+              title={singleQuizData?.title}
+              description={singleQuizData?.description}
+            />
+          )}
         </div>
         <nav
           onClick={handleNavbarChange}

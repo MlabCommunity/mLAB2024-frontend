@@ -6,19 +6,42 @@ import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGetQuizList } from "@/utils/hooks/useGetQuizList";
 import { Pagination, Skeleton } from "@nextui-org/react";
-import { DashboardQuizItemT, DashboardQuizT } from "../types";
+import { DashboardQuizItemT } from "../types";
+import {
+  QueryClient,
+  usePrefetchQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 4;
 
-  const { data, isPending, isFetching } = useGetQuizList(page);
+  // const { data, isPending, isFetching, isSuccess } =
+  //   useGetQuizList(currentPage);
 
   const skeletonItems = Array.from({ length: pageSize });
 
+  const { data, isPending, isFetching, isSuccess } = useQuery({
+    queryKey: ["quizList", currentPage],
+    queryFn: () => getQuizList(currentPage),
+    staleTime: 50000,
+  });
   const totalPages = data?.totalPages;
 
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (currentPage < pageSize) {
+      const nextPage = currentPage + 1;
+      queryClient.prefetchQuery({
+        queryKey: ["quizList", nextPage],
+        queryFn: () => getQuizList(nextPage),
+      });
+    }
+  }, [currentPage, queryClient]);
   return (
     <section className="py-8 w-full md:max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start mb-5 font-semibold">
@@ -62,12 +85,12 @@ const DashboardPage = () => {
         )}
       </div>
       <div className="w-full">
-        {data?.items.length !== 0 && (
+        {data?.items.length !== 0 && isSuccess && (
           <Pagination
             className="flex justify-center w-full py-10"
             total={totalPages}
-            initialPage={page}
-            onChange={(pageNumber) => setPage(pageNumber)}
+            initialPage={currentPage}
+            onChange={(pageNumber) => setCurrentPage(pageNumber)}
           />
         )}
         <div className="border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">

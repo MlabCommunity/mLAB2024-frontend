@@ -11,12 +11,13 @@ import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { updateQuizStatus } from "@/utils/actions/api/updateQuizStatus";
+import { Button } from "@nextui-org/react";
 
 interface QuizCardProps {
   title: string;
   id?: string;
   description: string;
-  status: string;
+  status: "Active" | "Inactive";
   questions: number;
 }
 
@@ -30,9 +31,10 @@ const QuizCard = ({
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
+  const [currentStatus, setCurrentStatus] = useState<"Active" | "Inactive">(
+    initialStatus
+  );
   const router = useRouter();
-  const [currentStatus, setCurrentStatus] = useState(initialStatus);
-  const [isUpdating, setIsUpdating] = useState(false);
   const { mutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
@@ -69,15 +71,20 @@ const QuizCard = ({
   });
 
   // Mutation for updating quiz status
-  const { mutate: updateStatusMutate } = useMutation({
+  const {
+    data,
+    mutate: updateStatusMutate,
+    isPending: isPendingStatus,
+  } = useMutation({
     mutationFn: ({
       id,
       newStatus,
     }: {
       id: string;
       newStatus: "Active" | "Inactive";
-    }) => updateQuizStatus(id!, newStatus),
-    onSuccess: () => {
+    }) => updateQuizStatus(id, newStatus),
+    onSuccess: (data) => {
+      setCurrentStatus(data.newStatus);
       toast.success(t("statusUpdateSuccess"));
     },
     onError: (error: any) => {
@@ -107,15 +114,11 @@ const QuizCard = ({
   const handleStatusChange = async () => {
     if (!id) return;
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
-    setIsUpdating(true);
     try {
       updateStatusMutate({ id, newStatus });
-      setCurrentStatus(newStatus); // Update the local status state
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
       toast.error(t("statusUpdateError"));
-    } finally {
-      setIsUpdating(false);
     }
   };
 
@@ -158,26 +161,30 @@ const QuizCard = ({
               {t("total")} {questions} {t("questions")}
             </p>
           </div>
-          <button
+          <Button
             onClick={(e) => {
               e.stopPropagation(); // Prevent opening the quiz details when changing status
               handleStatusChange();
             }}
-            disabled={isUpdating}
+            disabled={isPendingStatus}
             className={cn(
               "px-2 py-1 rounded-lg text-small h-full flex items-center justify-center",
               currentStatus === "Active" ? "bg-success" : "bg-danger",
-              isUpdating ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+              isPendingStatus
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer"
             )}
           >
             <p
               className={cn(
-                currentStatus === "Active" ? "text-black" : "text-white"
+                currentStatus === "Active"
+                  ? "text-foreground-600"
+                  : "text-white"
               )}
             >
-              {isUpdating ? t("updating") : currentStatus}
+              {isPendingStatus ? t("updatingQuizStatus") : currentStatus}
             </p>
-          </button>
+          </Button>
         </div>
       </div>
     </div>

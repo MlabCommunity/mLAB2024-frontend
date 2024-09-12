@@ -53,9 +53,9 @@
     "profileUpdated": "Profile updated succesfully!",
     "statusUpdateSuccess": "Quiz status updated successfully",
     "updatingQuizStatus": "Updating quiz status...",
-    "statusUpdateError": "Error while updating status",
-    "active": "Aktywny",
-    "inactive": "Nieaktywny"
+    "statusUpdateError": "Error occured while updating quiz status",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "QuestionsOnAnswers": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",

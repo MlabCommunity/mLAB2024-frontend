@@ -28,10 +28,19 @@ const QuizCard = ({
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
+<<<<<<< HEAD
   const [currentStatus, setCurrentStatus] = useState<string>(initialStatus);
   const translatedCurrentStatus = t(currentStatus.toLocaleLowerCase());
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+=======
+  const [currentStatus, setCurrentStatus] = useState<"Active" | "Inactive">(
+    initialStatus
+  );
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
+
+>>>>>>> 56d1cbee16532dd640707f90480f33a11416f8db
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
@@ -60,7 +69,11 @@ const QuizCard = ({
         newStatus: "Active" | "Inactive";
       }) => updateQuizStatus(id, newStatus),
       onSuccess: (data) => {
+<<<<<<< HEAD
         toast.success(data.newStatus);
+=======
+        setCurrentStatus(data.newStatus);
+>>>>>>> 56d1cbee16532dd640707f90480f33a11416f8db
         toast.success(t("statusUpdateSuccess"));
       },
       onError: (error: any) => {
@@ -98,7 +111,10 @@ const QuizCard = ({
   const handleStatusChange = async () => {
     if (!id) return;
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
+<<<<<<< HEAD
     setCurrentStatus(newStatus);
+=======
+>>>>>>> 56d1cbee16532dd640707f90480f33a11416f8db
     updateStatusMutate({ id, newStatus });
   };
 
@@ -164,9 +180,13 @@ const QuizCard = ({
                   : "text-white"
               )}
             >
+<<<<<<< HEAD
               {isPendingStatus
                 ? t("updatingQuizStatus")
                 : translatedCurrentStatus}
+=======
+              {isPendingStatus ? t("updatingQuizStatus") : currentStatus}
+>>>>>>> 56d1cbee16532dd640707f90480f33a11416f8db
             </p>
           </Button>
         </div>

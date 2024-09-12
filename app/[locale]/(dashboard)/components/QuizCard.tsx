@@ -32,7 +32,6 @@ const QuizCard = ({
   const translatedCurrentStatus = t(currentStatus.toLocaleLowerCase());
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
-
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {

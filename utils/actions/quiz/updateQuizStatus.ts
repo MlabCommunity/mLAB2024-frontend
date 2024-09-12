@@ -1,7 +1,7 @@
 "use server";
-import axios, { AxiosError } from "axios";
-import { API_BASE_URL, updateQuizStatusUrl } from "@/constants/api";
-import { cookies } from "next/headers"; // For handling cookies in Next.js
+import { AxiosError } from "axios";
+import { updateQuizStatusUrl } from "@/constants/api";
+import { cookies } from "next/headers";
 import axiosInstance from "@/utils/axiosInstance";
 
 export const updateQuizStatus = async (
@@ -16,7 +16,6 @@ export const updateQuizStatus = async (
     }
 
     const payload = newStatus;
-    console.log(payload);
 
     const result = await axiosInstance.patch(
       `${updateQuizStatusUrl}/${id}/status`,
@@ -28,8 +27,6 @@ export const updateQuizStatus = async (
         },
       }
     );
-
-    return result.data;
 
     return result.data;
   } catch (error) {

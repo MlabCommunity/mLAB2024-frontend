@@ -50,8 +50,8 @@ axiosInstance.interceptors.response.use(
       return axiosInstance(originalRequest);
     } catch (refreshError) {
       // console.error("Token refresh failed:", refreshError);
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
+      Cookies.set("AccessToken", "", { maxAge: 0 });
+      Cookies.set("RefreshToken", "", { maxAge: 0 });
       return Promise.reject(refreshError);
     }
   }

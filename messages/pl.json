@@ -55,6 +55,8 @@
     "statusUpdateError": "Bład podczas aktualizacji statusu",
     "active": "Aktywny",
     "inactive": "Nieaktywny"
+    "updatingQuizStatus": "Updating quiz status...",
+    "statusUpdateError": "Bład podczas aktualizacji statusu"
   },
   "QuestionsOnAnswers": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",

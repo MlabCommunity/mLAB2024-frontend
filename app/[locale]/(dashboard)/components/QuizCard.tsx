@@ -28,6 +28,7 @@ const QuizCard = ({
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
+
   const [currentStatus, setCurrentStatus] = useState<string>(initialStatus);
   const translatedCurrentStatus = t(currentStatus.toLocaleLowerCase());
   const [isDeleting, setIsDeleting] = useState(false);
@@ -60,7 +61,7 @@ const QuizCard = ({
         newStatus: "Active" | "Inactive";
       }) => updateQuizStatus(id, newStatus),
       onSuccess: (data) => {
-        toast.success(data.newStatus);
+        setCurrentStatus(data.newStatus);
         toast.success(t("statusUpdateSuccess"));
       },
       onError: (error: any) => {

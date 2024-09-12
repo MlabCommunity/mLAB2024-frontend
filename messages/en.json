@@ -53,7 +53,9 @@
     "profileUpdated": "Profile updated succesfully!",
     "statusUpdateSuccess": "Quiz status updated successfully",
     "updatingQuizStatus": "Updating quiz status...",
-    "statusUpdateError": "Error while updating status"
+    "statusUpdateError": "Error while updating status",
+    "active": "Aktywny",
+    "inactive": "Nieaktywny"
   },
   "QuestionsOnAnswers": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -145,7 +147,7 @@
     "cancelQuizConfirm": "Yes, I quit",
     "uploadFile": "Upload file",
     "uploadFileData": "Drag and drop file here or insert file",
-    "uploadFileSupportedFormats": "Supported formats: PDF, PPTX ",
+    "uploadFileSupportedFormats": "Supported formats: .docx, .pdf, .pptx, .xls ",
     "uploadFileMaximumSize": "Maximum size: 10 MB",
     "uploadFileDownload": "Download",
     "fileUploaded": "Uploaded file",

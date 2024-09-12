@@ -51,8 +51,10 @@
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
     "profileUpdated": "Twoje dane zostały zaktualizowane.",
     "statusUpdateSuccess": "Pomyślnie zaktualizowano status quizu",
-    "updatingQuizStatus": "Updating quiz status...",
-    "statusUpdateError": "Bład podczas aktualizacji statusu"
+    "updatingQuizStatus": "Aktualizowanie statusu quizu...",
+    "statusUpdateError": "Bład podczas aktualizacji statusu",
+    "active": "Aktywny",
+    "inactive": "Nieaktywny"
   },
   "QuestionsOnAnswers": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -142,7 +144,7 @@
     "cancelQuizConfirm": "Tak, opuszczam",
     "uploadFile": "Dodaj plik",
     "uploadFileData": "Przesuń i upuść tutaj plik albo dodaj plik ",
-    "uploadFileSupportedFormats": "Wspierane formaty:.docx, .pdf, .pptx, .xls ",
+    "uploadFileSupportedFormats": "Wspierane formaty: .docx, .pdf, .pptx, .xls ",
     "uploadFileMaximumSize": "Maksymalny rozmiar: 10 MB",
     "uploadFileDownload": "Pobierz",
     "fileUploaded": "Przesłano plik",

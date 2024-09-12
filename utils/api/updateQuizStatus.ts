@@ -21,13 +21,9 @@ export const updateQuizStatus = async (
     }
 
     const payload = newStatus;
-<<<<<<< HEAD:utils/actions/api/updateQuizStatus.ts
-    console.log(payload);
-=======
 
     console.log("Payload:", JSON.stringify(payload));
 
->>>>>>> e0830aed1a4dc35017ec103059754e1bddef3606:utils/api/updateQuizStatus.ts
     const result = await axios.patch(
       `${updateQuizStatusUrl}/${id}/status`,
       payload,
@@ -38,15 +34,11 @@ export const updateQuizStatus = async (
         },
       }
     );
-<<<<<<< HEAD:utils/actions/api/updateQuizStatus.ts
     console.log(result.data);
-=======
 
-    
     return result.data;
 
     // Return the response data
->>>>>>> e0830aed1a4dc35017ec103059754e1bddef3606:utils/api/updateQuizStatus.ts
     return result.data;
   } catch (error) {
     // Handle Axios errors

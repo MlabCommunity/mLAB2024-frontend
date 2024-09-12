@@ -44,19 +44,24 @@ export const refreshToken = async () => {
     if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.set("AccessToken", "", { maxAge: 0 });
-      Cookies.set("RefreshToken", "", { maxAge: 0 });
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
 
-      Cookies.set("AccessToken", accessToken);
-      Cookies.set("RefreshToken", newRefreshToken);
+      // Set cookies with expiration of 5 minutes
+      Cookies.set("AccessToken", accessToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
+      Cookies.set("RefreshToken", newRefreshToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
 
       onRefreshed(accessToken, newRefreshToken);
       return { accessToken, newRefreshToken };
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
-    Cookies.set("AccessToken", "", { maxAge: 0 });
-    Cookies.set("RefreshToken", "", { maxAge: 0 });
+    Cookies.remove("AccessToken");
+    Cookies.remove("RefreshToken");
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

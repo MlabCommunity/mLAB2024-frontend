@@ -44,8 +44,8 @@ export const refreshToken = async () => {
     if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
+      Cookies.set("AccessToken", "", { maxAge: 0 });
+      Cookies.set("RefreshToken", "", { maxAge: 0 });
 
       Cookies.set("AccessToken", accessToken, { expires: 1 });
       Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });

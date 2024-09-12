@@ -38,6 +38,8 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
+      Cookies.set("AccessToken", "", { maxAge: 0 });
+
       Cookies.set("AccessToken", accessToken, { expires: 1 });
       Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
 

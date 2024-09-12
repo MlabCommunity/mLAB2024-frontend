@@ -38,10 +38,11 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.set("AccessToken", "", { maxAge: 0 });
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
 
-      Cookies.set("AccessToken", accessToken, { expires: 1 });
-      Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
+      Cookies.set("AccessToken", accessToken);
+      Cookies.set("RefreshToken", newRefreshToken);
 
       axiosInstance.defaults.headers.common[
         "Authorization"
@@ -49,9 +50,9 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     } catch (refreshError) {
-      // console.error("Token refresh failed:", refreshError);
-      Cookies.set("AccessToken", "", { maxAge: 0 });
-      Cookies.set("RefreshToken", "", { maxAge: 0 });
+      console.error("Token refresh failed:", refreshError);
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
       return Promise.reject(refreshError);
     }
   }

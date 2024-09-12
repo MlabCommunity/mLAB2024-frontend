@@ -48,7 +48,7 @@ function InsertFileModal() {
           <div className="w-full h-full">
             <FilePicker id={"file"} name={"filePicker"} onClose={closeModal} />
           </div>
-          <aside className="flex justify-between">
+          <aside className="md:flex md:justify-between flex-col gap-2 text-start">
             <div className="">
               <p className="text-foreground-600">
                 {t("uploadFileSupportedFormats")}

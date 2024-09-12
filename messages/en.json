@@ -146,7 +146,7 @@
     "cancelQuizWarningText": "You are about to quit the quiz creation process. Any progress made so far will be lost. The action cannot be undone",
     "cancelQuizConfirm": "Yes, I quit",
     "uploadFile": "Upload file",
-    "uploadFileData": "Drag and drop file here or insert file",
+    "uploadFileData": "Drag and Drop file here or insert file",
     "uploadFileSupportedFormats": "Supported formats: .docx, .pdf, .pptx, .xls ",
     "uploadFileMaximumSize": "Maximum size: 10 MB",
     "uploadFileDownload": "Download",
@@ -157,7 +157,8 @@
     "uploadFileSuccess": "File uploaded successfully",
     "uploadDeleteFiles": "Delete files",
     "uploadDeleteFilesSuccess": "Deleted files successfully",
-    "uploadFileDragActive": "Drag files here..."
+    "uploadFileDragActive": "Drag files here...",
+    "pleaseSelectAFile": "Please select a file to upload"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Configure Quiz",

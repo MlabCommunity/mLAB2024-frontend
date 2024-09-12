@@ -2,11 +2,13 @@
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { z } from "zod";
-
+import document from "@/public/assets/wordIcon.svg";
+import FileItem from "./FileItem";
 interface FilePickerProps {
   id: string;
   name: string;
@@ -47,11 +49,14 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
 
   const attachments: File[] = generateQuizData.Attachments || [];
 
-  const handleDeleteAttachments = () => {
+  const handleDeleteAttachment = (fileName: string) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Clear the file input
     }
-    setGenerateQuizData({ ...generateQuizData, Attachments: [] });
+    setGenerateQuizData({
+      ...generateQuizData,
+      Attachments: attachments.filter((att) => att.name !== fileName),
+    });
   };
 
   useEffect(() => {
@@ -103,25 +108,34 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     <form onSubmit={handleSubmit}>
       <div
         {...getRootProps()}
-        className={`border-dashed border-4 p-4 rounded-lg ${
+        className={`border-dashed border-4 p-4 flex flex-col justify-center rounded-lg h-[50vh] ${
           isDragActive ? "bg-gray-100 border-blue-400" : "bg-white"
         } cursor-pointer`}
       >
         <input {...getInputProps()} ref={fileInputRef} />
         <label htmlFor={id}>
           {attachments.length > 0 ? (
-            <div>
-              <h4>{t("file")}</h4>
-              <ul>
-                {attachments.map((file, index) => (
-                  <li key={index}>{file.name}</li>
-                ))}
-              </ul>
+            <div className="text-center flex items-center justify-center gap-3">
+              <div className="flex flex-col items-center">
+                <ul className="flex flex-col gap-3">
+                  {attachments.map((file, index) => (
+                    <FileItem
+                      key={index}
+                      fileName={file.name}
+                      fileSize={file.size}
+                      onDelete={handleDeleteAttachment}
+                    ></FileItem>
+                  ))}
+                </ul>
+              </div>
             </div>
           ) : (
-            <p>
-              {isDragActive ? t("uploadFileDragActive") : t("uploadFileData")}
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <Image width={128} height={128} src={document} alt="document" />
+              <p className="text-center text-foreground-600 font-semibold text-2xl">
+                {isDragActive ? t("uploadFileDragActive") : t("uploadFileData")}
+              </p>
+            </div>
           )}
         </label>
       </div>
@@ -132,15 +146,6 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
         <Button type="submit" color="primary">
           {t("nextButton")}
         </Button>
-        {attachments.length > 0 && (
-          <Button
-            variant="flat"
-            color="danger"
-            onClick={handleDeleteAttachments}
-          >
-            {t("uploadDeleteFiles")}
-          </Button>
-        )}
       </div>
     </form>
   );

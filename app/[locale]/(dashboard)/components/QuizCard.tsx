@@ -7,9 +7,9 @@ import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { Button } from "@nextui-org/react";
-import { updateQuizStatus } from "@/utils/actions/quiz/updateQuizStatus";
 import { cn } from "@/lib";
 import Image from "next/image";
+import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
 
 interface QuizCardProps {
   title: string;

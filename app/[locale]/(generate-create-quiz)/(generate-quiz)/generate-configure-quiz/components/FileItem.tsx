@@ -6,7 +6,9 @@ import wordIcon from "@/public/assets/wordIcon.svg";
 import txtIcon from "@/public/assets/txtIcon.svg";
 import { Button, Divider } from "@nextui-org/react";
 import pptIcon from "@/public/assets/pptIcon.svg";
-
+import trashIcon from "@/public/assets/trash.svg";
+import downloadIcon from "@/public/assets/download.svg";
+import Link from "next/link";
 type FileItemProps = {
   fileName: string;
   fileSize: number;
@@ -17,7 +19,7 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
   const fileFormat = fileName.split(".");
   const fileType = fileFormat[fileFormat.length - 1];
   const file = fileFormat[0];
-  const fileSizeInMB = (fileSize / 1024).toFixed(2);
+  const fileSizeInMB = fileSize / 1024 / 1024;
   const renderCorrespondingIcon = () => {
     switch (fileType) {
       case "pdf":
@@ -34,25 +36,39 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between p-6 rounded-lg gap-4 text-foreground-700 shadow-sm shadow-default-200">
+    <div className=" flex items-center justify-between p-6 rounded-lg gap-4 text-foreground-700 shadow-md shadow-default-200">
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">{renderCorrespondingIcon()}</div>
-        <div className="flex flex-col">
-          <span className="md:text-lg text-sm">{file}</span>
-          <div className="flex gap-3 ">
-            <span className="text-sm">.{fileType}</span>
-            <span className="text-sm text-gray-400">{fileSizeInMB} KB</span>
+        <div className="flex flex-col ">
+          <span className="md:text-lg w-3/4 truncate border">{file}</span>
+
+          <div className="flex gap-3 text-sm text-foreground-400 ">
+            <span>.{fileType}</span>
+            <Divider orientation="vertical" />
+            <span>{`${
+              fileSizeInMB < 0.1 ? "<0.5 MB" : `${fileSizeInMB.toFixed(2)} MB`
+            }`}</span>
           </div>
         </div>
       </div>
-      <Button
-        size="sm"
-        onClick={() => onDelete(fileName)}
-        variant="flat"
-        color="danger"
-      >
-        Delete
-      </Button>
+      <div className="flex items-center gap-2">
+        {/* Rounded delete button with trash icon */}
+        <Button
+          isIconOnly
+          size="md"
+          variant="flat"
+          onClick={() => onDelete(fileName)}
+        >
+          <Image width={24} height={24} src={trashIcon} alt="trash" />
+        </Button>
+
+        {/* Rounded download button */}
+        <Link href={"#"} target="_blank" download={fileName}>
+          <Button isIconOnly size="md" variant="flat">
+            <Image width={24} height={24} src={downloadIcon} alt="download" />
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

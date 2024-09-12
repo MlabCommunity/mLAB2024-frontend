@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import document from "@/public/assets/wordIcon.svg";
+import document from "@/public/assets/docxIcon.svg";
 import FileItem from "./FileItem";
 interface FilePickerProps {
   id: string;
@@ -115,24 +115,22 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
         <input {...getInputProps()} ref={fileInputRef} />
         <label htmlFor={id}>
           {attachments.length > 0 ? (
-            <div className="text-center flex items-center justify-center gap-3">
-              <div className="flex flex-col items-center">
-                <ul className="flex flex-col gap-3">
-                  {attachments.map((file, index) => (
-                    <FileItem
-                      key={index}
-                      fileName={file.name}
-                      fileSize={file.size}
-                      onDelete={handleDeleteAttachment}
-                    ></FileItem>
-                  ))}
-                </ul>
-              </div>
+            <div className=" p-4 gap-3">
+              <ul className="flex flex-col gap-3">
+                {attachments.map((file, index) => (
+                  <FileItem
+                    key={index}
+                    fileName={file.name}
+                    fileSize={file.size}
+                    onDelete={handleDeleteAttachment}
+                  />
+                ))}
+              </ul>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4">
               <Image width={128} height={128} src={document} alt="document" />
-              <p className="text-center text-foreground-600 font-semibold text-2xl">
+              <p className="text-center text-foreground-600 font-semibold md:text-2xl text-lg">
                 {isDragActive ? t("uploadFileDragActive") : t("uploadFileData")}
               </p>
             </div>

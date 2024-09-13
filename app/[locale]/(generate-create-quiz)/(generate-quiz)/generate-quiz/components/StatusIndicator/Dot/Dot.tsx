@@ -4,7 +4,6 @@ import { cn } from "@/lib";
 const Dot = ({
   step,
   visited,
-  currentRouteProp,
 }: {
   step: number;
   currentRouteProp: string;

@@ -9,6 +9,7 @@ import pptIcon from "@/public/assets/pptIcon.svg";
 import trashIcon from "@/public/assets/trash.svg";
 import downloadIcon from "@/public/assets/download.svg";
 import Link from "next/link";
+import Close from "@/public/assets/closeIcon.svg";
 type FileItemProps = {
   fileName: string;
   fileSize: number;
@@ -26,21 +27,23 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
         return <Image width={32} height={32} src={pdfIcon} alt="PDF icon" />;
       case "txt":
         return <Image width={32} height={32} src={txtIcon} alt="TXT icon" />;
-      case "xls":
-        return <Image width={32} height={32} src={xlsIcon} alt="XLS icon" />;
-      case "ppt":
-        <Image width={32} height={32} src={pptIcon} alt="PPT icon" />;
+      case "xlsx":
+        return <Image width={32} height={32} src={xlsIcon} alt="XLSX icon" />;
+      case "pptx":
+        return <Image width={32} height={32} src={pptIcon} alt="PPTX icon" />;
       default:
         return <Image width={32} height={32} src={wordIcon} alt="Word icon" />;
     }
   };
 
   return (
-    <div className=" flex items-center justify-between p-6 rounded-lg gap-4 text-foreground-700 shadow-md shadow-default-200">
+    <div className=" flex items-center justify-between p-6 rounded-lg gap-4 text-foreground-700 shadow-md shadow-default-200 relative ">
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">{renderCorrespondingIcon()}</div>
         <div className="flex flex-col ">
-          <span className="md:text-lg w-3/4 truncate border">{file}</span>
+          <span className="md:text-lg md:w-3/4 w-1/2 text-sm break-words border">
+            {file}
+          </span>
 
           <div className="flex gap-3 text-sm text-foreground-400 ">
             <span>.{fileType}</span>
@@ -55,7 +58,7 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
         {/* Rounded delete button with trash icon */}
         <Button
           isIconOnly
-          size="md"
+          size="sm"
           variant="flat"
           onClick={() => onDelete(fileName)}
         >
@@ -64,7 +67,7 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
 
         {/* Rounded download button */}
         <Link href={"#"} target="_blank" download={fileName}>
-          <Button isIconOnly size="md" variant="flat">
+          <Button isIconOnly size="sm" variant="flat">
             <Image width={24} height={24} src={downloadIcon} alt="download" />
           </Button>
         </Link>

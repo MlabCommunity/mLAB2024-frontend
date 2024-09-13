@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import editIcon from "/public/assets/edit.svg";
 import binIcon from "/public/assets/bin.svg";
@@ -16,11 +16,19 @@ import toast from "react-hot-toast";
 import { GeneratedQuestionsT, QuestionsT } from "../types";
 import { useQuizDetailStore } from "@/store/quizDetailsStore";
 import QuestionsSkeleton from "../components/skeletons/QuestionsSkeleton";
+import { motion, useInView, useScroll } from "framer-motion";
+import Question from "./Question";
 
 const Questions = () => {
   const { questions, setQuestionsData } = useQuizDetailStore();
   const queryClient = useQueryClient();
   const [enabled, setEnabled] = useState(false);
+  const container = useRef(null);
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+  });
+  const isInView = useInView(ref);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
   >(null);
@@ -98,7 +106,7 @@ const Questions = () => {
   return (
     <>
       <section data-navbar-item="questions">
-        <div className=" bg-content2 py-4 px-4 rounded-lg">
+        <div className="bg-content2 py-4 px-4 rounded-lg">
           <div className="flex justify-between items-center mb-6 mt-2 px-2">
             <div className="flex justify-end items-center">
               <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
@@ -113,58 +121,17 @@ const Questions = () => {
           <div className="flex justify-end items-center mb-4">
             <Button
               color="primary"
-              className=" py-2 px-2 rounded-lg ml-auto disabled:bg-primary/50"
+              className="py-2 px-2 rounded-lg ml-auto disabled:bg-primary/50"
               onClick={handleOpenAddQuestion}
             >
               {t("addNewButton")}
             </Button>
           </div>
-          <ul>
-            {questions?.map((data, index) => (
-              <li
-                key={index}
-                className="bg-default-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
-              >
-                <div className="w-full">
-                  <h4 className="font-bold mb-2 text-foreground-700">
-                    {index + 1}. {data?.title}
-                  </h4>
-                  <p className="text-foreground-500 mb-4">
-                    {data?.description}
-                  </p>
-                  <div className="space-y-2 mt-2">
-                    {data?.answers?.map((answer: any, i: number) => (
-                      <div
-                        key={i}
-                        className={cn(
-                          "flex items-center p-2 rounded-lg cursor-pointer",
-                          enabled && answer.isCorrect
-                            ? "bg-success-100"
-                            : "bg-white"
-                        )}
-                      >
-                        <span className="font-medium text-foreground-700">
-                          {String.fromCharCode(65 + i)}
-                        </span>
-                        <div className="border-l border-b-gray-700 h-6 mx-2" />
-                        <span className="text-foreground-700">
-                          {answer.content}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <button onClick={() => handleEditQuestion(index)}>
-                    <Image src={editIcon} alt="edit icon" />
-                  </button>
-                  <button onClick={() => handleDeleteQuestion(index)}>
-                    <Image src={binIcon} alt="bin icon" />
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <Question
+            questions={questions}
+            handleDeleteQuestion={handleDeleteQuestion}
+            handleEditQuestion={handleEditQuestion}
+          />
         </div>
 
         {currentQuestionIndex !== null && (

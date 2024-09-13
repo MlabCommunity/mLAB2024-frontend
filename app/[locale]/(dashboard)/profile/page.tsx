@@ -9,7 +9,7 @@ import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "@/utils/actions/user/updateProfile";
 import toast from "react-hot-toast";
-
+import { motion } from "framer-motion";
 const ProfilePage = () => {
   const queryClient = useQueryClient();
   const { data: currentProfile } = useGetCurrentProfile();
@@ -61,7 +61,12 @@ const ProfilePage = () => {
   };
 
   return (
-    <section className="py-8 w-full md:max-w-7xl">
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="py-8 w-full md:max-w-7xl"
+    >
       <h2 className="text-4xl font-bold mb-4 text-foreground-700">
         {t("profile")}
       </h2>
@@ -108,7 +113,7 @@ const ProfilePage = () => {
           </Button>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

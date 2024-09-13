@@ -22,7 +22,7 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const isValidExtension = (file: File) => {
-    const fileTypes = ["docx", "pdf", "txt", "xls"];
+    const fileTypes = ["docx", "pdf", "txt", "xlsx", "pptx"];
     if (file?.name) {
       const fileType = file?.name.split(".").pop()?.toLowerCase();
       return fileType && fileTypes.includes(fileType);

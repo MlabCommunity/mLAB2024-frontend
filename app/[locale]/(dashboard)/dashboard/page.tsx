@@ -27,7 +27,12 @@ const DashboardPage = () => {
   const totalPages = data?.totalPages;
 
   const queryClient = useQueryClient();
-
+  useEffect(() => {
+    const nextPage = currentPage + 1;
+    queryClient.invalidateQueries({
+      queryKey: ["quizList", nextPage],
+    });
+  }, [currentPage, queryClient]);
   return (
     <section className="py-8 w-full md:max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start mb-5 font-semibold">

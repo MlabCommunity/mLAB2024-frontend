@@ -3,10 +3,10 @@
 import React from "react";
 import BackToDashboard from "../../(generate-quiz)/generate-quiz/components/buttons/BackToDashboard";
 import { useTranslations } from "next-intl";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 
-const page = () => {
+const CreateQuizSuccessPage = () => {
   const t = useTranslations("CreateQuizSuccess");
   return (
     <>
@@ -37,4 +37,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CreateQuizSuccessPage;

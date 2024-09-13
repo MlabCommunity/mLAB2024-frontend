@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { motion, useScroll } from "framer-motion";
 import Confetti from "react-confetti";
 
-const page = async () => {
+const page = () => {
   const t = useTranslations("CreateQuizSuccess");
   return (
     <>

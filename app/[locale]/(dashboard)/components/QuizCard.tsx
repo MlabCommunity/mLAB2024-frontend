@@ -109,7 +109,7 @@ const QuizCard = ({
   // Make sure to return the JSX here
   return (
     <div
-      className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg cursor-pointer"
+      className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-full sm:w-auto rounded-lg cursor-pointer"
       onClick={goQuizDetailsPage}
     >
       <div className="flex flex-row justify-between items-start">

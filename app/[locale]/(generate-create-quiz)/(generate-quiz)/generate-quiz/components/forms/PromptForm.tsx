@@ -11,6 +11,7 @@ import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import InsertFileButton from "../buttons/InsertFileButton";
+import { motion } from "framer-motion";
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
@@ -55,7 +56,15 @@ const PromptForm = () => {
         className="p-6 gap-2 bg-content2 rounded-lg"
       />
       {errors.prompt && (
-        <div className="text-red-500 text-sm mt-2">{errors.prompt.message}</div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="text-red-500 text-sm mt-2">
+            {errors.prompt.message}
+          </div>
+        </motion.div>
       )}
       <NavigationControls>
         <NextButton />

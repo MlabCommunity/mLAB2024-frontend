@@ -83,7 +83,7 @@ function ButtonGroupComponent() {
       onSubmit={handleSubmit}
       className="md:w-full rounded-lg flex flex-col"
     >
-      <div className="flex flex-col bg-content2 gap-4 p-6">
+      <div className="flex flex-col bg-content2 gap-4 p-6 rounded-t-lg">
         <span>{t("questionsType")}</span>
         <div className="w-full flex">
           <ButtonGroup
@@ -114,7 +114,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <div>
-        <div className="gap-4 p-6 flex flex-col bg-content2">
+        <div className="gap-4 p-6 flex flex-col bg-content2 rounded-b-lg">
           <span>{t("howManyQuestions")}</span>
           <ButtonGroup
             className="flex-col w-full gap-2 items-start flex md:flex-row justify-start"

@@ -25,7 +25,7 @@ const Dot = ({
     animate: {
       width: "80px",
       backgroundColor: visited ? "black" : "#e5e7eb",
-      transition: { duration: 1 },
+      transition: { duration: 0.5 },
     },
   };
 

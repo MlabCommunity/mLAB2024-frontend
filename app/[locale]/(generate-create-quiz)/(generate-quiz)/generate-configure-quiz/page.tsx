@@ -1,6 +1,7 @@
 import React from "react";
 import ButtonGroupComponent from "./components/ButtonsGroupComponent";
 import { getTranslations } from "next-intl/server";
+
 const GenerateConfigureQuiz = async () => {
   const t = await getTranslations("ConfigureQuiz");
   return (

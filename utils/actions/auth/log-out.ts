@@ -6,6 +6,7 @@ import { logOutUrl } from "@/constants/api";
 import axiosInstance from "../../axiosInstance";
 
 export const logOutUser = async () => {
+  const refreshToken = cookies().get("RefreshToken")?.value;
   try {
     axiosInstance.post(
       logOutUrl,
@@ -14,8 +15,16 @@ export const logOutUser = async () => {
         withCredentials: true,
       }
     );
-    cookies().delete("AccessToken");
-    cookies().delete("RefreshToken");
+    if (refreshToken) {
+      cookies().set("RefreshToken", "", { maxAge: 0 });
+      cookies().set("AccessToken", "", { maxAge: 0 });
+    } else {
+      cookies().set("AccessToken", "", { maxAge: 0 });
+    }
+
+    // commented to check if it works on development
+    // cookies().delete("AccessToken");
+    // cookies().delete("RefreshToken");
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);

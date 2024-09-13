@@ -8,6 +8,7 @@ import { DashboardQuizItemT } from "../types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
+import { motion, useScroll } from "framer-motion";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
@@ -55,14 +56,21 @@ const DashboardPage = () => {
         {(isPending || isFetching ? skeletonItems : data?.items).map(
           (quiz: DashboardQuizItemT, index: number) =>
             quiz ? (
-              <QuizCard
-                key={quiz.id}
-                id={quiz.id}
-                title={quiz.title}
-                description={quiz.description}
-                status={quiz.status}
-                questions={quiz.totalQuestions}
-              />
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <QuizCard
+                  key={quiz.id}
+                  id={quiz.id}
+                  title={quiz.title}
+                  description={quiz.description}
+                  status={quiz.status}
+                  questions={quiz.totalQuestions}
+                />
+              </motion.div>
             ) : (
               <div
                 key={index}

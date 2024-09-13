@@ -13,6 +13,7 @@ import GeneralSkeleton from "../../components/skeletons/GeneralSkeleton";
 import QuizDetailsInfoSkeleton from "../../components/skeletons/QuizDetailsInfoSkeleton";
 import { useQuizDetailStore } from "@/store/quizDetailsStore";
 import QuizDetailsInfo from "../../components/QuizDetailsInfo";
+import { motion, useScroll } from "framer-motion";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -32,6 +33,7 @@ const General = dynamic(() => import("../../NavbarContent/General"), {
 });
 
 const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
+  const { scrollYProgress } = useScroll();
   const { setStatus, setQuestionsData, setAvailability } = useQuizDetailStore();
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
@@ -62,7 +64,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("general"), value: "General" },
   ];
 
-
   const renderTabContent = useCallback(
     (activeTab: string) => {
       if (isFetching) {
@@ -88,48 +89,51 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   );
 
   return (
-    <div className="bg-white w-full md:max-w-7xl">
-      <div className="bg-white p-4 md:p-6 rounded-lg">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">{t("detailQuizzHeading")}</h2>
-          <Button color="primary" isDisabled={isFetching}>
-            {t("shareQuizzButton")}
-          </Button>
+    <>
+      <motion.div style={{ scaleX: scrollYProgress }} className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left" />
+      <div className="bg-white w-full md:max-w-7xl">
+        <div className="bg-white p-4 md:p-6 rounded-lg">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold">{t("detailQuizzHeading")}</h2>
+            <Button color="primary" isDisabled={isFetching}>
+              {t("shareQuizzButton")}
+            </Button>
+          </div>
+          <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
+            {isFetching ? (
+              <QuizDetailsInfoSkeleton />
+            ) : (
+              <QuizDetailsInfo
+                title={singleQuizData?.title}
+                description={singleQuizData?.description}
+              />
+            )}
+          </div>
+          <nav
+            onClick={handleNavbarChange}
+            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
+          >
+            {tabs.map((tab) => (
+              <Link
+                key={tab.value}
+                href="#"
+                className={cn(
+                  "px-2 py-2 rounded-lg whitespace-nowrap",
+                  activeTab === tab.value
+                    ? "bg-white text-default-foreground"
+                    : "text-default-500",
+                  isFetching && "pointer-events-none"
+                )}
+                data-navbar-item={tab.value}
+              >
+                {tab.label}
+              </Link>
+            ))}
+          </nav>
+          {renderTabContent(activeTab)}
         </div>
-        <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
-          {isFetching ? (
-            <QuizDetailsInfoSkeleton />
-          ) : (
-            <QuizDetailsInfo
-              title={singleQuizData?.title}
-              description={singleQuizData?.description}
-            />
-          )}
-        </div>
-        <nav
-          onClick={handleNavbarChange}
-          className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
-        >
-          {tabs.map((tab) => (
-            <Link
-              key={tab.value}
-              href="#"
-              className={cn(
-                "px-2 py-2 rounded-lg whitespace-nowrap",
-                activeTab === tab.value
-                  ? "bg-white text-default-foreground"
-                  : "text-default-500",
-                isFetching && "pointer-events-none"
-              )}
-              data-navbar-item={tab.value}
-            >
-              {tab.label}
-            </Link>
-          ))}
-        </nav>
-        {renderTabContent(activeTab)}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -38,8 +38,12 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.set("AccessToken", accessToken, { expires: 1 });
-      Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
+      Cookies.set("AccessToken", accessToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
+      Cookies.set("RefreshToken", newRefreshToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
 
       axiosInstance.defaults.headers.common[
         "Authorization"
@@ -47,7 +51,6 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     } catch (refreshError) {
-      // console.error("Token refresh failed:", refreshError);
       Cookies.remove("AccessToken");
       Cookies.remove("RefreshToken");
       return Promise.reject(refreshError);

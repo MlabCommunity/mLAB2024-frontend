@@ -47,8 +47,13 @@ export const refreshToken = async () => {
       Cookies.remove("AccessToken");
       Cookies.remove("RefreshToken");
 
-      Cookies.set("AccessToken", accessToken, { expires: 1 });
-      Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
+      // Set cookies with expiration of 5 minutes
+      Cookies.set("AccessToken", accessToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
+      Cookies.set("RefreshToken", newRefreshToken, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
 
       onRefreshed(accessToken, newRefreshToken);
       return { accessToken, newRefreshToken };

@@ -9,7 +9,6 @@ import Quiz from "../../components/Quiz";
 import { quizData } from "@/constants";
 import { AnswerMapItemT, HistoryItemT } from "../../types";
 
-
 const TakeQuiz = () => {
   const [isTakeQuizBoxVisible, setIsTakeQuizBoxVisible] = useState(true);
   const [activeQuestion, setActiveQuestion] = useState(0);

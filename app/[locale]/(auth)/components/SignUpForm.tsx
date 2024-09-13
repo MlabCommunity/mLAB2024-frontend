@@ -9,9 +9,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import toast from "react-hot-toast";
-import { signUp } from "@/app/actions/sign-up";
+
 import { useMutation } from "@tanstack/react-query";
 import AuthSchemas from "../schemas/authSchemas";
+import { signUp } from "@/utils/actions/auth/sign-up";
 
 function SignUpForm() {
   const { signUpSchema } = AuthSchemas();

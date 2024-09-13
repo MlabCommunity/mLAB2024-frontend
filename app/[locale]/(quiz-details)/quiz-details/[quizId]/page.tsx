@@ -90,7 +90,10 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
 
   return (
     <>
-      <motion.div style={{ scaleX: scrollYProgress }} className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left" />
+      <motion.div
+        style={{ scaleX: scrollYProgress }}
+        className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left"
+      />
       <div className="bg-white w-full md:max-w-7xl">
         <div className="bg-white p-4 md:p-6 rounded-lg">
           <div className="flex justify-between items-center mb-6">

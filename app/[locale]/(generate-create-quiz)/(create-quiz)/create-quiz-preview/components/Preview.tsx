@@ -17,12 +17,12 @@ import { GeneratedQuestionT } from "../../../types";
 import AddQuestionGenerateModal from "../../../(generate-quiz)/modals/AddQuestionGenerateModal";
 import DeleteQuestionGenerateModal from "../../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
 import EditQuestionGenerateModal from "../../../(generate-quiz)/modals/EditQuestionGenerateModal";
+import { AnimatePresence } from "framer-motion";
 
 function Preview() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const selectedType = params.get("selectedType");
-  console.log(selectedType);
 
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const t = useTranslations("QuizPreview");
@@ -143,18 +143,20 @@ function Preview() {
         >
           {t("addNewQuestionBtn")}
         </Button>
-        {questions?.map((question, index) => (
-          <QuizItem
-            key={index}
-            questionId={index + 1}
-            number={index + 1}
-            question={question.title}
-            generateAnswers={question.generateAnswers}
-            showCorrectAnswers={showCorrectAnswers}
-            handleDelete={() => handleDeleteQuestion(index)}
-            handleEdit={() => handleEditQuestion(index)}
-          />
-        ))}
+        <AnimatePresence>
+          {questions?.map((question, index) => (
+            <QuizItem
+              key={question.title}
+              questionId={index + 1}
+              number={index + 1}
+              question={question.title}
+              generateAnswers={question.generateAnswers}
+              showCorrectAnswers={showCorrectAnswers}
+              handleDelete={() => handleDeleteQuestion(index)}
+              handleEdit={() => handleEditQuestion(index)}
+            />
+          ))}
+        </AnimatePresence>
       </aside>
       <NavigationControls>
         <SaveQuiz />

@@ -6,6 +6,7 @@ import edit from "/public/assets/edit-2.svg";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/react";
 import { cn } from "@/lib";
+import { motion } from "framer-motion";
 
 type QuizItemProps = {
   questionId: number;
@@ -15,6 +16,12 @@ type QuizItemProps = {
   showCorrectAnswers?: boolean;
   handleDelete: () => void;
   handleEdit: () => void;
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  exit: { opacity: 0, scale: 0, transition: { duration: 0.5 } },
 };
 
 const QuizItem = ({
@@ -28,9 +35,15 @@ const QuizItem = ({
 }: QuizItemProps) => {
   const labels = ["A", "B", "C", "D"];
   return (
-    <div
+    <motion.li
       data-question-id={questionId}
       className="relative flex flex-col gap-4 my-1"
+      initial="hidden"
+      key={questionId}
+      layout
+      animate="visible"
+      exit="exit"
+      variants={itemVariants}
     >
       <div className="flex flex-col gap-4 pt-4 border-[1.5px] border-dashed rounded-lg pb-4 pl-6 pr-6">
         <div className="flex justify-between items-start">
@@ -82,7 +95,7 @@ const QuizItem = ({
           ))}
         </div>
       </div>
-    </div>
+    </motion.li>
   );
 };
 

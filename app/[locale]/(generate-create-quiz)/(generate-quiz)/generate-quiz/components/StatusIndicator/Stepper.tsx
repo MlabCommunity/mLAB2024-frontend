@@ -20,7 +20,6 @@ const Stepper = () => {
         {stepperRoutes.map((routeObj, index) => (
           <Dot
             key={index}
-            currentRouteProp={routeObj.route}
             step={index}
             visited={visitedRoutes.includes(routeObj.route)}
           />

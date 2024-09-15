@@ -25,7 +25,6 @@ type EditQuestionGenerateModalProps = {
 const EditQuestionGenerateModal = ({
   questionData,
   setQuestions,
-  questions,
 }: EditQuestionGenerateModalProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
@@ -33,6 +32,8 @@ const EditQuestionGenerateModal = ({
   const [question, setQuestion] = useState(questionData.questionTitle);
   const [options, setOptions] = useState(questionData.options);
   const [isFormChanged, setIsFormChanged] = useState(false);
+
+  console.log(question);
 
   useEffect(() => {
     setQuestion(questionData.questionTitle);
@@ -48,25 +49,25 @@ const EditQuestionGenerateModal = ({
   }, [question, options, questionData]);
 
   const handleSave = () => {
-    const updatedQuestion2 = {
+    const savedQuestionData = {
       title: question,
       generateAnswers: options,
     };
 
     setQuestions((prevQuestions: GeneratedQuestionT[]) => {
       const updatedQuestion = prevQuestions.find(
-        (question) => question.title === updatedQuestion2.title
+        (question) => question.title === savedQuestionData.title
       );
 
       if (updatedQuestion) {
         return prevQuestions.map((question) =>
-          question.title === updatedQuestion2.title
-            ? updatedQuestion2
+          question.title === savedQuestionData.title
+            ? savedQuestionData
             : question
         );
       }
 
-      return [...prevQuestions, updatedQuestion2];
+      return [...prevQuestions, savedQuestionData];
     });
     closeModal();
   };

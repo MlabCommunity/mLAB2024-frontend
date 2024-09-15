@@ -38,17 +38,19 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("QuestionsOnAnswers");
+  const randomNumber = Math.floor(Math.random() * 1000);
 
   useEffect(() => {
     if (singleQuizData) {
       setQuestionsData(singleQuizData?.questions || []);
       setStatus(singleQuizData?.status || "Active");
       setAvailability(singleQuizData?.availability || "Public");
-      setActiveTab("Questions");
     }
   }, [singleQuizData]);
 
-  console.log(isFetching);
+  useEffect(() => {
+    setActiveTab("Questions");
+  }, []);
 
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
     const target = e.target.getAttribute("data-navbar-item");

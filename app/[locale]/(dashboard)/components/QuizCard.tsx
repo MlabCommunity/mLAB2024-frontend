@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,13 +17,16 @@ interface QuizCardProps {
   description: string;
   status: "Active" | "Inactive";
   questions: number;
+  currentPage: number;
 }
+
 const QuizCard = ({
   title,
   id,
   description,
   status: initialStatus,
   questions,
+  currentPage,
 }: QuizCardProps) => {
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
@@ -32,6 +35,7 @@ const QuizCard = ({
   const translatedCurrentStatus = t(currentStatus.toLocaleLowerCase());
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
@@ -43,13 +47,12 @@ const QuizCard = ({
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["quizList"],
+        queryKey: ["quizList", currentPage],
       });
       setIsDeleting(false);
     },
   });
 
-  // Mutation for updating quiz status
   const { mutate: updateStatusMutate, isPending: isPendingStatus } =
     useMutation({
       mutationFn: ({
@@ -62,14 +65,18 @@ const QuizCard = ({
       onSuccess: (data) => {
         setCurrentStatus(data.newStatus);
         toast.success(t("statusUpdateSuccess"));
+        queryClient.setQueryData(["quizList", currentPage], (oldData: any) => {
+          if (!oldData || !oldData.items) return oldData;
+          return {
+            ...oldData,
+            items: oldData.items.map((quiz: any) =>
+              quiz.id === id ? { ...quiz, status: data.newStatus } : quiz
+            ),
+          };
+        });
       },
       onError: (error: any) => {
         toast.error(error.message || t("statusUpdateError"));
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["updateQuizStatus"],
-        });
       },
     });
 
@@ -103,10 +110,9 @@ const QuizCard = ({
   };
 
   const goQuizDetailsPage = () => {
-    router.push(routes.quizDetails + id);
+    router.push(`${routes.quizDetails}${id}?currentPage=${currentPage}`);
   };
 
-  // Make sure to return the JSX here
   return (
     <div
       className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-full sm:w-auto rounded-lg cursor-pointer"

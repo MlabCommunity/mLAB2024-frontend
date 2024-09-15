@@ -16,7 +16,7 @@ import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
 import { AnswerT, GeneratedQuestionsT } from "../types";
 
 type QuestionEditT = {
-  questionTitle: string;
+  questionTitle: string
   questionId: string;
   options: AnswerT[];
 };

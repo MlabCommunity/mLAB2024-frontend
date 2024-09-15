@@ -16,6 +16,13 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
+
+const answerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0, transition: { duration: 0.3 } },
+};
 
 function AddQuestionModal() {
   const { quizId } = useParams();
@@ -30,17 +37,30 @@ function AddQuestionModal() {
 
   const { mutate } = useMutation({
     mutationFn: createNewQuestion,
-    onSuccess: () => {
+
+    onSuccess: (data, variables) => {
+      console.log(data);
       toast.success(t("addedQuestionSuccess"));
       closeModal();
+      queryClient.setQueryData(["singleQuiz"], (oldData: any) => {
+        if (oldData) {
+          return {
+            ...oldData,
+            questions: [
+              ...oldData.questions,
+              {
+                id: data,
+                title: variables.title,
+                answers: variables.createAnswers,
+              },
+            ],
+          };
+        }
+        return oldData;
+      });
     },
     onError: (error: any) => {
       toast.error(error.message);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["singleQuiz"],
-      });
     },
   });
 
@@ -50,21 +70,24 @@ function AddQuestionModal() {
   if (!isOpen && type !== "addQuestion") return null;
 
   const handleAddQuestion = () => {
-    setAnswers([...answers, { id: answers.length + 1, value: "" }]);
+    const newAnswer = { id: answers.length + 1, value: "" };
+    setAnswers([...answers, newAnswer]);
   };
 
   const handleRemoveQuestion = (index: number) => {
-    const updatedQuestions = answers.filter((_, i) => i !== index);
-    setAnswers(updatedQuestions);
+    setTimeout(() => {
+      const updatedQuestions = answers.filter((_, i) => i !== index);
+      setAnswers(updatedQuestions);
 
-    if (selectedQuestionIndex === index) {
-      setSelectedQuestionIndex(null);
-    } else if (
-      selectedQuestionIndex !== null &&
-      selectedQuestionIndex > index
-    ) {
-      setSelectedQuestionIndex(selectedQuestionIndex - 1);
-    }
+      if (selectedQuestionIndex === index) {
+        setSelectedQuestionIndex(null);
+      } else if (
+        selectedQuestionIndex !== null &&
+        selectedQuestionIndex > index
+      ) {
+        setSelectedQuestionIndex(selectedQuestionIndex - 1);
+      }
+    }, 300);
   };
 
   const handleInputChange = (
@@ -138,9 +161,16 @@ function AddQuestionModal() {
 
               <div className="flex flex-col gap-2">
                 <h3>{t("answers")}</h3>
-                <div className="flex flex-col gap-2">
+                <AnimatePresence>
                   {answers.map((question, index) => (
-                    <div className="flex items-center gap-2" key={index}>
+                    <motion.div
+                      key={question.id}
+                      variants={answerVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="flex items-center gap-2"
+                    >
                       <Checkbox
                         isSelected={selectedQuestionIndex === index}
                         onChange={() => handleSelectQuestion(index)}
@@ -153,9 +183,9 @@ function AddQuestionModal() {
                       <Button onClick={() => handleRemoveQuestion(index)}>
                         {t("remove")}
                       </Button>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </AnimatePresence>
               </div>
               <Button color="primary" onClick={handleAddQuestion}>
                 {t("addQuestion")}
@@ -164,7 +194,7 @@ function AddQuestionModal() {
           </Tab>
           <Tab className="w-full h-full " key="AIGeneration" title={t("ai")}>
             <div className="flex flex-col justify-center w-full p-6 gap-6 h-full">
-              <h3>Prompt</h3>
+              <h4>Prompt</h4>
               <Input variant="flat" color="default" radius="sm" size="md" />
             </div>
           </Tab>

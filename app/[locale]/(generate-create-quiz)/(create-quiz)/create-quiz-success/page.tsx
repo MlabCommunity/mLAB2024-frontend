@@ -22,8 +22,8 @@ const CreateQuizSuccessPage = () => {
           <p className="text-foreground-600 text-lg">
             {t("quizSuccessMessage")}
           </p>
-          <div className="bg-content2 p-6 gap-6 flex flex-col">
-            <div className=" flex items-center h-[52px] bg-white p-3  gap-3 justify-center">
+          <div className="bg-content2 p-6 gap-6 flex flex-col rounded-lg">
+            <div className=" flex items-center h-[52px] bg-white p-3  gap-3 justify-center rounded-lg">
               <span className="text-lg">link.com/unique-id123</span>
               {/* <Image src={documentIcon} alt="Document Icon" /> */}
             </div>

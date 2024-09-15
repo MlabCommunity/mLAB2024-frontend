@@ -4,6 +4,7 @@ type Answer = {
 };
 
 export type GeneratedQuestionT = {
+  id?: string;
   title: string;
   generateAnswers: Answer[];
 };

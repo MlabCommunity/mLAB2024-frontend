@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
@@ -8,46 +8,50 @@ import { DashboardQuizItemT } from "../types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
-import DashboardLoading from "./loading";
+import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
+import { useQuizDetailStore } from "@/store/quizDetailsStore";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4;
+  const [currentPage, setCurrentPage] = React.useState(1);
 
-  const { data, isPending, isFetching, isSuccess } = useQuery({
+  const { data, isFetching, isSuccess } = useQuery({
     queryKey: ["quizList", currentPage],
     queryFn: () => getQuizList(currentPage),
   });
-  const totalPages = data?.totalPages;
+
+  const totalPages = data?.totalPages ?? 0;
 
   const queryClient = useQueryClient();
-
   useEffect(() => {
-    const nextPage = currentPage + 1;
-    queryClient.prefetchQuery({
-      queryKey: ["quizList", nextPage],
-      queryFn: () => getQuizList(nextPage),
-    });
-  }, [currentPage, queryClient]);
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      queryClient.prefetchQuery({
+        queryKey: ["quizList", nextPage],
+        queryFn: () => getQuizList(nextPage),
+      });
+    }
+  }, [currentPage, queryClient, totalPages]);
 
-  // Skeleton items for loading state
-  const skeletonItems = Array.from({ length: pageSize }).map((_, index) => (
-    <div
-      key={index}
-      className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg"
-    >
-      <Skeleton className="h-6 w-3/4 rounded-lg" />
-      <Skeleton className="mt-4 h-4 w-5/6 rounded-lg" />
-      <div className="flex items-center justify-start gap-4 mt-4">
-        <Skeleton className="h-8 w-20 rounded-lg" />
-        <Skeleton className="h-8 w-20 rounded-lg" />
-      </div>
-    </div>
-  ));
+  const renderQuizCards = () => {
+    if (isFetching) return <DashboardLoading />;
+    if (!data?.items?.length) return null;
 
-  return !isFetching ? (
+    return data.items.map((quiz: DashboardQuizItemT) => (
+      <QuizCard
+        key={quiz.id}
+        id={quiz.id}
+        title={quiz.title}
+        description={quiz.description}
+        status={quiz.status}
+        questions={quiz.totalQuestions}
+        currentPage={currentPage}
+      />
+    ));
+  };
+
+  return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -69,38 +73,18 @@ const DashboardPage = () => {
           {t("manageQuizz")}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-          {(isPending || isFetching ? skeletonItems : data?.items).map(
-            (quiz: DashboardQuizItemT, index: number) =>
-              quiz ? (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full"
-                >
-                  <QuizCard
-                    key={quiz.id}
-                    id={quiz.id}
-                    title={quiz.title}
-                    description={quiz.description}
-                    status={quiz.status}
-                    questions={quiz.totalQuestions}
-                  />
-                </motion.div>
-              ) : (
-                skeletonItems[index]
-              )
-          )}
+          {renderQuizCards()}
         </div>
         <div className="w-full">
-          {data?.items.length !== 0 && isSuccess && (
+          {isSuccess && data?.items.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
               total={totalPages}
               initialPage={currentPage}
-              onChange={(pageNumber) => setCurrentPage(pageNumber)}
+              onChange={setCurrentPage}
             />
+          ) : (
+            <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />
           )}
           <div className="w-full border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
             <Link href={routes.createQuiz[0].route}>
@@ -113,8 +97,6 @@ const DashboardPage = () => {
         </div>
       </section>
     </motion.div>
-  ) : (
-    <DashboardLoading />
   );
 };
 

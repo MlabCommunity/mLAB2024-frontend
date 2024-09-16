@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useModalStore } from "@/store/modalStore2";
+import { useModalStore } from "@/store/modalStore";
 import EditQuestionModal from "../modals/EditQuestionModal";
 import DeleteQuestionModal from "../modals/DeleteQuestionModal";
 import { Button, Switch } from "@nextui-org/react";
@@ -9,7 +9,7 @@ import AddQuestionModal from "../modals/AddQuestionModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteQuestion } from "@/utils/actions/quiz/deleteQuestion";
 import toast from "react-hot-toast";
-import { GeneratedQuestionsT, QuestionsT } from "../types";
+import { GeneratedQuestionsT } from "../types";
 import { useQuizDetailStore } from "@/store/quizDetailsStore";
 import QuestionsSkeleton from "../components/skeletons/QuestionsSkeleton";
 import Question from "./Question";

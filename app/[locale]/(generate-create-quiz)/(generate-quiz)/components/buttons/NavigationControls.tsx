@@ -1,6 +1,5 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import CancelButton from "./CancelButton";
-import InsertFileButton from "./InsertFileButton";
 
 interface NavigationControlsProps {
   isPending?: boolean;

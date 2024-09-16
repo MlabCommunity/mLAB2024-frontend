@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import ButtonGroupComponent from "./components/ButtonsGroupComponent";
-import { getTranslations } from "next-intl/server";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import ButtonGroupComponent from "../components/ButtonsGroupComponent";
 
 const GenerateConfigureQuiz = () => {
   const t = useTranslations("ConfigureQuiz");

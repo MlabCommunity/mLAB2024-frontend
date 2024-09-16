@@ -1,9 +1,9 @@
 "use client";
 
 import React, { Suspense } from "react";
-import Preview from "./components/Preview";
+import Preview from "../components/Preview";
 import { useTranslations } from "next-intl";
-import PreviewSkeleton from "./components/skeletons/PreviewSkeleton";
+import PreviewSkeleton from "../components/skeletons/PreviewSkeleton";
 import { motion, useScroll } from "framer-motion";
 
 const PreviewPage = () => {

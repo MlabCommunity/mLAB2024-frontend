@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import PromptForm from "./components/forms/PromptForm";
+import PromptForm from "../components/forms/PromptForm";
 import InsertFileModal from "@/app/[locale]/(quiz-details)/modals/InsertFileModal";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";

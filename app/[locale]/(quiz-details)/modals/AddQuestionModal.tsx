@@ -1,5 +1,5 @@
 "use client";
-import { useModalStore } from "@/store/modalStore2";
+import { useModalStore } from "@/store/modalStore";
 import { createNewQuestion } from "@/utils/actions/quiz/createQuestion";
 import {
   Button,

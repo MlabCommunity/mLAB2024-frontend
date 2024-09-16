@@ -4,15 +4,15 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import TickCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/TickCircle";
-import EmptyCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/EmptyCircle";
-import NextButton from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NextButton";
-import NavigationControls from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
+import TickCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/TickCircle";
+import EmptyCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/EmptyCircle";
+import NextButton from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/buttons/NextButton";
+import NavigationControls from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/buttons/NavigationControls";
 
 function ButtonGroupComponent() {
   const [selectedType, setSelectedType] = useState("multiple-choice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
-  const [isPending, setIsPending] = useState(false); 
+  const [isPending, setIsPending] = useState(false);
   const router = useRouter();
   const t = useTranslations("ConfigureQuiz");
 
@@ -29,15 +29,13 @@ function ButtonGroupComponent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isPending) {
-      setIsPending(true); 
+      setIsPending(true);
       try {
-      
-        
         router.push(routes.createQuiz[2].route);
       } catch (error) {
         console.error("Błąd:", error);
       } finally {
-        setIsPending(false); 
+        setIsPending(false);
       }
     }
   };
@@ -73,7 +71,7 @@ function ButtonGroupComponent() {
               name="multiple-choice"
               aria-pressed={selectedType === "multiple-choice"}
               onClick={() => handleTypeClick("multiple-choice")}
-              disabled={isPending} 
+              disabled={isPending}
             >
               <span>{t("multipleChoice")}</span>
             </Button>
@@ -87,7 +85,7 @@ function ButtonGroupComponent() {
               name="true-false"
               aria-pressed={selectedType === "true-false"}
               onClick={() => handleTypeClick("true-false")}
-              disabled={isPending} 
+              disabled={isPending}
             >
               <span>{t("trueFalse")}</span>
             </Button>
@@ -114,7 +112,7 @@ function ButtonGroupComponent() {
               name="low"
               aria-pressed={selectedQuantity === "low"}
               onClick={() => handleQuantityClick("low")}
-              disabled={isPending} 
+              disabled={isPending}
             >
               <span>{t("low")}</span>
             </Button>
@@ -125,16 +123,12 @@ function ButtonGroupComponent() {
               }`}
               size="lg"
               startContent={
-                selectedQuantity === "medium" ? (
-                  <TickCircle />
-                ) : (
-                  <EmptyCircle />
-                )
+                selectedQuantity === "medium" ? <TickCircle /> : <EmptyCircle />
               }
               name="medium"
               aria-pressed={selectedQuantity === "medium"}
               onClick={() => handleQuantityClick("medium")}
-              disabled={isPending} 
+              disabled={isPending}
             >
               <span>{t("med")}</span>
             </Button>
@@ -157,16 +151,12 @@ function ButtonGroupComponent() {
               className="w-full justify-start md:w-auto"
               size="lg"
               startContent={
-                selectedQuantity === "manual" ? (
-                  <TickCircle />
-                ) : (
-                  <EmptyCircle />
-                )
+                selectedQuantity === "manual" ? <TickCircle /> : <EmptyCircle />
               }
               name="manual"
               aria-pressed={selectedQuantity === "manual"}
               onClick={() => handleQuantityClick("manual")}
-              disabled={isPending} 
+              disabled={isPending}
             >
               <span>{t("man")}</span>
             </Button>
@@ -174,7 +164,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls>
-        <NextButton isPending={isPending} /> 
+        <NextButton isPending={isPending} />
       </NavigationControls>
     </form>
   );

@@ -2,25 +2,22 @@ import React, { useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
-import SaveQuiz from "../../../(generate-quiz)/generate-quiz/components/buttons/SaveQuiz";
-import NavigationControls from "../../../(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
+import SaveQuiz from "../../(generate-quiz)/components/buttons/SaveQuiz";
+import NavigationControls from "../../(generate-quiz)/components/buttons/NavigationControls";
 import { useRouter, useSearchParams } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import { useModalStore } from "@/store/modalStore2";
+import { useModalStore } from "@/store/modalStore";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import { createQuiz } from "@/utils/actions/quiz/createQuiz";
 import toast from "react-hot-toast";
-import { GeneratedQuestionT } from "../../../types";
-import AddQuestionGenerateModal from "../../../(generate-quiz)/modals/AddQuestionGenerateModal";
-import DeleteQuestionGenerateModal from "../../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
-import EditQuestionGenerateModal from "../../../(generate-quiz)/modals/EditQuestionGenerateModal";
-
-import BackButton from "../../../(generate-quiz)/generate-quiz/components/buttons/BackButton";
+import { GeneratedQuestionT } from "../../types";
+import AddQuestionGenerateModal from "../../(generate-quiz)/modals/AddQuestionGenerateModal";
+import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
+import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 
 import { AnimatePresence } from "framer-motion";
-
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -39,23 +36,23 @@ function Preview() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
   >(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { mutate } = useMutation({
     mutationFn: createQuiz,
     onError: (error) => {
       toast.error(error.message);
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     },
     onSuccess: (data) => {
       setGeneratedQuizData(data);
       toast.success(t("createdSuccessfullyMsg"));
       router.push(routes.createQuiz[3].route);
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     },
     onMutate: () => {
       toast.loading(t("creating"), { id: "loading-toast" });
-      setIsSubmitting(true); 
+      setIsSubmitting(true);
     },
     onSettled() {
       toast.dismiss("loading-toast");
@@ -64,7 +61,7 @@ function Preview() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return; 
+    if (isSubmitting) return;
 
     mutate({
       title: generatedQuizData.title,
@@ -167,7 +164,6 @@ function Preview() {
         </AnimatePresence>
       </aside>
       <NavigationControls>
-        <BackButton/>
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (

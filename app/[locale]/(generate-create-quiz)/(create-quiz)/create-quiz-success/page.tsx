@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import BackToDashboard from "../../(generate-quiz)/generate-quiz/components/buttons/BackToDashboard";
+import BackToDashboard from "../../(generate-quiz)/components/buttons/BackToDashboard";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Confetti from "react-confetti";

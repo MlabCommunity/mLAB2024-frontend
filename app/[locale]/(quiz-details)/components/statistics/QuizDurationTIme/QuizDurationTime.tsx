@@ -1,3 +1,4 @@
+import { getPluralForm } from "@/utils/helpers";
 import { useTranslations } from "next-intl";
 import React from "react";
 
@@ -9,11 +10,6 @@ const QuizDurationTime = ({
   const t = useTranslations("QuestionsOnAnswers");
 
   // Helper function to determine the correct form based on the number
-  const getPluralForm = (count: number, key: string) => {
-    if (count === 1) return t(`${key}_one`);
-    if (count > 1 && count < 5) return t(`${key}_few`);
-    return t(`${key}_many`);
-  };
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);

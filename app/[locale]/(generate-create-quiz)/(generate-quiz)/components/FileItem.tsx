@@ -24,15 +24,15 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
   const renderCorrespondingIcon = () => {
     switch (fileType) {
       case "pdf":
-        return <Image width={32} height={32} src={pdfIcon} alt="PDF icon" />;
+        return <Image className="w-10" src={pdfIcon} alt="PDF icon" />;
       case "txt":
-        return <Image width={32} height={32} src={txtIcon} alt="TXT icon" />;
+        return <Image className="w-10" src={txtIcon} alt="TXT icon" />;
       case "xlsx":
-        return <Image width={32} height={32} src={xlsIcon} alt="XLSX icon" />;
+        return <Image className="w-10" src={xlsIcon} alt="XLSX icon" />;
       case "pptx":
-        return <Image width={32} height={32} src={pptIcon} alt="PPTX icon" />;
+        return <Image className="w-10" src={pptIcon} alt="PPTX icon" />;
       default:
-        return <Image width={32} height={32} src={wordIcon} alt="Word icon" />;
+        return <Image className="w-10" src={wordIcon} alt="Word icon" />;
     }
   };
 
@@ -62,13 +62,13 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
           variant="flat"
           onClick={() => onDelete(fileName)}
         >
-          <Image width={24} height={24} src={trashIcon} alt="trash" />
+          <Image src={trashIcon} alt="trash" />
         </Button>
 
         {/* Rounded download button */}
         <Link href={"#"} target="_blank" download={fileName}>
           <Button isIconOnly size="sm" variant="flat">
-            <Image width={24} height={24} src={downloadIcon} alt="download" />
+            <Image src={downloadIcon} alt="download" />
           </Button>
         </Link>
       </div>

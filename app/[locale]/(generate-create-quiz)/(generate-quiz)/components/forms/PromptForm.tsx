@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Textarea, Button } from "@nextui-org/react"; 
+import { Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +11,6 @@ import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
-import BackButton from "../buttons/BackButton"; 
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { routes } from "@/routes";
 
@@ -48,7 +47,6 @@ const PromptForm = () => {
 
   return (
     <div className="relative">
-     
       <form onSubmit={handleSubmit(onSubmit)} className="pt-8">
         <Textarea
           isRequired
@@ -71,7 +69,6 @@ const PromptForm = () => {
           </motion.div>
         )}
         <NavigationControls>
-          <BackButton /> 
           <NextButton />
           <InsertFileButton />
         </NavigationControls>

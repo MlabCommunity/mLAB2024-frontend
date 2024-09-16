@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Dot from "./Dot/Dot";
+import Dot from "../Dot/Dot";
 import { useStepper } from "@/app/context/StepContext";
 
 const Stepper = () => {

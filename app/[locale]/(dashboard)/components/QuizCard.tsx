@@ -10,6 +10,7 @@ import { Button } from "@nextui-org/react";
 import { cn } from "@/lib";
 import Image from "next/image";
 import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
+import bin from "@/public/assets/bin.svg";
 
 interface QuizCardProps {
   title: string;
@@ -134,9 +135,7 @@ const QuizCard = ({
           disabled={isDeleting}
         >
           <Image
-            src="/assets/bin.svg"
-            width={20}
-            height={20}
+            src={bin}
             className="min-w-5 min-h-5 md:min-h-6 md:min-w-6"
             alt="bin icon"
           />

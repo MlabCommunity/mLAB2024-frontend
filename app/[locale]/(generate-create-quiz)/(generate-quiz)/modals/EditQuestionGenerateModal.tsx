@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
-import { useModalStore } from "@/store/modalStore2";
+import { useModalStore } from "@/store/modalStore";
 import {
   Button,
   Input,

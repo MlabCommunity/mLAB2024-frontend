@@ -3,17 +3,15 @@ import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "./TickCircle";
 import EmptyCircle from "./EmptyCircle";
-import NextButton from "../../generate-quiz/components/buttons/NextButton";
+import NextButton from "./buttons/NextButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import NavigationControls from "../../generate-quiz/components/buttons/NavigationControls";
+import NavigationControls from "./buttons/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { GenerateQuizT } from "@/types";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
-import BackButton from "../../generate-quiz/components/buttons/BackButton";
 
 function ButtonGroupComponent() {
   const searchParams = useSearchParams();
@@ -150,7 +148,6 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls isPending={isPending}>
-        <BackButton/>
         <NextButton isPending={isPending} />
       </NavigationControls>
     </form>

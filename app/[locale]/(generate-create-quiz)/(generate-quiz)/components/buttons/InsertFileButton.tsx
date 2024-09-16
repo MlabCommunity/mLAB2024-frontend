@@ -2,7 +2,7 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
-import fileIcon from "../../../../../../../public/assets/file.svg";
+import fileIcon from "@/public/assets/file.svg";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
 const InsertFileButton = () => {

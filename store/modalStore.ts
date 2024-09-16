@@ -5,7 +5,7 @@ type ModalDataT = {
   status: string;
   questions: number;
   onConfirmDelete?: () => void;
-  isPending: boolean;
+  isPending?: boolean;
 };
 
 interface ModalStore {
@@ -22,9 +22,13 @@ export type ModalType =
   | "cancelCreateQuizz"
   | "finishQuiz"
   | "uploadFile"
+  | "deleteQuestion"
+  | "editQuestion"
+  | "addQuestion"
   | "";
 
 export const useModalStore = create<ModalStore>((set) => ({
+  isPending: false,
   type: "",
   isOpen: false,
   openModal: (paylaod: ModalType) => set({ isOpen: true, type: paylaod }),

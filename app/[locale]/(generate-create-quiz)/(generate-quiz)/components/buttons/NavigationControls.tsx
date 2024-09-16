@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import CancelButton from "./CancelButton";
 
 interface NavigationControlsProps {

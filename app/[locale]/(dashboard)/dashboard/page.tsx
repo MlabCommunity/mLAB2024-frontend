@@ -15,7 +15,6 @@ import usePaginator from "@/app/hooks/usePaginator";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   const {
-    count,
     page,
     setPage,
     pages,
@@ -27,7 +26,6 @@ const DashboardPage = () => {
     queryKey: ["quizList"],
     pageSize: 4,
   });
-
   const queryClient = useQueryClient();
 
   const renderQuizCards = () => {
@@ -73,11 +71,6 @@ const DashboardPage = () => {
           <h2 className="text-4xl font-bold mb-4 sm:mb-0 text-foreground-700">
             {t("quizzes")}
           </h2>
-          <Link href={routes.takeQuiz}>
-            <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
-              {t("createNewQuizButton")}
-            </button>
-          </Link>
         </div>
         <p className="text-foreground-600 mb-4 text-medium md:text-large">
           {t("manageQuizz")}

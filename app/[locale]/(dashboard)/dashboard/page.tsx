@@ -1,44 +1,40 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT } from "../types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
-import { useQuizDetailStore } from "@/store/quizDetailsStore";
+import usePaginator from "@/app/hooks/usePaginator";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ["quizList", currentPage],
-    queryFn: () => getQuizList(currentPage),
+  const {
+    count,
+    page,
+    setPage,
+    pages,
+    items: quizzes,
+    isFetching,
+    isSuccess,
+  } = usePaginator({
+    fetch: getQuizList,
+    queryKey: ["quizList"],
+    pageSize: 4,
   });
 
-  const totalPages = data?.totalPages ?? 0;
-
   const queryClient = useQueryClient();
-  useEffect(() => {
-    if (currentPage < totalPages) {
-      const nextPage = currentPage + 1;
-      queryClient.prefetchQuery({
-        queryKey: ["quizList", nextPage],
-        queryFn: () => getQuizList(nextPage),
-      });
-    }
-  }, [currentPage, queryClient, totalPages]);
 
   const renderQuizCards = () => {
     if (isFetching) return <DashboardLoading />;
-    if (!data?.items?.length) return null;
+    if (!quizzes.length) return null;
 
-    return data.items.map((quiz: DashboardQuizItemT) => (
+    return quizzes?.map((quiz: DashboardQuizItemT) => (
       <QuizCard
         key={quiz.id}
         id={quiz.id}
@@ -46,11 +42,25 @@ const DashboardPage = () => {
         description={quiz.description}
         status={quiz.status}
         questions={quiz.totalQuestions}
-        currentPage={currentPage}
+        currentPage={page}
       />
     ));
   };
+  const handleOnPageChange = useCallback(
+    (newPage: number) => {
+      console.log(`Pagination changed to page ${newPage}`);
 
+      setPage(newPage);
+
+      if (newPage < pages) {
+        queryClient.prefetchQuery({
+          queryKey: ["quizList", newPage + 1],
+          queryFn: () => getQuizList(newPage + 1, 4),
+        });
+      }
+    },
+    [setPage, pages, queryClient]
+  );
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -76,12 +86,12 @@ const DashboardPage = () => {
           {renderQuizCards()}
         </div>
         <div className="w-full">
-          {isSuccess && data?.items.length >= 0 ? (
+          {isSuccess && quizzes && quizzes.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
-              total={totalPages}
-              initialPage={currentPage}
-              onChange={setCurrentPage}
+              total={pages}
+              initialPage={page}
+              onChange={handleOnPageChange}
             />
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { Providers } from "../providers/providers";
@@ -6,7 +5,6 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@/utils";
-import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 

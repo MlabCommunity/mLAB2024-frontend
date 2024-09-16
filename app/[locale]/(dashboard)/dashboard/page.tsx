@@ -10,7 +10,6 @@ import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
-import { useQuizDetailStore } from "@/store/quizDetailsStore";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
@@ -63,11 +62,6 @@ const DashboardPage = () => {
           <h2 className="text-4xl font-bold mb-4 sm:mb-0 text-foreground-700">
             {t("quizzes")}
           </h2>
-          <Link href={routes.takeQuiz}>
-            <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
-              {t("createNewQuizButton")}
-            </button>
-          </Link>
         </div>
         <p className="text-foreground-600 mb-4 text-medium md:text-large">
           {t("manageQuizz")}

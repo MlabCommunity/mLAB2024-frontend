@@ -4,6 +4,7 @@ import Container from "@/components/shared/Container";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
@@ -52,7 +53,7 @@ const Header = () => {
         <div className="flex items-center justify-end">
           <div className="relative flex gap-2">
             <LanguageSwitcher />
-            <img
+            <Image
               src={user.avatar}
               alt={t("userAvatar")}
               className="rounded-full cursor-pointer w-10"

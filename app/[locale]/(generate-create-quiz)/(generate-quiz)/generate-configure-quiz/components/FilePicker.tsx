@@ -129,7 +129,7 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4">
-              <Image width={128} height={128} src={document} alt="document" />
+              <Image className="h-72" src={document} alt="document" />
               <p className="text-center text-foreground-600 font-semibold md:text-2xl text-lg">
                 {isDragActive ? t("uploadFileDragActive") : t("uploadFileData")}
               </p>

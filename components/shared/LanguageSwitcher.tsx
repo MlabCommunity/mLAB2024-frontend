@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import polandFlag from "@/public/assets/poland-flag.svg";
 import ukFlag from "@/public/assets/uk-flag.svg";
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
 
 export default function LanguageSwitcher() {
   const t = useTranslations("LanguageSwitcher");

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
 import Link from "next/link";
-import { Button, Skeleton } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { cn } from "@/lib";
 import dynamic from "next/dynamic";
 import QuestionsSkeleton from "../../components/skeletons/QuestionsSkeleton";

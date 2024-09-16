@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
@@ -38,7 +38,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("QuestionsOnAnswers");
-  const randomNumber = Math.floor(Math.random() * 1000);
 
   useEffect(() => {
     if (singleQuizData) {

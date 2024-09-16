@@ -1,7 +1,21 @@
+import { absoluteUrl } from "@/lib";
+import { routes } from "@/routes";
 import { Button } from "@nextui-org/react";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: routes.notFoundPage.title,
+  alternates: {
+    canonical: routes.notFoundPage.pathname,
+  },
+  openGraph: {
+    title: routes.notFoundPage.title,
+    url: absoluteUrl(routes.notFoundPage.pathname),
+  },
+};
 
 const NotFoundPage = async () => {
   const t = await getTranslations("NotFoundPage");

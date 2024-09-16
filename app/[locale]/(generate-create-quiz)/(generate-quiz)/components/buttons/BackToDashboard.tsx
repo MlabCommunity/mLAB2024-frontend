@@ -18,7 +18,7 @@ function BackToDashboard() {
         queryClient.invalidateQueries({ queryKey: ["quizList"] });
       }}
     >
-      <Link href={routes.dashboard}>{t("backToDashboardBtn")}</Link>
+      <Link href={routes.dashboard.pathname}>{t("backToDashboardBtn")}</Link>
     </Button>
   );
 }

@@ -8,6 +8,20 @@ import TakeQuizBox from "../../components/TakeQuizBox";
 import Quiz from "../../components/Quiz";
 import { quizData } from "@/constants";
 import { AnswerMapItemT, HistoryItemT } from "../../types";
+import { Metadata } from "next";
+import { routes } from "@/routes";
+import { absoluteUrl } from "@/lib";
+
+export const metadata: Metadata = {
+  title: routes.takeQuiz.title,
+  alternates: {
+    canonical: routes.takeQuiz.pathname,
+  },
+  openGraph: {
+    title: routes.takeQuiz.title,
+    url: absoluteUrl(routes.takeQuiz.pathname),
+  },
+};
 
 const TakeQuiz = () => {
   const [isTakeQuizBoxVisible, setIsTakeQuizBoxVisible] = useState(true);

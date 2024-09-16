@@ -2,6 +2,21 @@ import SignInForm from "../components/SignInForm";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import logo from "@/public/assets/logo.svg";
+import { Metadata } from "next";
+import { routes } from "@/routes";
+import { absoluteUrl } from "@/lib";
+
+export const metadata: Metadata = {
+  title: routes.signIn.title,
+  alternates: {
+    canonical: routes.signIn.pathname,
+  },
+  openGraph: {
+    title: routes.signIn.title,
+    url: absoluteUrl(routes.signIn.pathname),
+  },
+};
+
 
 const SignInPage = async () => {
   const t = await getTranslations("AuthPages");

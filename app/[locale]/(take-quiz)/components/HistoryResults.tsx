@@ -81,7 +81,7 @@ const HistoryResults = ({
             </div>
           </div>
         ))}
-        <Link href={routes.dashboard} className="ml-auto">
+        <Link href={routes.dashboard.pathname} className="ml-auto">
           <Button variant="flat" color="primary">
             {t("home")}
           </Button>

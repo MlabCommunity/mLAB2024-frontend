@@ -31,7 +31,7 @@ function ButtonGroupComponent() {
     if (!isPending) {
       setIsPending(true);
       try {
-        router.push(routes.createQuiz[2].route);
+        router.push(routes.quizPreview.pathname);
       } catch (error) {
         console.error("Błąd:", error);
       } finally {

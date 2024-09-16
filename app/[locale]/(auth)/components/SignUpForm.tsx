@@ -39,7 +39,7 @@ function SignUpForm() {
     },
     onSuccess: () => {
       toast.success(t("signedUp"));
-      router.push(routes.signIn);
+      router.push(routes.signIn.pathname);
     },
   });
   const onSubmit = async (data: FormData) => {

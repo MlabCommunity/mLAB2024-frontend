@@ -33,7 +33,7 @@ function ButtonGroupComponent() {
       const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
       params.set("selectedType", selectedType);
-      router.push(`${routes.createQuiz[2].route}?${params.toString()}`);
+      router.push(`${routes.quizPreview.pathname}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
     onMutate: () => {

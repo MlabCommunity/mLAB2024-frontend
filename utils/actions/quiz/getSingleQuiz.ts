@@ -1,6 +1,6 @@
 "use server";
 
-import { quizListUrl, singleQuizUrl } from "@/constants/api";
+import { singleQuizUrl } from "@/constants/api";
 import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
 import { cookies } from "next/headers";

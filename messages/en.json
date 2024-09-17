@@ -190,7 +190,8 @@
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",
     "quizSuccessMessage": "You succesfully created your quiz. You can now share it with others.",
-    "backToDashboardBtn": "Back to dashboard"
+    "backToDashboardBtn": "Back to dashboard",
+    "linkCopiedMsg": "Copied Link"
   },
   "TakeQuiz": {
     "takeQuiz": "Take quiz",

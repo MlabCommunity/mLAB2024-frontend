@@ -46,6 +46,7 @@ function Preview() {
     },
     onSuccess: (data) => {
       setGeneratedQuizData(data);
+      console.log(generatedQuizData);
       toast.success(t("createdSuccessfullyMsg"));
       router.push(routes.createQuiz[3].route);
       setIsSubmitting(false);

@@ -187,7 +187,8 @@
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Sukces",
     "quizSuccessMessage": "Quiz został pomyślnie utworzony. Teraz możesz go udostępnić innym.",
-    "backToDashboardBtn": "Powrót do dashboardu"
+    "backToDashboardBtn": "Powrót do dashboardu",
+    "linkCopiedMsg": "Skopiowano link"
   },
 
   "TakeQuiz": {

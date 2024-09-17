@@ -13,6 +13,7 @@ export const createQuiz = async (data: any) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

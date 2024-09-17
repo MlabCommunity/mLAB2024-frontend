@@ -14,3 +14,14 @@ export type UserPaginatorOptions = {
   fetch: <T>(page: number, limit: number) => Promise<PaginatedResponse<T>>;
   pageSize: number;
 };
+export type DashboardQuizT = {
+  id: string;
+  title: string;
+  description: string;
+  availability: "Public";
+  status: "Active" | "Inactive";
+  totalQuestions: number;
+};
+export type DashboardQuizData = {
+  quizzes: DashboardQuizT[];
+};

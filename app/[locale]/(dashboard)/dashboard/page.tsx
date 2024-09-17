@@ -11,25 +11,23 @@ import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
 import usePaginator from "@/app/hooks/usePaginator";
-
+import { useDashboardQuizzes, useDashboardStore } from "@/store/dashboardStore";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   const {
-    page,
-    setPage,
-    pages,
     items: quizzes,
-    isFetching,
-    isSuccess,
-  } = usePaginator({
-    fetch: getQuizList,
-    queryKey: ["quizList"],
-    pageSize: 4,
-  });
+    page,
+    pages,
+    setPage,
+    isLoading,
+    isError,
+    error,
+  } = useDashboardQuizzes();
+
   const queryClient = useQueryClient();
 
   const renderQuizCards = () => {
-    if (isFetching) return <DashboardLoading />;
+    if (isLoading) return <DashboardLoading />;
     if (!quizzes.length) return null;
 
     return quizzes?.map((quiz: DashboardQuizItemT) => (
@@ -44,6 +42,7 @@ const DashboardPage = () => {
       />
     ));
   };
+
   const handleOnPageChange = useCallback(
     (newPage: number) => {
       console.log(`Pagination changed to page ${newPage}`);
@@ -79,7 +78,7 @@ const DashboardPage = () => {
           {renderQuizCards()}
         </div>
         <div className="w-full">
-          {isSuccess && quizzes && quizzes.length >= 0 ? (
+          {!isError && quizzes && quizzes.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
               total={pages}

@@ -214,7 +214,17 @@
     "seeResults": "See results",
     "awesome": "Awesome!!!",
     "notYourDay": "This is not your day...",
-    "warningName": "Name must be at least 2 characters long"
+    "warningName": "Name must be at least 2 characters long",
+    "codeGeneratedSuccessfully": "Code generated successfully",
+    "enterQuizUrl": "Enter quiz url",
+    "generateCodeFirst": "Please generate code first",
+    "joiningQuiz": "Joining quiz with code: ",
+    "toImprove": "Take part in a quiz to improve your skills.",
+    "generateCode": "Generate Quiz Code",
+    "generateCode2": "Generate Code",
+    "join": "Join Quiz",
+    "willApearHere": "Your code will appear here",
+    "generatingQuizCode": "Generating quiz code..."
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",

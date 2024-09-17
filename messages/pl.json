@@ -212,7 +212,17 @@
     "seeResults": "Zobacz wyniki",
     "awesome": "Niesamowicie!!!",
     "notYourDay": "To nie Twój dzień...",
-    "warningName": "Imię musi mieć co najmniej 2 znaki"
+    "warningName": "Imię musi mieć co najmniej 2 znaki",
+    "codeGeneratedSuccessfully": "Kod wygenerowany pomyślnie",
+    "enterQuizUrl": "Wprowadź adres URL quizu",
+    "generateCodeFirst": "Proszę najpierw wygenerować kod",
+    "joiningQuiz": "Dołączanie do quizu z kodem: ",
+    "toImprove": "Weź udział w quizie, aby poprawić swoje umiejętności.",
+    "generateCode": "Wygeneruj kod quizu",
+    "generateCode2": "Wygeneruj kod",
+    "join": "Dołącz do quizu",
+    "willApearHere": "Twój kod pojawi się tutaj",
+    "generatingQuizCode": "Generowanie kodu quizu..."
   },
   "NotFoundPage": {
     "goDashboard": "Przejdź do panelu",

@@ -18,6 +18,6 @@ export const updateStatusUrl = `${API_BASE_URL}/api/quiz/status`;
 export const updateQuizDataUrl = `${API_BASE_URL}/api/quiz/`;
 export const createQuestionUrl = `${API_BASE_URL}/api/questionsandanswers/create-question`;
 export const deleteQuestionUrl = `${API_BASE_URL}/api/questionsandanswers/`;
-
+export const registerParticipationUrl = `${API_BASE_URL}/api/`;
 
 

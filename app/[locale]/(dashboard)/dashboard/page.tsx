@@ -1,16 +1,14 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
-import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
-import usePaginator from "@/app/hooks/usePaginator";
 import { useDashboardQuizzes, useDashboardStore } from "@/store/dashboardStore";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
@@ -42,22 +40,12 @@ const DashboardPage = () => {
       />
     ));
   };
-
-  const handleOnPageChange = useCallback(
-    (newPage: number) => {
-      console.log(`Pagination changed to page ${newPage}`);
-
-      setPage(newPage);
-
-      if (newPage < pages) {
-        queryClient.prefetchQuery({
-          queryKey: ["quizList", newPage + 1],
-          queryFn: () => getQuizList(newPage + 1, 4),
-        });
-      }
-    },
-    [setPage, pages, queryClient]
-  );
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage); // This will trigger fetching new data for the selected page
+  };
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["quizzes"] });
+  }, [queryClient]);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -78,12 +66,12 @@ const DashboardPage = () => {
           {renderQuizCards()}
         </div>
         <div className="w-full">
-          {!isError && quizzes && quizzes.length >= 0 ? (
+          {!isLoading && quizzes && quizzes.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
               total={pages}
               initialPage={page}
-              onChange={handleOnPageChange}
+              onChange={handlePageChange}
             />
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />

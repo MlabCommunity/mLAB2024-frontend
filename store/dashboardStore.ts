@@ -1,31 +1,55 @@
 "use client";
-
-import {
-  DashboardQuizItemT,
-  DashboardQuizT,
-} from "@/app/[locale]/(dashboard)/types";
-import { DashboardQuizData, PaginatedResponse } from "@/types";
+import { DashboardQuizItemT } from "@/app/[locale]/(dashboard)/types";
+import { PaginatedResponse } from "@/types";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { create } from "zustand";
 import usePaginator, { UserPaginatorOptions } from "@/app/hooks/usePaginator";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 interface DashboardQuizStore {
+  quizzes: DashboardQuizItemT[];
+  setQuizzes: (quizzes: DashboardQuizItemT[]) => void;
   updateQuizUrl: (quizId: string, newUrl: string) => void;
   pageSize: number;
   setPageSize: (size: number) => void;
 }
+const localStorageKey = "dashboardQuizUrls";
 
+const getStoredQuizUrls = () => {
+  const storedData = localStorage.getItem(localStorageKey);
+  return storedData ? JSON.parse(storedData) : {};
+};
+
+const saveQuizUrlToLocalStorage = (quizId: string, newUrl: string) => {
+  const storedUrls = getStoredQuizUrls();
+  storedUrls[quizId] = newUrl;
+  localStorage.setItem(localStorageKey, JSON.stringify(storedUrls));
+};
 export const useDashboardStore = create(
   persist<DashboardQuizStore>(
-    (set, get) => ({
+    (set) => ({
+      quizzes: [],
+      setQuizzes: (quizzes) => {
+        set({ quizzes });
+      },
       pageSize: 4,
       updateQuizUrl: (quizId, newUrl) => {
-        // This function now only updates the URL in the cache
-        // The actual update should be handled by your backend and then reflected in the next fetch
+        console.log(`Updating URL for quiz ${quizId} to ${newUrl}`);
+        set((state) => {
+          const updatedQuizzes = state.quizzes.map((quiz) =>
+            quiz.id === quizId ? { ...quiz, url: newUrl } : quiz
+          );
+          console.log("Updated quizzes:", updatedQuizzes);
+          return { quizzes: updatedQuizzes };
+        });
+        saveQuizUrlToLocalStorage(quizId, newUrl);
       },
-      setPageSize: (size) => set({ pageSize: size }),
+      setPageSize: (size) => {
+        console.log(`Setting page size to ${size}`);
+        set({ pageSize: size });
+      },
     }),
     {
       name: "dashboard-storage",
@@ -34,7 +58,6 @@ export const useDashboardStore = create(
   )
 );
 
-// Custom hook to use paginator with the dashboard store
 export const useDashboardPagination = (): UseQueryResult<
   PaginatedResponse<DashboardQuizItemT>,
   Error
@@ -46,23 +69,46 @@ export const useDashboardPagination = (): UseQueryResult<
   items: DashboardQuizItemT[];
   showing: [number, number];
 } => {
-  const { pageSize } = useDashboardStore();
+  const { pageSize, setQuizzes } = useDashboardStore();
+  const queryClient = useQueryClient();
 
   const paginatorOptions: UserPaginatorOptions<DashboardQuizItemT> = {
-    fetch: (page, pageSize) => getQuizList(page, pageSize),
+    fetch: async (page, pageSize) => {
+      try {
+        const response = await getQuizList(page, pageSize);
+        if (!response.items || response.items.length === 0) {
+          console.warn("Received empty items array from API");
+          return { items: [], count: 0, page, pages: 0 }; // Return default values if the API fails
+        }
+        setQuizzes(response.items || []);
+        return response;
+      } catch (error) {
+        console.error("Error fetching quizzes:", error);
+        throw error;
+      }
+    },
     queryKey: ["quizzes"],
     pageSize,
   };
 
-  return usePaginator<DashboardQuizItemT>(paginatorOptions);
+  const result = usePaginator<DashboardQuizItemT>(paginatorOptions);
+
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries({ queryKey: ["quizzes"] });
+    };
+  }, [queryClient]);
+
+  return result;
 };
 
 export const useDashboardQuizzes = () => {
   const pagination = useDashboardPagination();
-  const { updateQuizUrl } = useDashboardStore();
+  const { quizzes, updateQuizUrl } = useDashboardStore();
 
   return {
     ...pagination,
+    quizzes,
     updateQuizUrl,
   };
 };

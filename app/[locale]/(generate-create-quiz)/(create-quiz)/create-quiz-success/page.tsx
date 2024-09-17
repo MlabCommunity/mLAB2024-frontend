@@ -55,7 +55,10 @@ const CreateQuizSuccessPage = () => {
               </div>
             </div>
             <div className="flex items-center justify-end">
-              <BackToDashboard />
+              <BackToDashboard
+                quizId={generatedQuizData?.id}
+                newUrl={generatedQuizData.url}
+              />
             </div>
           </main>
         </form>

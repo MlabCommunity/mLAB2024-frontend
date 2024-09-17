@@ -37,7 +37,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { setStatus, setQuestionsData, setAvailability } = useQuizDetailStore();
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
-  const t = useTranslations("Questi onsOnAnswers");
+  const t = useTranslations("QuestionsOnAnswers");
   const randomNumber = Math.floor(Math.random() * 1000);
 
   useEffect(() => {

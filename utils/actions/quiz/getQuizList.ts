@@ -30,7 +30,6 @@ export const getQuizList = async (
       count: totalItemsCount,
       items,
     };
-    console.log(response.data);
     revalidatePath("/dashboard");
     return data;
   } catch (error) {

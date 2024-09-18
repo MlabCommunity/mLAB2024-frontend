@@ -9,23 +9,27 @@ import { useQueryClient } from "@tanstack/react-query";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
-import { useDashboardQuizzes, useDashboardStore } from "@/store/dashboardStore";
+import usePaginator from "@/app/hooks/usePaginator";
+import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   const {
-    items: quizzes,
     page,
-    pages,
     setPage,
-    isLoading,
-    isError,
-    error,
-  } = useDashboardQuizzes();
+    pages,
+    items: quizzes,
+    isFetching,
+    isSuccess,
+  } = usePaginator({
+    fetch: getQuizList,
+    queryKey: ["quizList"],
+    pageSize: 4,
+  });
 
   const queryClient = useQueryClient();
 
   const renderQuizCards = () => {
-    if (isLoading) return <DashboardLoading />;
+    if (isFetching) return <DashboardLoading />;
     if (!quizzes.length) return null;
 
     return quizzes?.map((quiz: DashboardQuizItemT) => (
@@ -41,7 +45,7 @@ const DashboardPage = () => {
     ));
   };
   const handlePageChange = (newPage: number) => {
-    setPage(newPage); // This will trigger fetching new data for the selected page
+    setPage(newPage);
   };
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["quizzes"] });
@@ -66,7 +70,7 @@ const DashboardPage = () => {
           {renderQuizCards()}
         </div>
         <div className="w-full">
-          {!isLoading && quizzes && quizzes.length >= 0 ? (
+          {isSuccess && quizzes && quizzes.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
               total={pages}

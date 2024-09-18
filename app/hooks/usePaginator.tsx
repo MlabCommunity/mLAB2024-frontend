@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  keepPreviousData,
-  useQuery,
-  QueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { useQuery, QueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
 import { PaginatedResponse } from "@/types";
 
@@ -27,7 +22,6 @@ function usePaginator<T>(
   pages: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   items: T[];
-  showing: [number, number];
 } {
   const [page, setPage] = useState(1);
 
@@ -39,10 +33,9 @@ function usePaginator<T>(
   });
 
   const { data } = query;
+
   const { count = 0, items = [] } = data || {};
   const pages = Math.ceil(count / p.pageSize);
-  const showing = (page - 1) * p.pageSize + (items.length > 0 ? 1 : 0);
-  const showingEnd = page * p.pageSize < count ? page * p.pageSize : count;
 
   return {
     count,
@@ -50,7 +43,6 @@ function usePaginator<T>(
     pages,
     setPage,
     items,
-    showing: [showing, showingEnd],
     ...query,
   };
 }

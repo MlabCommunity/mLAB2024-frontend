@@ -5,6 +5,7 @@ export type DashboardQuizItemT = {
   availability: "Public" | "Private";
   status: "Active" | "Inactive";
   totalQuestions: number;
+  url?: string;
 };
 
 export type DashboardQuizT = {

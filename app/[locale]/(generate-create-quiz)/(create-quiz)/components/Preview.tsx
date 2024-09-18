@@ -3,7 +3,7 @@ import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
 import SaveQuiz from "../../(generate-quiz)/components/buttons/SaveQuiz";
-import NavigationControls from "../../(generate-quiz)/components/buttons/NavigationControls";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import { useRouter, useSearchParams } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
@@ -18,6 +18,7 @@ import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQues
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 
 import { AnimatePresence } from "framer-motion";
+import BackButton from "../../(generate-quiz)/components/buttons/BackButton";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -164,6 +165,7 @@ function Preview() {
         </AnimatePresence>
       </aside>
       <NavigationControls>
+        <BackButton />
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (

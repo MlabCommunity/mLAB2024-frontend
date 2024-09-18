@@ -5,7 +5,7 @@ import { currentProfileUrl, signInUrl } from "@/constants/api";
 import { revalidatePath } from "next/cache";
 import axiosInstance from "../../axiosInstance";
 
-export const updateProfile = async (values: { userName: string }) => {
+export const updateProfile = async (values: { displayName: string }) => {
   const token = cookies().get("AccessToken")?.value;
   try {
     const response = await axiosInstance.put(currentProfileUrl, values, {

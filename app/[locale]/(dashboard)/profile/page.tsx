@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const queryClient = useQueryClient();
   const { data: currentProfile } = useGetCurrentProfile();
   const [nameValue, setNameValue] = useState<string>(
-    currentProfile?.userName || ""
+    currentProfile?.displayName || ""
   );
   const [isChanged, setIsChanged] = useState<boolean>(false);
 
@@ -45,7 +45,7 @@ const ProfilePage = () => {
 
   const handleUpdate = () => {
     mutate({
-      userName: nameValue,
+      displayName: nameValue,
     });
   };
 
@@ -60,6 +60,7 @@ const ProfilePage = () => {
     setNameValue(e.target.value);
     setIsChanged(e.target.value !== currentProfile?.userName);
   };
+
 
   return (
     <motion.section

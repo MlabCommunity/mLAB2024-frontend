@@ -1,17 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import TickCircle from "./TickCircle";
-import EmptyCircle from "./EmptyCircle";
-import NextButton from "./buttons/NextButton";
+import TickCircle from "@/generate-quiz-components/TickCircle";
+import EmptyCircle from "@/generate-quiz-components/EmptyCircle";
+import NextButton from "@/generate-quiz-components/NextButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import NavigationControls from "./buttons/NavigationControls";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
+
 
 function ButtonGroupComponent() {
   const searchParams = useSearchParams();
@@ -148,6 +149,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls isPending={isPending}>
+      
         <NextButton isPending={isPending} />
       </NavigationControls>
     </form>

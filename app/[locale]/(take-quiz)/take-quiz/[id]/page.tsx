@@ -6,19 +6,21 @@ import QuizResults from "../../components/QuizResults";
 import HistoryResults from "../../components/HistoryResults";
 import TakeQuizBox from "../../components/TakeQuizBox";
 import Quiz from "../../components/Quiz";
-import { quizData } from "@/constants";
 import { AnswerMapItemT, HistoryItemT } from "../../types";
+import { useGetQuizParticipation } from "@/utils/hooks/useGetQuizParticipation";
+import { useTakeQuizStore } from "@/store/takeQuizStore";
 
-const TakeQuiz = () => {
+const TakeQuiz = ({ params }: { params: { id: string } }) => {
+  const { data: quizParticipationData } = useGetQuizParticipation(params.id);
   const [isTakeQuizBoxVisible, setIsTakeQuizBoxVisible] = useState(true);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const [answersMap, setAnswersMap] = useState<AnswerMapItemT>({});
   const [history, setHistory] = useState<HistoryItemT[]>([]);
+  const { setAnswersId, setQuestionsId, questionsId, answersId } =
+    useTakeQuizStore();
 
-  const { questions } = quizData;
-  const { question, answers, correctAnswer } = questions[activeQuestion];
   const correctAnswers = history.filter(
     (item) => item.isCorrect === true
   ).length;
@@ -31,44 +33,36 @@ const TakeQuiz = () => {
   };
 
   const nextQuestion = () => {
+    const currentQuestionId =
+      quizParticipationData?.quizResponse.questions[activeQuestion]?.id;
+
+    // Update questionsId array
+    if (!questionsId.includes(currentQuestionId)) {
+      setQuestionsId((prev) => [...prev, currentQuestionId]);
+    }
+
     if (answersMap[activeQuestion] !== undefined) {
-      const selectedAnswer = answers[answersMap[activeQuestion]!];
-      const isCorrect =
-        answersMap[activeQuestion] ===
-        questions[activeQuestion].answers.indexOf(correctAnswer);
-
-      setHistory((prev) => {
-        const updatedHistory = [...prev];
-        const existingIndex = updatedHistory.findIndex(
-          (item) => item.question === question
-        );
-
-        const options = answers.map((answer) => ({
-          answer,
-          properValue: answer === correctAnswer,
-        }));
-
-        const newHistoryItem = {
-          question,
-          selectedAnswer,
-          isCorrect,
-          options,
-        };
-
+      const selectedAnswerId =
+        quizParticipationData?.quizResponse.questions[activeQuestion].answers[
+          answersMap[activeQuestion]!
+        ].id;
+      setAnswersId((prev) => {
+        const newAnswersId = [...prev];
+        const existingIndex = questionsId.indexOf(currentQuestionId);
         if (existingIndex >= 0) {
-          updatedHistory[existingIndex] = newHistoryItem;
+          newAnswersId[existingIndex] = selectedAnswerId;
         } else {
-          updatedHistory.push(newHistoryItem);
+          newAnswersId.push(selectedAnswerId);
         }
-
-        return updatedHistory;
+        return newAnswersId;
       });
     }
 
-    if (activeQuestion < questions.length - 1) {
+    if (
+      activeQuestion <
+      quizParticipationData?.quizResponse.questions.length - 1
+    ) {
       setActiveQuestion((prev) => prev + 1);
-    } else {
-      setShowResult(true);
     }
   };
 
@@ -84,35 +78,42 @@ const TakeQuiz = () => {
         {isTakeQuizBoxVisible && (
           <TakeQuizBox
             setIsTakeQuizBoxVisible={setIsTakeQuizBoxVisible}
-            quizTitle={quizData.title}
-            quizDescription={quizData.description}
-            quizLength={questions.length}
+            quizTitle={quizParticipationData?.quizResponse.title}
+            quizDescription={quizParticipationData?.quizResponse.description}
+            quizLength={quizParticipationData?.quizResponse.questions.length}
           />
         )}
         {!isTakeQuizBoxVisible && !showResult && (
           <Quiz
-            questionHeading={questions[activeQuestion].question}
-            questionDescription={questions[activeQuestion].description}
+            questionHeading={
+              quizParticipationData?.quizResponse.questions[activeQuestion]
+                .title
+            }
             currentQuestionNumber={activeQuestion + 1}
-            answers={answers}
+            answers={
+              quizParticipationData?.quizResponse.questions[activeQuestion]
+                .answers
+            }
             handleSelectAnswer={handleSelectAnswer}
             selectedAnswerIndex={answersMap[activeQuestion]}
             nextQuestion={nextQuestion}
             previousQuestion={previousQuestion}
-            quizLength={questions.length}
+            quizLength={quizParticipationData?.quizResponse.questions.length}
             setShowResult={setShowResult}
+            questionsId={questionsId}
+            answersId={answersId}
           />
         )}
         {showResult && !isHistoryVisible && (
           <QuizResults
             correctAnswers={correctAnswers}
-            quizLength={questions.length}
+            quizLength={quizParticipationData?.quizResponse.questions.length}
             setIsHistoryVisible={setIsHistoryVisible}
           />
         )}
         {isHistoryVisible && (
           <HistoryResults
-            quizLength={questions.length}
+            quizLength={quizParticipationData?.quizResponse.questions.length}
             correctAnswers={correctAnswers}
             history={history}
           />

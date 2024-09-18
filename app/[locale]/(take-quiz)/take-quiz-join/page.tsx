@@ -9,32 +9,30 @@ import { cn } from "@/lib";
 import { getIdFromUrl } from "@/utils/helpers";
 import { registerParticipation } from "@/utils/actions/quiz/registerParticipation";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
-const TakeQuizPage = () => {
+const TakeQuizJoinPage = () => {
+  const router = useRouter();
   const t = useTranslations("TakeQuiz");
   const [quizUrl, setQuizUrl] = useState("");
   const [quizCode, setQuizCode] = useState("");
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: registerParticipationMutate, isPending } = useMutation({
     mutationFn: registerParticipation,
     onError: (error) => toast.error(error.message),
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: ({ id }) => {
       toast.success(t("codeGeneratedSuccessfully"));
-      setQuizCode(data.id);
+      setQuizCode(id);
     },
-    onMutate: () => {
-      toast.loading(t("generatingQuizCode"), { id: "loading-toast" });
-    },
-    onSettled() {
-      toast.dismiss("loading-toast");
-    },
+    onMutate: () =>
+      toast.loading(t("generatingQuizCode"), { id: "loading-toast" }),
+    onSettled: () => toast.dismiss("loading-toast"),
   });
 
   const handleGenerateCode = () => {
     const urlId = getIdFromUrl(quizUrl);
-    if (quizUrl && urlId) {
-      mutate({ urlId });
+    if (urlId) {
+      registerParticipationMutate({ urlId });
     } else {
       toast.error(t("enterQuizUrl"));
     }
@@ -42,11 +40,15 @@ const TakeQuizPage = () => {
 
   const handleJoinQuiz = () => {
     if (quizCode) {
-      toast.success(t("joiningQuiz") + quizCode);
+      toast.success(`${t("joiningQuiz")} ${quizCode}`);
+      router.push(`/take-quiz/${quizCode}`);
     } else {
       toast.error(t("generateCodeFirst"));
     }
   };
+
+  const isGenerateDisabled = isPending || !quizUrl;
+  const isJoinDisabled = !quizCode || isPending;
 
   return (
     <motion.section
@@ -55,7 +57,7 @@ const TakeQuizPage = () => {
       transition={{ duration: 0.5 }}
       className="py-8 w-full max-w-7xl mx-auto"
     >
-      <h2 className="text-3xl font-bold mb-2 text-gray-800">{t("takeQuiz")}</h2>
+      <h2 className="text-3xl font-bold mb-2 text-black">{t("takeQuiz")}</h2>
       <p className="text-gray-600 mb-6">{t("toImprove")}</p>
 
       <Card className="mb-6 p-2">
@@ -74,11 +76,10 @@ const TakeQuizPage = () => {
             color="primary"
             className={cn(
               "cursor-pointer text-md",
-              (isPending || !quizUrl) &&
-                "cursor-not-allowed disabled:bg-primary/70"
+              isGenerateDisabled && "cursor-not-allowed disabled:bg-primary/70"
             )}
             onClick={handleGenerateCode}
-            disabled={isPending || !quizUrl}
+            disabled={isGenerateDisabled}
           >
             {t("generateCode2")}
           </Button>
@@ -98,11 +99,10 @@ const TakeQuizPage = () => {
           <Button
             color="success"
             onClick={handleJoinQuiz}
-            disabled={!quizCode || isPending}
+            disabled={isJoinDisabled}
             className={cn(
-              "w-full  text-white cursor-pointer text-md",
-              (isPending || !quizUrl) &&
-                "cursor-not-allowed disabled:bg-success/70"
+              "w-full text-white cursor-pointer text-md",
+              isJoinDisabled && "cursor-not-allowed disabled:bg-success/70"
             )}
           >
             {t("join")}
@@ -113,4 +113,4 @@ const TakeQuizPage = () => {
   );
 };
 
-export default TakeQuizPage;
+export default TakeQuizJoinPage;

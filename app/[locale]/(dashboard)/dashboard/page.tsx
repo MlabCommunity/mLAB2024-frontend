@@ -63,7 +63,7 @@ const DashboardPage = () => {
           <h2 className="text-4xl font-bold mb-4 sm:mb-0 text-foreground-700">
             {t("quizzes")}
           </h2>
-          <Link href="take-quiz">
+          <Link href="take-quiz-join">
             <Button size="lg" className="gap-2" color="primary">
               <ListPlus />
               Take quiz

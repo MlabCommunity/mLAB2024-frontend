@@ -17,7 +17,6 @@ interface QuizProps {
   previousQuestion: () => void;
   quizLength: number;
   setShowResult: React.Dispatch<React.SetStateAction<boolean>>;
-  questionDescription: string;
 }
 
 const Quiz = ({
@@ -30,7 +29,8 @@ const Quiz = ({
   previousQuestion,
   quizLength,
   setShowResult,
-  questionDescription,
+  questionsId,
+  answersId,
 }: QuizProps) => {
   const alphabet = ["A", "B", "C", "D"];
   const { openModal } = useModalStore();
@@ -48,15 +48,12 @@ const Quiz = ({
         <p className="font-bold text-foreground-700">
           {currentQuestionNumber}. {questionHeading}
         </p>
-        <p className="text-foreground-500 text-base mt-1">
-          {questionDescription}
-        </p>
       </div>
       <ul className="w-full flex flex-col gap-4">
         {answers.map((answer, index) => (
           <button
-            onClick={() => handleSelectAnswer(answer, index)}
-            key={answer}
+            onClick={() => handleSelectAnswer(answer?.content, index)}
+            key={answer?.content}
           >
             <li
               key={index}
@@ -79,7 +76,7 @@ const Quiz = ({
                   selectedAnswerIndex === index && "text-white"
                 )}
               >
-                {answer}
+                {answer?.content}
               </p>
             </li>
           </button>
@@ -103,6 +100,7 @@ const Quiz = ({
             color="primary"
             radius="md"
             onClick={() => {
+              nextQuestion();
               openModal("finishQuiz");
             }}
             disabled={selectedAnswerIndex === undefined}
@@ -126,6 +124,8 @@ const Quiz = ({
       <FinishQuizModal
         setShowResult={setShowResult}
         nextQuestion={nextQuestion}
+        questionsId={questionsId}
+        answersId={answersId}
       />
     </div>
   );

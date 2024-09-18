@@ -1,21 +1,26 @@
 "use client";
 
 import { useModalStore } from "@/store/modalStore";
+import { useTakeQuizStore } from "@/store/takeQuizStore";
+import { submitQuizParticipation } from "@/utils/actions/quiz/submitQuizParticipation";
 import {
   Button,
-  Link,
   Modal,
-  ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 interface FinishQuizModalProps {
   setShowResult: React.Dispatch<React.SetStateAction<boolean>>;
   nextQuestion: () => void;
+  questionsId: string[];
+  answersId: string[];
 }
 
 function FinishQuizModal({
@@ -23,14 +28,36 @@ function FinishQuizModal({
   nextQuestion,
 }: FinishQuizModalProps) {
   const t = useTranslations("TakeQuiz");
-  const { isOpen, type, closeModal, modalData } = useModalStore();
+  const { isOpen, type, closeModal } = useModalStore();
   const isModalOpen = isOpen && type === "finishQuiz";
+  const { setAnswersId, setQuestionsId, questionsId, answersId } =
+    useTakeQuizStore();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: submitQuizParticipation,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success(t("signedIn"));
+    },
+  });
+
+  const { id } = useParams();
+
+  const handleFinish = () => {
+    setShowResult(true);
+    closeModal();
+    mutate({ questionsId, answersId, quizParticipationId: id });
+  };
+
   return (
     <Modal
       onOpenChange={closeModal}
       isOpen={isModalOpen}
       size="3xl"
-      className="bg-content2 "
+      className="bg-content2"
       closeButton={
         <button
           style={{
@@ -67,14 +94,7 @@ function FinishQuizModal({
           <Button variant="flat" color="primary" onPress={closeModal}>
             {t("cancel")}
           </Button>
-          <Button
-            color="primary"
-            onPress={() => {
-              nextQuestion();
-              setShowResult(true);
-              closeModal();
-            }}
-          >
+          <Button color="primary" onPress={handleFinish} isLoading={isPending}>
             {t("finish")}
           </Button>
         </ModalFooter>

@@ -18,7 +18,7 @@ const DeleteQuestionModal = ({
   onConfirmDelete,
   questionTitle,
 }: DeleteQuestionModalProps) => {
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { closeModal, isOpen, type } = useModalStore();
 
   if (!(isOpen && type === "deleteQuestion")) return null;

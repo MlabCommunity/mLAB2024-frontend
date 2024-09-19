@@ -9,7 +9,7 @@ const NavbarContentContainer = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   return (
     <>
       <p className="mb-4">{t("manageSettings")}</p>

@@ -7,19 +7,17 @@ const QuizDurationTime = ({
 }: {
   durationInSeconds: number;
 }) => {
-  const t = useTranslations("QuestionsOnAnswers");
-
-  // Helper function to determine the correct form based on the number
+  const t = useTranslations("quizDetails");
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
 
     const minuteStr =
-      minutes > 0 ? `${minutes} ${getPluralForm(minutes, "minutes")}` : "";
+      minutes > 0 ? `${minutes} ${t(getPluralForm(minutes, "minute"))}` : "";
     const secondStr =
       remainingSeconds > 0
-        ? `${remainingSeconds} ${getPluralForm(remainingSeconds, "seconds")}`
+        ? `${remainingSeconds} ${t(getPluralForm(remainingSeconds, "second"))}`
         : "";
 
     if (minutes > 0 && remainingSeconds > 0) {

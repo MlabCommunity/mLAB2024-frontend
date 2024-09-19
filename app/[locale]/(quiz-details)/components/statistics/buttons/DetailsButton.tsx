@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import React from "react";
 const DetailsButton = () => {
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   return (
     <Button
       variant="solid"

@@ -16,7 +16,7 @@ import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
 import { AnswerT, GeneratedQuestionsT } from "../types";
 
 type QuestionEditT = {
-  questionTitle: string
+  questionTitle: string;
   questionId: string;
   options: AnswerT[];
 };
@@ -27,7 +27,7 @@ const EditQuestionModal = ({
   questionData: QuestionEditT;
 }) => {
   const queryClient = useQueryClient();
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { closeModal, isOpen, type } = useModalStore();
 
   const [question, setQuestion] = useState(questionData.questionTitle);

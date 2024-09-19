@@ -11,7 +11,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const t = await getTranslations("QuestionsOnAnswers");
+  const t = await getTranslations("quizDetails");
   return (
     <>
       <Header />

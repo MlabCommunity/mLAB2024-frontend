@@ -57,7 +57,7 @@
     "active": "Active",
     "inactive": "Inactive"
   },
-  "QuestionsOnAnswers": {
+  "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
     "availabilityUpdateError": "Error while updating availability",
     "statusUpdateSuccess": "Status updated succesfully!",
@@ -89,12 +89,12 @@
     "timeTableHeader": "Time",
     "dateTableHeader": "Date",
     "detailsButton": "Details",
-    "minutes_one": "minute",
-    "minutes_few": "minutes",
-    "minutes_many": "minutes",
-    "seconds_one": "second",
-    "seconds_few": "seconds",
-    "seconds_many": "seconds",
+    "minute_one": "minute",
+    "minute_few": "minutes",
+    "minute_many": "minutes",
+    "second_one": "second",
+    "second_few": "seconds",
+    "second_many": "seconds",
     "generalSettingsHeadingTitle": "This is the title of your quiz. It will be displayed on the quiz page. You can change it at any time.",
     "generalSettingsHeading": "Quiz Title",
     "generalSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. You can change it anytime",
@@ -113,7 +113,9 @@
     "titleRequired": "Title is required.",
     "dataUpdated": "Data updated successfully",
     "changedQuestionSuccessfully": "Changed question successfully",
-    "deletedQuestionSuccess": "Deleted question succesfully"
+    "deletedQuestionSuccess": "Deleted question succesfully",
+    "linkCopiedMsg": "Copied to clipboard",
+    "close": "Close"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -232,5 +234,14 @@
     "addQuestion": "Add question field",
     "remove": "Remove",
     "addedQuestionSuccess": "Question added successfully"
+  },
+  "ShareQuizModal": {
+    "shareQuizTitle": "Share your quiz with others !",
+    "shareAsLinkTitle": "Share as a link",
+    "shareAsLinkDesc": "Share the link to the exercise with your colleagues or students",
+    "embedWebsiteTitle": "Embed in your website",
+    "embedWebsiteDesc": "Simply use the excercise on any website or platform",
+    "copyToClipboard": "Copy to clipboard",
+    "close": "Close"
   }
 }

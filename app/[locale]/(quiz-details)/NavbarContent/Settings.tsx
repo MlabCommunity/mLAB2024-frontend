@@ -24,7 +24,7 @@ function Settings({ quizId }: SettingsProps) {
   console.log(currentPage);
 
   const queryClient = useQueryClient();
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { mutate: updateAvailabilityMutate } = useMutation({
     mutationFn: ({
       id,

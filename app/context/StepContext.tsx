@@ -24,7 +24,12 @@ const StepperContext = createContext<StepContextProps | undefined>(undefined);
 function StepperProvider({ children }: { children: ReactNode }) {
   const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
 
-  const stepperRoutes = routes.createQuiz.slice(1, 4);
+  const stepperRoutes = [
+    { route: routes.generateQuiz.pathname },
+    { route: routes.configureQuiz.pathname },
+    { route: routes.quizPreview.pathname },
+    { route: routes.quizSuccess.pathname },
+  ].slice(1, 4);
 
   const currentRoute = usePathname();
 

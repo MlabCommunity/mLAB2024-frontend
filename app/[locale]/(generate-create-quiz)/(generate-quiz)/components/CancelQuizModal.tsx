@@ -22,7 +22,7 @@ function CancelQuizModal() {
   const handleClose = () => {
     localStorage.removeItem("visitedRoutes");
     closeModal();
-    router.push(routes.dashboard);
+    router.push(routes.dashboard.pathname);
   };
   return (
     <Modal
@@ -67,7 +67,7 @@ function CancelQuizModal() {
           <Button variant="flat" color="primary" onPress={closeModal}>
             {t("cancelButton")}
           </Button>
-          <Link href={routes.dashboard}>
+          <Link href={routes.dashboard.pathname}>
             <Button color="danger" onPress={handleClose}>
               {t("cancelQuizConfirm")}
             </Button>

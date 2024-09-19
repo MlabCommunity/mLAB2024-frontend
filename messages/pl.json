@@ -56,7 +56,7 @@
     "active": "Aktywny",
     "inactive": "Nieaktywny"
   },
-  "QuestionsOnAnswers": {
+  "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
     "availabilityUpdateError": "Bład podczas aktualizacji dostępności",
     "statusUpdateSuccess": "Status został zaktualizowany.",
@@ -88,11 +88,11 @@
     "statusFinishedTableHeader": "Ukończony",
     "statusStoppedTableHeader": "Wstrzymany",
     "minutes_one": "minuta",
-    "minutes_few": "minuty",
-    "minutes_many": "minut",
-    "seconds_one": "sekunda",
-    "seconds_few": "sekundy",
-    "seconds_many": "sekund",
+    "minute_few": "minuty",
+    "minute_many": "minut",
+    "second_one": "sekunda",
+    "second_few": "sekundy",
+    "second_many": "sekund",
     "detailsButton": "Szczegóły",
     "minutes": "minut",
     "generalSettingsHeading": "Tytuł Quizu",
@@ -187,7 +187,8 @@
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Sukces",
     "quizSuccessMessage": "Quiz został pomyślnie utworzony. Teraz możesz go udostępnić innym.",
-    "backToDashboardBtn": "Powrót do dashboardu"
+    "backToDashboardBtn": "Powrót do dashboardu",
+    "linkCopiedMsg": "Skopiowano link"
   },
 
   "TakeQuiz": {
@@ -244,5 +245,16 @@
     "addQuestion": "Dodaj pole pytania",
     "remove": "Usuń",
     "addedQuestionSuccess": "Dodano pytanie do quizu"
+  },
+  "ShareQuizModal": {
+    "shareQuizTitle": "Udostępnij swój quiz innym !",
+    "shareAsLinkTitle": "Udostępnij jako link ",
+    "shareAsCodeTitle": "Udostępnij do swojej strony internetowej",
+    "shareAsLinkDesc": "Podziel się quizem z Twoimi przyjaciółmi",
+    "embedWebsiteTitle": "Osadź swoją stronę internetową",
+    "embedWebsiteDesc": "Wykorzystaj ćwiczenie na swojej stronie internetowej lub innej platformie",
+    "copyToClipboard": "Skopiuj do schowka",
+    "linkCopiedMsg": "Skopiowano link",
+    "close": "Zamknij"
   }
 }

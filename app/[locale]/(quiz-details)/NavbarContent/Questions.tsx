@@ -21,7 +21,7 @@ const Questions = () => {
     number | null
   >(null);
   const { openModal, setModalData, closeModal, type } = useModalStore();
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { questions, setQuestionsData } = useQuizDetailStore();
   const queryClient = useQueryClient();
 

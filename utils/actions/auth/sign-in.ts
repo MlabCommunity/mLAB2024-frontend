@@ -20,12 +20,16 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
     });
 
     if (rememberMe) {
-      cookies().set("AccessToken", response.data.accessToken, { secure: true });
+      cookies().set("AccessToken", response.data.accessToken, {
+        secure: false,
+      });
       cookies().set("RefreshToken", response.data.refreshToken, {
-        secure: true,
+        secure: false,
       });
     } else {
-      cookies().set("AccessToken", response.data.accessToken, { secure: true });
+      cookies().set("AccessToken", response.data.accessToken, {
+        secure: false,
+      });
     }
   } catch (error) {
     if (error instanceof AxiosError) {

@@ -5,40 +5,35 @@ import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { Button, Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT } from "../types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getQuizList } from "@/utils/actions/quiz/getQuizList";
+import { useQueryClient } from "@tanstack/react-query";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
 import { ListPlus } from "lucide-react";
-
+import usePaginator from "@/app/hooks/usePaginator";
+import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
-  const [currentPage, setCurrentPage] = React.useState(1);
-
-  const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ["quizList", currentPage],
-    queryFn: () => getQuizList(currentPage),
+  const {
+    page,
+    setPage,
+    pages,
+    items: quizzes,
+    isFetching,
+    isSuccess,
+  } = usePaginator({
+    fetch: getQuizList,
+    queryKey: ["quizList"],
+    pageSize: 4,
   });
 
-  const totalPages = data?.totalPages ?? 0;
-
   const queryClient = useQueryClient();
-  useEffect(() => {
-    if (currentPage < totalPages) {
-      const nextPage = currentPage + 1;
-      queryClient.prefetchQuery({
-        queryKey: ["quizList", nextPage],
-        queryFn: () => getQuizList(nextPage),
-      });
-    }
-  }, [currentPage, queryClient, totalPages]);
 
   const renderQuizCards = () => {
     if (isFetching) return <DashboardLoading />;
-    if (!data?.items?.length) return null;
+    if (!quizzes.length) return null;
 
-    return data.items.map((quiz: DashboardQuizItemT) => (
+    return quizzes?.map((quiz: DashboardQuizItemT) => (
       <QuizCard
         key={quiz.id}
         id={quiz.id}
@@ -46,11 +41,16 @@ const DashboardPage = () => {
         description={quiz.description}
         status={quiz.status}
         questions={quiz.totalQuestions}
-        currentPage={currentPage}
+        currentPage={page}
       />
     ));
   };
-
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["quizzes"] });
+  }, [queryClient]);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -77,18 +77,18 @@ const DashboardPage = () => {
           {renderQuizCards()}
         </div>
         <div className="w-full">
-          {isSuccess && data?.items.length >= 0 ? (
+          {isSuccess && quizzes && quizzes.length >= 0 ? (
             <Pagination
               className="flex justify-center w-full py-10"
-              total={totalPages}
-              initialPage={currentPage}
-              onChange={setCurrentPage}
+              total={pages}
+              initialPage={page}
+              onChange={handlePageChange}
             />
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />
           )}
           <div className="w-full border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
-            <Link href={routes.createQuiz[0].route}>
+            <Link href={routes.generateQuiz.pathname}>
               <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
                 <span className="text-4xl mb-2">+</span>
                 <span>{t("addQuizzButton")}</span>

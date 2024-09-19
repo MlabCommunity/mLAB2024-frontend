@@ -25,7 +25,7 @@ const General = ({ title, description }: GeneralProps) => {
 
   const queryClient = useQueryClient();
   const { quizId } = useParams();
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
 
   const [isModified, setIsModified] = useState(false);
   const initialValues = { title, description };

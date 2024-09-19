@@ -7,7 +7,7 @@ type ChipStatusProp = {
 };
 
 const StatusChip = ({ status }: ChipStatusProp) => {
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   return (
     <Chip
       variant="dot"

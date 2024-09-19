@@ -22,7 +22,7 @@ function Settings({ quizId }: SettingsProps) {
   const currentPage = Number(params.get("currentPage"));
 
   const queryClient = useQueryClient();
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { mutate: updateAvailabilityMutate } = useMutation({
     mutationFn: ({
       id,

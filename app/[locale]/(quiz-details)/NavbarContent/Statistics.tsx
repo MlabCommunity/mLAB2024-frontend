@@ -15,12 +15,12 @@ import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import EventDuration from "../components/statistics/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
 
 function Statistics() {
   const date = new Date();
   const formatedDate = format(date, "dd.MM.yyyy");
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const finishedQuizzes = [
     {
       quizId: 1,
@@ -65,6 +65,15 @@ function Statistics() {
       email: "user@example.com",
       stat: "Finished",
       time: <EventDuration durationInSeconds={3600} />,
+      date: formatedDate,
+    },
+    {
+      quizId: 5,
+      score: 40,
+      name: "Random",
+      email: "user@example.com",
+      stat: "Finished",
+      time: <EventDuration durationInSeconds={3} />,
       date: formatedDate,
     },
   ];

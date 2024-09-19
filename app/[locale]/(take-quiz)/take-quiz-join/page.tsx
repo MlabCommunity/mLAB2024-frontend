@@ -25,7 +25,6 @@ const TakeQuizJoinPage = () => {
     mutationFn: registerParticipation,
     onError: (error) => toast.error(error.message),
     onSuccess: ({ id }) => {
-      toast.success(t("joined"));
       router.push(`${routes.takeQuiz.pathname}${id}`);
     },
     onMutate: () =>

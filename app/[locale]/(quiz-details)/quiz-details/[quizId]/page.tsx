@@ -16,7 +16,6 @@ import QuizDetailsInfo from "../../components/QuizDetailsInfo";
 import { motion, useScroll } from "framer-motion";
 import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
-import { getJoinCode, createNewQuizURL } from "@/utils/helpers";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -41,7 +40,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("quizDetails");
-  const { shareLink } = singleQuizData;
   useEffect(() => {
     if (singleQuizData) {
       setQuestionsData(singleQuizData?.questions || []);
@@ -144,7 +142,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           {renderTabContent(activeTab)}
         </div>
       </div>
-      <ShareQuizModal shareLink={shareLink} />
+      <ShareQuizModal shareLink={singleQuizData?.shareLink} />
     </>
   );
 };

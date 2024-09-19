@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import Container from "@/components/shared/Container";
 import QuizResults from "../../components/QuizResults";
 import HistoryResults from "../../components/HistoryResults";
@@ -9,9 +9,13 @@ import Quiz from "../../components/Quiz";
 import { AnswerMapItemT } from "../../types";
 import { useGetQuizParticipation } from "@/utils/hooks/useGetQuizParticipation";
 import { useTakeQuizStore } from "@/store/takeQuizStore";
+import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
+import { set } from "date-fns";
 
 const TakeQuiz = ({ params }: { params: { id: string } }) => {
   const { data: quizParticipationData } = useGetQuizParticipation(params.id);
+  const t = useTranslations("TakeQuiz");
 
   const [quizState, setQuizState] = useState({
     isTakeQuizBoxVisible: true,
@@ -22,6 +26,7 @@ const TakeQuiz = ({ params }: { params: { id: string } }) => {
   const [answersMap, setAnswersMap] = useState<AnswerMapItemT>({});
   const { setAnswersId, setQuestionsId, questionsId, answersId } =
     useTakeQuizStore();
+  const [toastShown, setToastShown] = useState(false);
 
   const handleSelectAnswer = useCallback(
     (_answer: string, index: number) => {
@@ -93,6 +98,13 @@ const TakeQuiz = ({ params }: { params: { id: string } }) => {
       quizParticipationData?.quizResponse.questions[quizState.activeQuestion],
     [quizParticipationData, quizState.activeQuestion]
   );
+
+  if (quizParticipationData) {
+    if (!toastShown) {
+      toast.success(t("joined"));
+      setToastShown(true);
+    }
+  }
 
   return (
     <Container>

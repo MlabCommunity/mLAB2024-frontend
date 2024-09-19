@@ -66,7 +66,7 @@ const DashboardPage = () => {
           <Link href="take-quiz-join">
             <Button size="lg" className="gap-2" color="primary">
               <ListPlus />
-              Take quiz
+              {t("takeQuizBtn")}
             </Button>
           </Link>
         </div>

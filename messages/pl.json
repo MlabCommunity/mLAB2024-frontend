@@ -54,7 +54,8 @@
     "updatingQuizStatus": "Aktualizowanie statusu quizu...",
     "statusUpdateError": "Bład podczas aktualizacji statusu",
     "active": "Aktywny",
-    "inactive": "Nieaktywny"
+    "inactive": "Nieaktywny",
+    "takeQuizBtn": "Rozpocznij quiz"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -215,7 +216,7 @@
     "notYourDay": "To nie Twój dzień...",
     "warningName": "Imię musi mieć co najmniej 2 znaki",
     "codeGeneratedSuccessfully": "Kod wygenerowany pomyślnie",
-    "enterQuizUrl": "Wprowadź adres URL quizu",
+    "enterQuizUrl": "Wprowadź kod do quizu",
     "generateCodeFirst": "Proszę najpierw wygenerować kod",
     "joiningQuiz": "Dołączanie do quizu z kodem: ",
     "toImprove": "Weź udział w quizie, aby poprawić swoje umiejętności.",
@@ -225,9 +226,9 @@
     "willApearHere": "Twój kod pojawi się tutaj",
     "generatingQuizCode": "Generowanie kodu quizu...",
     "charactersLong": "Kod quizu musi mieć 8 znaków",
-    "joined":"Dołączono do quizu",
-    "joining":"Dołączanie...",
-    "calculating":"Liczenie wyniku...",
+    "joined": "Dołączono do quizu",
+    "joining": "Dołączanie...",
+    "calculating": "Liczenie wyniku...",
     "quizResultSuccess": "Wynik quizu obliczony pomyślnie"
   },
   "NotFoundPage": {

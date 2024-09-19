@@ -37,14 +37,14 @@ export const routes = {
   },
   takeQuiz: {
     title: "Take Quiz",
-    pathname: "/take-quiz/1",
+    pathname: "/take-quiz/",
   },
   quizDetails: {
     title: "Quiz Details",
     pathname: "/quiz-details/",
   },
-  notFoundPage:{
+  notFoundPage: {
     title: "Not Found",
     pathname: "/404",
-  }
+  },
 };

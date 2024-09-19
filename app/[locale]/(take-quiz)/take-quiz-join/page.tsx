@@ -10,6 +10,7 @@ import { registerParticipation } from "@/utils/actions/quiz/registerParticipatio
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { routes } from "@/routes";
 
 const TakeQuizJoinPage = () => {
   const t = useTranslations("TakeQuiz");
@@ -25,7 +26,7 @@ const TakeQuizJoinPage = () => {
     onError: (error) => toast.error(error.message),
     onSuccess: ({ id }) => {
       toast.success(t("joined"));
-      router.push(`/take-quiz/${id}`);
+      router.push(`${routes.takeQuiz.pathname}${id}`);
     },
     onMutate: () =>
       toast.loading(t("joining"), { id: "loading-toast" }),

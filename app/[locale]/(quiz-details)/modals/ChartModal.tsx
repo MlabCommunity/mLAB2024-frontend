@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import ChartComponent from "../components/chart/Chart";
 import { useModalStore } from "@/store/modalStore";
+import CloseButton from "../components/statistics/buttons/CloseButton";
 
 interface FinishedQuiz {
   quizId: number;
@@ -25,21 +26,13 @@ const ChartModal = ({ finishedQuiz }: { finishedQuiz: FinishedQuiz[] }) => {
   }));
 
   return (
-    <Modal isOpen={isModalOpen} size="5xl">
+    <Modal onOpenChange={closeModal} isOpen={isModalOpen} size="5xl">
       <ModalContent>
         <ModalBody>
           <ChartComponent quiz={chartData} />
         </ModalBody>
         <ModalFooter>
-          <Button
-            size="md"
-            color="default"
-            variant="ghost"
-            onClick={closeModal}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark"
-          >
-            Close
-          </Button>
+          <CloseButton close={closeModal} />
         </ModalFooter>
       </ModalContent>
     </Modal>

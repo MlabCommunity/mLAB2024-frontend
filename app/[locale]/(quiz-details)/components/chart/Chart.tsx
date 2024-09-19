@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { useTranslations } from "next-intl";
 
@@ -21,6 +22,7 @@ ChartJS.register(
 );
 
 interface QuizItem {
+  stat: "Finished" | "Stopped";
   name: string;
   scorePercentage: number;
 }
@@ -28,7 +30,8 @@ interface QuizItem {
 const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
   const t = useTranslations("ChartModal");
   const title = t("title");
-  const options = {
+
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -44,7 +47,7 @@ const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
         beginAtZero: true,
         max: 100,
         ticks: {
-          callback: (value: string) => {
+          callback: function (value) {
             return value + "%";
           },
         },
@@ -52,19 +55,24 @@ const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
     },
   };
 
-  if (!quiz) {
+  if (!quiz || quiz.length === 0) {
     return <div>No data available</div>;
   }
 
   const labels = quiz.map((item) => item.name);
   const label = t("legend");
+
   const data = {
     labels,
     datasets: [
       {
         label: label,
         data: quiz.map((item) => item.scorePercentage),
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        backgroundColor: quiz.map((quiz) =>
+          quiz.scorePercentage > 60
+            ? "rgba(75, 192, 192, 0.6)"
+            : "rgba(255, 99, 132, 0.6)"
+        ),
       },
     ],
   };

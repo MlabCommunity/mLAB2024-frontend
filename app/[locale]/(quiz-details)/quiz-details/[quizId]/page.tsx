@@ -153,7 +153,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         </div>
       </div>
       <ShareQuizModal shareLink={shareLink} />
-      <ChartModal />
     </>
   );
 };

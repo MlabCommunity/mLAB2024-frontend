@@ -9,7 +9,6 @@ export async function uploadFileAction(
   formData: FormData
 ) {
   // const data = Object.fromEntries(formData);
-  console.log(formData);
   // const validatedFields = uploadSchema.safeParse({ image: data.fileId });
   const access = cookies().get("AccessToken")?.value;
   // return validatedFields;

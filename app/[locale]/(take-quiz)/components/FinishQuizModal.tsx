@@ -18,33 +18,24 @@ import toast from "react-hot-toast";
 
 interface FinishQuizModalProps {
   setShowResult: React.Dispatch<React.SetStateAction<boolean>>;
-  nextQuestion: () => void;
-  questionsId: string[];
-  answersId: string[];
 }
 
-function FinishQuizModal({
-  setShowResult,
-  nextQuestion,
-}: FinishQuizModalProps) {
+function FinishQuizModal({ setShowResult }: FinishQuizModalProps) {
   const t = useTranslations("TakeQuiz");
   const { isOpen, type, closeModal } = useModalStore();
   const isModalOpen = isOpen && type === "finishQuiz";
-  const { setAnswersId, setQuestionsId, questionsId, answersId } =
-    useTakeQuizStore();
+  const { questionsId, answersId } = useTakeQuizStore();
+  const { id } = useParams();
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: submitQuizParticipation,
     onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: (data) => {
-      console.log(data);
-      toast.success(t("signedIn"));
+    onMutate: () => {
+      toast.loading(t("calculating"), { id: "calculating-quiz-result" });
     },
   });
-
-  const { id } = useParams();
 
   const handleFinish = () => {
     setShowResult(true);

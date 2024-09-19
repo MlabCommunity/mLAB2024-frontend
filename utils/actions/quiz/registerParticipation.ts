@@ -18,7 +18,6 @@ export const registerParticipation = async (data: { urlId: string }) => {
         },
       }
     );
-    console.log(response)
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

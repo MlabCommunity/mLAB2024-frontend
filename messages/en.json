@@ -224,7 +224,12 @@
     "generateCode2": "Generate Code",
     "join": "Join Quiz",
     "willApearHere": "Your code will appear here",
-    "generatingQuizCode": "Generating quiz code..."
+    "generatingQuizCode": "Generating quiz code...",
+    "charactersLong": "Quiz code must be exactly 8 characters long",
+    "joined": "Joined to the quiz",
+    "joining": "Joining...",
+    "calculating": "Calculating result...",
+    "quizResultSuccess": "Quiz result calculated successfully"
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",

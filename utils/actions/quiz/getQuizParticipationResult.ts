@@ -1,16 +1,18 @@
 "use server";
 
-import { cookies } from "next/headers";
-import { createQuizUrl, submitQuizParticipationUrl } from "@/constants/api";
-import axiosInstance from "../../axiosInstance";
+import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
+import { cookies } from "next/headers";
+import { getQuizParticipation } from "./getQuizParticipation";
+import { getQuizParticipationResultUrl } from "@/constants/api";
 
-export const submitQuizParticipation = async (data: any) => {
+export const getQuizParticipationResult = async (
+  quizParticipationId: string
+) => {
   const token = cookies().get("AccessToken")?.value;
   try {
-    const response = await axiosInstance.post(
-      submitQuizParticipationUrl,
-      data,
+    const response = await axiosInstance.get(
+      getQuizParticipationResultUrl + `${quizParticipationId}/result`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -20,7 +22,6 @@ export const submitQuizParticipation = async (data: any) => {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error);
       throw new Error(error.response?.data?.detail);
     } else {
       throw new Error("An unexpected error occurred");

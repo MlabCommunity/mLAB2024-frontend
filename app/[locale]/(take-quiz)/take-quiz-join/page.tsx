@@ -6,49 +6,47 @@ import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import { cn } from "@/lib";
-import { getIdFromUrl } from "@/utils/helpers";
 import { registerParticipation } from "@/utils/actions/quiz/registerParticipation";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 const TakeQuizJoinPage = () => {
-  const router = useRouter();
   const t = useTranslations("TakeQuiz");
+
+  const quizUrlSchema = z.string().length(8, { message: t("charactersLong") });
+
+  const router = useRouter();
   const [quizUrl, setQuizUrl] = useState("");
-  const [quizCode, setQuizCode] = useState("");
+  const [error, setError] = useState("");
 
   const { mutate: registerParticipationMutate, isPending } = useMutation({
     mutationFn: registerParticipation,
     onError: (error) => toast.error(error.message),
     onSuccess: ({ id }) => {
-      toast.success(t("codeGeneratedSuccessfully"));
-      setQuizCode(id);
+      toast.success(t("joined"));
+      router.push(`/take-quiz/${id}`);
     },
     onMutate: () =>
-      toast.loading(t("generatingQuizCode"), { id: "loading-toast" }),
+      toast.loading(t("joining"), { id: "loading-toast" }),
     onSettled: () => toast.dismiss("loading-toast"),
   });
 
-  const handleGenerateCode = () => {
-    const urlId = getIdFromUrl(quizUrl);
-    if (urlId) {
-      registerParticipationMutate({ urlId });
-    } else {
-      toast.error(t("enterQuizUrl"));
-    }
-  };
-
   const handleJoinQuiz = () => {
-    if (quizCode) {
-      toast.success(`${t("joiningQuiz")} ${quizCode}`);
-      router.push(`/take-quiz/${quizCode}`);
-    } else {
-      toast.error(t("generateCodeFirst"));
+    try {
+      quizUrlSchema.parse(quizUrl);
+      setError("");
+      registerParticipationMutate({ urlId: quizUrl });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        setError(err.errors[0].message);
+      } else {
+        setError(t("invalidQuizUrl"));
+      }
     }
   };
 
-  const isGenerateDisabled = isPending || !quizUrl;
-  const isJoinDisabled = !quizCode || isPending;
+  const isJoinDisabled = !quizUrl || isPending;
 
   return (
     <motion.section
@@ -60,49 +58,30 @@ const TakeQuizJoinPage = () => {
       <h2 className="text-3xl font-bold mb-2 text-black">{t("takeQuiz")}</h2>
       <p className="text-gray-600 mb-6">{t("toImprove")}</p>
 
-      <Card className="mb-6 p-2">
-        <CardHeader>
-          <h3 className="text-xl font-semibold">{t("generateCode")}</h3>
-        </CardHeader>
-        <CardBody>
-          <Input
-            label="Quiz URL"
-            placeholder={t("enterQuizUrl")}
-            value={quizUrl}
-            onChange={(e) => setQuizUrl(e.target.value)}
-            className="mb-4"
-          />
-          <Button
-            color="primary"
-            className={cn(
-              "cursor-pointer text-md",
-              isGenerateDisabled && "cursor-not-allowed disabled:bg-primary/70"
-            )}
-            onClick={handleGenerateCode}
-            disabled={isGenerateDisabled}
-          >
-            {t("generateCode2")}
-          </Button>
-        </CardBody>
-      </Card>
-
       <Card className="p-2">
         <CardHeader>
           <h3 className="text-xl font-semibold">{t("join")}</h3>
         </CardHeader>
         <CardBody>
-          <div className="bg-gray-100 p-4 rounded-lg mb-4 border-dashed border-2 border-gray-300">
-            <p className="text-xl text-center">
-              {quizCode || t("willApearHere")}
-            </p>
-          </div>
+          <Input
+            size="lg"
+            placeholder={t("enterQuizUrl")}
+            value={quizUrl}
+            onChange={(e) => {
+              setQuizUrl(e.target.value);
+              setError("");
+            }}
+            className="w-full bg-gray-100  border-dashed border-2 border-gray-300 rounded-lg "
+          />
+          {error && <p className="text-red-500 py-3">{error}</p>}
           <Button
             color="success"
             onClick={handleJoinQuiz}
             disabled={isJoinDisabled}
             className={cn(
               "w-full text-white cursor-pointer text-md",
-              isJoinDisabled && "cursor-not-allowed disabled:bg-success/70"
+              isJoinDisabled && "cursor-not-allowed disabled:bg-success/70",
+              !error && "mt-4"
             )}
           >
             {t("join")}

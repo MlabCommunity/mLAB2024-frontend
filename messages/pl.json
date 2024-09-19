@@ -222,7 +222,12 @@
     "generateCode2": "Wygeneruj kod",
     "join": "Dołącz do quizu",
     "willApearHere": "Twój kod pojawi się tutaj",
-    "generatingQuizCode": "Generowanie kodu quizu..."
+    "generatingQuizCode": "Generowanie kodu quizu...",
+    "charactersLong": "Kod quizu musi mieć 8 znaków",
+    "joined":"Dołączono do quizu",
+    "joining":"Dołączanie...",
+    "calculating":"Liczenie wyniku...",
+    "quizResultSuccess": "Wynik quizu obliczony pomyślnie"
   },
   "NotFoundPage": {
     "goDashboard": "Przejdź do panelu",

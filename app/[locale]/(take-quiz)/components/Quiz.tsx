@@ -3,21 +3,25 @@
 import { cn } from "@/lib";
 import { useModalStore } from "@/store/modalStore";
 import { Button, Progress } from "@nextui-org/react";
-import React from "react";
+import React, { SetStateAction } from "react";
 import FinishQuizModal from "./FinishQuizModal";
 import { useTranslations } from "next-intl";
 
 interface QuizProps {
   questionHeading: string;
   currentQuestionNumber: number;
-  answers: string[];
+  answers: { id: string; content: string }[];
   handleSelectAnswer: (answer: string, index: number) => void;
   selectedAnswerIndex: number | undefined;
   nextQuestion: () => void;
   previousQuestion: () => void;
   quizLength: number;
   setShowResult: React.Dispatch<React.SetStateAction<boolean>>;
+  questionsId: string[];
+  answersId: string[];
 }
+
+const ALPHABET = ["A", "B", "C", "D"];
 
 const Quiz = ({
   questionHeading,
@@ -29,18 +33,19 @@ const Quiz = ({
   previousQuestion,
   quizLength,
   setShowResult,
-  questionsId,
-  answersId,
 }: QuizProps) => {
-  const alphabet = ["A", "B", "C", "D"];
   const { openModal } = useModalStore();
   const t = useTranslations("TakeQuiz");
+
+  const progressValue = (currentQuestionNumber / quizLength) * 100;
+  const isLastQuestion = currentQuestionNumber === quizLength;
+  const isAnswerSelected = selectedAnswerIndex == undefined;
 
   return (
     <div className="bg-default-100 px-6 py-6 pt-8 rounded-xl flex flex-col gap-8 items-center w-[700px]">
       <Progress
         aria-label="Progress"
-        value={(currentQuestionNumber / quizLength) * 100}
+        value={progressValue}
         color="primary"
         className="w-full"
       />
@@ -68,7 +73,7 @@ const Quiz = ({
                   selectedAnswerIndex === index && "text-white border-white"
                 )}
               >
-                {alphabet[index]}
+                {ALPHABET[index]}
               </span>
               <p
                 className={cn(
@@ -94,7 +99,7 @@ const Quiz = ({
             {t("previous")}
           </Button>
         )}
-        {currentQuestionNumber === quizLength ? (
+        {isLastQuestion ? (
           <Button
             variant="solid"
             color="primary"
@@ -103,7 +108,7 @@ const Quiz = ({
               nextQuestion();
               openModal("finishQuiz");
             }}
-            disabled={selectedAnswerIndex === undefined}
+            disabled={isAnswerSelected}
             className="text-white self-end text-medium py-1 px-2 cursor-pointer disabled:bg-primary/60 disabled:cursor-not-allowed disabled:hover:bg-primary/60 ml-auto"
           >
             {t("finish")}
@@ -114,19 +119,14 @@ const Quiz = ({
             color="primary"
             radius="md"
             onClick={nextQuestion}
-            disabled={selectedAnswerIndex === undefined}
+            disabled={isAnswerSelected}
             className="text-white self-end text-medium py-1 px-2 cursor-pointer disabled:bg-primary/60 disabled:cursor-not-allowed disabled:hover:bg-primary/60 ml-auto"
           >
             {t("next")}
           </Button>
         )}
       </div>
-      <FinishQuizModal
-        setShowResult={setShowResult}
-        nextQuestion={nextQuestion}
-        questionsId={questionsId}
-        answersId={answersId}
-      />
+      <FinishQuizModal setShowResult={setShowResult} />
     </div>
   );
 };

@@ -17,6 +17,7 @@ import { motion, useScroll } from "framer-motion";
 import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
 import { getJoinCode, createNewQuizURL } from "@/utils/helpers";
+import ChartModal from "../../modals/ChartModal";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -58,6 +59,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
 
   useEffect(() => {
     setActiveTab("Questions");
+    console.log(singleQuizData);
   }, []);
 
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
@@ -151,6 +153,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         </div>
       </div>
       <ShareQuizModal shareLink={shareLink} />
+      <ChartModal />
     </>
   );
 };

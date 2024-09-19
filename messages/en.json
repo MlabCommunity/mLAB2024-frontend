@@ -115,7 +115,9 @@
     "changedQuestionSuccessfully": "Changed question successfully",
     "deletedQuestionSuccess": "Deleted question succesfully",
     "linkCopiedMsg": "Copied to clipboard",
-    "close": "Close"
+    "close": "Close",
+    "noQuizTaken": "You didn't take this quiz.",
+    "quizTakenPreviewButton": "Chart"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -243,5 +245,9 @@
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
     "close": "Close"
+  },
+  "ChartModal": {
+    "title": "Quiz statistics",
+    "legend": "Score (%)"
   }
 }

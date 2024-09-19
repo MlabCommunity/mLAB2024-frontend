@@ -26,6 +26,7 @@ export type ModalType =
   | "editQuestion"
   | "addQuestion"
   | "shareQuizz"
+  | "chartModal"
   | "";
 
 export const useModalStore = create<ModalStore>((set) => ({

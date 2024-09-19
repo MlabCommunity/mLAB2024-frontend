@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { format } from "date-fns";
-
 import {
   Table,
   TableHeader,
@@ -16,15 +15,26 @@ import EventDuration from "../components/statistics/QuizDurationTIme/QuizDuratio
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { showStats } from "@/utils/actions/quiz/showStatistics";
+import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
+import ChartModal from "../modals/ChartModal";
 
 function Statistics() {
   const date = new Date();
   const formatedDate = format(date, "dd.MM.yyyy");
   const t = useTranslations("quizDetails");
+  const { data: user } = useGetCurrentProfile();
+  const userId = user?.id;
+  const { data: stats } = useQuery({
+    queryKey: ["stats", userId],
+    queryFn: () => showStats(userId),
+    enabled: !!userId,
+  });
   const finishedQuizzes = [
     {
       quizId: 1,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Finished",
@@ -33,7 +43,7 @@ function Statistics() {
     },
     {
       quizId: 2,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Stopped",
@@ -42,7 +52,7 @@ function Statistics() {
     },
     {
       quizId: 3,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Stopped",
@@ -51,7 +61,7 @@ function Statistics() {
     },
     {
       quizId: 4,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Finished",
@@ -60,7 +70,7 @@ function Statistics() {
     },
     {
       quizId: 5,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Finished",
@@ -69,7 +79,7 @@ function Statistics() {
     },
     {
       quizId: 5,
-      score: 40,
+      scorePercentage: 40,
       name: "Random",
       email: "user@example.com",
       stat: "Finished",
@@ -127,12 +137,12 @@ function Statistics() {
             emptyContent={"You didn't take any quiz"}
             className="bg-white rounded-lg"
           >
-            {finishedQuizzes.map((finishedQuizz) => (
+            {finishedQuizzes?.map((finishedQuizz) => (
               <TableRow
                 className="bg-white rounded-lg"
                 key={finishedQuizz.quizId}
               >
-                <TableCell>{finishedQuizz.score}</TableCell>
+                <TableCell>{finishedQuizz.scorePercentage}</TableCell>
                 <TableCell>{finishedQuizz.name}</TableCell>
                 <TableCell>{finishedQuizz.email}</TableCell>
                 <TableCell>
@@ -155,6 +165,7 @@ function Statistics() {
           </TableBody>
         </Table>
       </NavbarContentContainer>
+      <ChartModal finishedQuiz={finishedQuizzes} />
     </motion.div>
   );
 }

@@ -3,5 +3,6 @@ import axiosInstance from "./axiosInstance";
 
 export const getCurrentProfile = async () => {
   const response = await axiosInstance.get(currentProfileUrl);
+  console.log(response.data);
   return response.data;
 };

@@ -111,7 +111,9 @@
     "titleRequired": "Tytuł quizu jest wymagany",
     "dataUpdated": "Dane zostały zaktualizowane",
     "changedQuestionSuccessfully": "Pytanie zostało zmienione",
-    "deletedQuestionSuccess": "Usunięto pytanie"
+    "deletedQuestionSuccess": "Usunięto pytanie",
+    "noQuizTaken": "Nie wziąłeś udziału w tym quizie.",
+    "quizTakenPreviewButton": "Wykres"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",
@@ -241,5 +243,9 @@
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
     "close": "Zamknij"
+  },
+  "ChartModal": {
+    "title": "Statystyki quizu",
+    "legend": "Wynik (%)"
   }
 }

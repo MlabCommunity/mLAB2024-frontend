@@ -71,7 +71,7 @@ const Header = () => {
                 </span>
                 <hr className=" w-[85%] mx-auto" />
                 <Link
-                  href={routes.profile}
+                  href={routes.profile.pathname}
                   className="block w-full text-left px-4 py-2 hover:bg-white hover:text-gray-900 transition-colors text-foreground-600 text-medium"
                 >
                   {t("profile")}

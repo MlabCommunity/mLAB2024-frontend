@@ -1,5 +1,5 @@
 import React from "react";
-import CancelButton from "./CancelButton";
+import CancelButton from "../(generate-quiz)/components/buttons/CancelButton";
 
 interface NavigationControlsProps {
   isPending?: boolean;

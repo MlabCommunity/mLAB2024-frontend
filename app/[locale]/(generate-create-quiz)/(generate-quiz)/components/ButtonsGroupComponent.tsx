@@ -1,18 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import TickCircle from "./TickCircle";
-import EmptyCircle from "./EmptyCircle";
-import NextButton from "./buttons/NextButton";
+import TickCircle from "@/generate-quiz-components/TickCircle";
+import EmptyCircle from "@/generate-quiz-components/EmptyCircle";
+import NextButton from "@/generate-quiz-components/NextButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import NavigationControls from "./buttons/NavigationControls";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
-import BackButton from "./buttons/BackButton";
+
 
 function ButtonGroupComponent() {
   const searchParams = useSearchParams();
@@ -34,7 +34,7 @@ function ButtonGroupComponent() {
       const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
       params.set("selectedType", selectedType);
-      router.push(`${routes.createQuiz[2].route}?${params.toString()}`);
+      router.push(`${routes.quizPreview.pathname}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
     onMutate: () => {
@@ -149,7 +149,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls isPending={isPending}>
-        <BackButton />
+      
         <NextButton isPending={isPending} />
       </NavigationControls>
     </form>

@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "@/utils/actions/user/updateProfile";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+
 const ProfilePage = () => {
   const queryClient = useQueryClient();
   const { data: currentProfile } = useGetCurrentProfile();
@@ -51,7 +52,7 @@ const ProfilePage = () => {
   const handleDelete = () => {
     if (window.confirm(t("areYouSure"))) {
       console.log("Delete account");
-      router.push(routes.signIn);
+      router.push(routes.signIn.pathname);
     }
   };
 

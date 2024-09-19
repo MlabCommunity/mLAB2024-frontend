@@ -13,11 +13,11 @@ const Navbar = () => {
   const navbarLinksList = [
     {
       label: "Dashboard",
-      route: routes.dashboard,
+      route: routes.dashboard.pathname,
     },
     {
       label: t("profile"),
-      route: routes.profile,
+      route: routes.profile.pathname,
     },
   ];
 

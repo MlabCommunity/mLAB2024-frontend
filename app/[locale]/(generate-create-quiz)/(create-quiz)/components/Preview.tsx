@@ -3,7 +3,7 @@ import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
 import SaveQuiz from "../../(generate-quiz)/components/buttons/SaveQuiz";
-import NavigationControls from "../../(generate-quiz)/components/buttons/NavigationControls";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import { useRouter, useSearchParams } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
@@ -49,7 +49,7 @@ function Preview() {
       setGeneratedQuizData(data);
       console.log(generatedQuizData);
       toast.success(t("createdSuccessfullyMsg"));
-      router.push(routes.createQuiz[3].route);
+      router.push(routes.quizSuccess.pathname);
       setIsSubmitting(false);
     },
     onMutate: () => {

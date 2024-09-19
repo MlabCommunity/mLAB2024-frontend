@@ -16,7 +16,7 @@ function BackToDashboard({
   const t = useTranslations("CreateQuizSuccess");
   const handleBackToDashboard = async () => {
     localStorage.removeItem("visitedRoutes");
-    router.push(routes.dashboard);
+    router.push(routes.dashboard.pathname);
   };
 
   return (

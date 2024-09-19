@@ -38,7 +38,7 @@ export default function LoginForm() {
       toast.error(error.message);
     },
     onSuccess: () => {
-      router.push(routes.dashboard);
+      router.push(routes.dashboard.pathname);
       toast.success(t("signedIn"));
     },
   });
@@ -131,7 +131,7 @@ export default function LoginForm() {
           color="primary"
           disabled={isPending}
         >
-          <Link href={routes.signUp}>{t("createAccount")}</Link>
+          <Link href={routes.signUp.pathname}>{t("createAccount")}</Link>
         </Button>
         <Button
           variant="ghost"

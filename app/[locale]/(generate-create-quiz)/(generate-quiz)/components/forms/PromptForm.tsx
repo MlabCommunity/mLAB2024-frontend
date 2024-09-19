@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import NavigationControls from "../buttons/NavigationControls";
-import NextButton from "../buttons/NextButton";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
+import NextButton from  "@/generate-quiz-components/NextButton";
 import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { routes } from "@/routes";
-import BackButton from "../buttons/BackButton";
+
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
@@ -39,7 +39,7 @@ const PromptForm = () => {
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
 
   const onSubmit = (data: FormValue) => {
-    router.push(routes.createQuiz[1].route);
+    router.push(routes.configureQuiz.pathname);
     setGenerateQuizData({
       ...generateQuizData,
       Content: data.prompt,
@@ -70,7 +70,7 @@ const PromptForm = () => {
           </motion.div>
         )}
         <NavigationControls>
-          <BackButton />
+          
           <NextButton />
           <InsertFileButton />
         </NavigationControls>

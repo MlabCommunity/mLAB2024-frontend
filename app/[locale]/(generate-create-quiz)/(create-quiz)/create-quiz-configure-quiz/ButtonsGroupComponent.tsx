@@ -4,10 +4,11 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import TickCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/TickCircle";
-import EmptyCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/EmptyCircle";
-import NextButton from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/buttons/NextButton";
-import NavigationControls from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/components/buttons/NavigationControls";
+
+import EmptyCircle from "@/generate-quiz-components/EmptyCircle";
+import NextButton from "@/generate-quiz-components/NextButton";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
+import TickCircle from "@/generate-quiz-components/TickCircle";
 
 function ButtonGroupComponent() {
   const [selectedType, setSelectedType] = useState("multiple-choice");
@@ -31,7 +32,7 @@ function ButtonGroupComponent() {
     if (!isPending) {
       setIsPending(true);
       try {
-        router.push(routes.createQuiz[2].route);
+        router.push(routes.quizPreview.pathname);
       } catch (error) {
         console.error("Błąd:", error);
       } finally {

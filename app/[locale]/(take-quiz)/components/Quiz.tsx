@@ -21,8 +21,6 @@ interface QuizProps {
   answersId: string[];
 }
 
-const ALPHABET = ["A", "B", "C", "D"];
-
 const Quiz = ({
   questionHeading,
   currentQuestionNumber,
@@ -73,7 +71,7 @@ const Quiz = ({
                   selectedAnswerIndex === index && "text-white border-white"
                 )}
               >
-                {ALPHABET[index]}
+                {String.fromCharCode(65 + index)}
               </span>
               <p
                 className={cn(

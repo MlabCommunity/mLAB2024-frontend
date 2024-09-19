@@ -9,12 +9,15 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import copyIcon from "@/public/assets/document-copy.svg";
 import Image from "next/image";
 import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
+import { getJoinCode } from "@/utils/helpers";
 const CreateQuizSuccessPage = () => {
   const t = useTranslations("CreateQuizSuccess");
   const { generatedQuizData } = useGenerateQuizStore();
+  const { url } = generatedQuizData;
+  const joinCode = getJoinCode(url);
   const handleCopyLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    navigator.clipboard.writeText(generatedQuizData?.url);
+    navigator.clipboard.writeText(joinCode);
   };
   return (
     <>
@@ -35,7 +38,7 @@ const CreateQuizSuccessPage = () => {
             </p>
             <div className="bg-content2 p-6 gap-6 flex flex-col rounded-lg">
               <div className=" flex items-center h-[52px] bg-white p-3 gap-3 justify-center rounded-lg">
-                <span className="text-sm">{generatedQuizData?.url}</span>
+                <span className="text-lg">{joinCode}</span>
                 <Popover>
                   <PopoverTrigger>
                     <Image

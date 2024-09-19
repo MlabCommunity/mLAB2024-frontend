@@ -111,7 +111,9 @@ const QuizCard = ({
   };
 
   const goQuizDetailsPage = () => {
-    router.push(`${routes.quizDetails.pathname}${id}?currentPage=${currentPage}`);
+    router.push(
+      `${routes.quizDetails.pathname}${id}?currentPage=${currentPage}`
+    );
   };
 
   return (

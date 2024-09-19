@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { format } from "date-fns";
 import {
   Table,
@@ -15,78 +15,18 @@ import EventDuration from "../components/statistics/QuizDurationTIme/QuizDuratio
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
-import { showStats } from "@/utils/actions/quiz/showStatistics";
-import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import ChartModal from "../modals/ChartModal";
-
-function Statistics() {
+import { useStats } from "../quiz-details/hooks/useStats";
+function Statistics({ id }: { id: string }) {
   const date = new Date();
   const formatedDate = format(date, "dd.MM.yyyy");
   const t = useTranslations("quizDetails");
-  const { data: user } = useGetCurrentProfile();
-  const userId = user?.id;
-  const { data: stats } = useQuery({
-    queryKey: ["stats", userId],
-    queryFn: () => showStats(userId),
-    enabled: !!userId,
+
+  const { user, stats, isLoading, isError } = useStats();
+  useEffect(() => {
+    console.log(user, stats);
   });
-  const finishedQuizzes = [
-    {
-      quizId: 1,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={136} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 2,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Stopped",
-      time: <EventDuration durationInSeconds={240} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 3,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Stopped",
-      time: <EventDuration durationInSeconds={30} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 4,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={140} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 5,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={3600} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 5,
-      scorePercentage: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={3} />,
-      date: formatedDate,
-    },
-  ];
+
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
@@ -96,6 +36,7 @@ function Statistics() {
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
+  const filterByQuizId = stats.;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -137,35 +78,33 @@ function Statistics() {
             emptyContent={"You didn't take any quiz"}
             className="bg-white rounded-lg"
           >
-            {finishedQuizzes?.map((finishedQuizz) => (
-              <TableRow
-                className="bg-white rounded-lg"
-                key={finishedQuizz.quizId}
-              >
-                <TableCell>{finishedQuizz.scorePercentage}</TableCell>
-                <TableCell>{finishedQuizz.name}</TableCell>
-                <TableCell>{finishedQuizz.email}</TableCell>
-                <TableCell>
-                  {finishedQuizz.stat === "Stopped" && (
-                    <StatusChip status={"Stopped"}></StatusChip>
-                  )}
-                  {finishedQuizz.stat === "Finished" && (
-                    <StatusChip status={"Finished"}></StatusChip>
-                  )}
-                </TableCell>
-                <TableCell className="text-center md:text-start">
-                  {finishedQuizz.time}
-                </TableCell>
-                <TableCell>{finishedQuizz.date}</TableCell>
-                <TableCell>
-                  <DetailsButton />
-                </TableCell>
-              </TableRow>
-            ))}
+            {stats &&
+              stats?.map((stat) => (
+                <TableRow className="bg-white rounded-lg" key={stat.quizId}>
+                  <TableCell>{stat.scorePercentage}</TableCell>
+                  <TableCell>{stat.name}</TableCell>
+                  <TableCell>{stat.email}</TableCell>
+                  <TableCell>
+                    {stat.stat === "Stopped" && (
+                      <StatusChip status={"Stopped"}></StatusChip>
+                    )}
+                    {stat.stat === "Finished" && (
+                      <StatusChip status={"Finished"}></StatusChip>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-center md:text-start">
+                    {stat.time}
+                  </TableCell>
+                  <TableCell>{stat.date}</TableCell>
+                  <TableCell>
+                    <DetailsButton />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </NavbarContentContainer>
-      <ChartModal finishedQuiz={finishedQuizzes} />
+      <ChartModal finishedQuiz={stats} />
     </motion.div>
   );
 }

@@ -6,7 +6,6 @@ export const getPluralForm = (count: number, key: string) => {
 };
 
 export const getJoinCode = (url: string) => {
-  // Safely check if the URL contains the code part
   if (!url) return "";
 
   const parts = url.split(".io/");

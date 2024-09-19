@@ -41,13 +41,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("quizDetails");
-  const randomNumber = Math.floor(Math.random() * 1000);
-  const joinCode = singleQuizData?.shareLink
-    ? getJoinCode(singleQuizData.shareLink)
-    : "";
-  const shareLink = joinCode ? createNewQuizURL(joinCode) : "";
-
-  console.log(singleQuizData?.shareLink);
+  const { shareLink } = singleQuizData;
   useEffect(() => {
     if (singleQuizData) {
       setQuestionsData(singleQuizData?.questions || []);

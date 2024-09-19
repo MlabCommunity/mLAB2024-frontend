@@ -238,6 +238,7 @@
   "ShareQuizModal": {
     "shareQuizTitle": "Share your quiz with others !",
     "shareAsLinkTitle": "Share as a link",
+    "shareAsCodeTitle": "Share as a code",
     "shareAsLinkDesc": "Share the link to the exercise with your colleagues or students",
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",

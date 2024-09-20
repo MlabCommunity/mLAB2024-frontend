@@ -116,7 +116,7 @@
     "changedQuestionSuccessfully": "Changed question successfully",
     "deletedQuestionSuccess": "Deleted question succesfully",
     "linkCopiedMsg": "Copied to clipboard",
-    "noQuizTaken": "You didn't take this quiz.",
+    "noQuizTakenDialogue": "You didn't take this quiz.",
     "quizTakenPreviewButton": "Chart",
     "close": "Close",
     "Started": "Started",

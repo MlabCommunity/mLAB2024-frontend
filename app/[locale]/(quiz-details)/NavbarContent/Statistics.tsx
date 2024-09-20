@@ -22,10 +22,12 @@ import {
 import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import { QuizHistoryType } from "@/types";
 import DetailsModal from "../modals/DetailsModal";
+import { Skeleton } from "@nextui-org/react";
+import { stat } from "fs";
 
 function Statistics() {
   const t = useTranslations("quizDetails");
-  const { stats } = useStats();
+  const { stats, isLoading } = useStats();
 
   const tableHeaders = [
     t("scoreTableHeader"),
@@ -77,39 +79,63 @@ function Statistics() {
             emptyContent={t("noQuizTakenDialogue")}
             className="bg-white rounded-lg"
           >
-            {stats &&
-              stats.map((stat: QuizHistoryType, index: number) => (
-                <TableRow className="bg-white rounded-lg" key={index}>
-                  <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
-                  <TableCell>{stat.quizTitle}</TableCell>
-                  <TableCell>
-                    {stat.status === "Started" && (
-                      <StatusChip status={"Started"}></StatusChip>
-                    )}
-                    {stat.status === "Stopped" && (
-                      <StatusChip status={"Stopped"}></StatusChip>
-                    )}
-                    {stat.status === "Finished" && (
-                      <StatusChip status={"Finished"}></StatusChip>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-center md:text-start ">
-                    {formatParticipationTime(stat.participtionDateUtc)}
-                  </TableCell>
-                  <TableCell>
-                    {formatParticipationDate(stat.participtionDateUtc)}
-                  </TableCell>
-                  <TableCell>
-                    {stat.status === "Started" ? (
-                      <span className="text-foreground-600 text-small">
-                        {t("inProgress")}
-                      </span>
-                    ) : (
-                      <DetailsButton id={stat?.quizId} />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
+            {isLoading
+              ? // Skeleton wierszy tabeli, gdy dane są ładowane
+                [...Array(stats)].map((_, index) => (
+                  <TableRow className="bg-white rounded-lg" key={index}>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell className="text-center md:text-start">
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : stats &&
+                stats.map((stat: QuizHistoryType, index: number) => (
+                  <TableRow className="bg-white rounded-lg" key={index}>
+                    <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
+                    <TableCell>{stat.quizTitle}</TableCell>
+                    <TableCell>
+                      {stat.status === "Started" && (
+                        <StatusChip status={"Started"} />
+                      )}
+                      {stat.status === "Stopped" && (
+                        <StatusChip status={"Stopped"} />
+                      )}
+                      {stat.status === "Finished" && (
+                        <StatusChip status={"Finished"} />
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center md:text-start">
+                      {formatParticipationTime(stat.participtionDateUtc)}
+                    </TableCell>
+                    <TableCell>
+                      {formatParticipationDate(stat.participtionDateUtc)}
+                    </TableCell>
+                    <TableCell>
+                      {stat.status === "Started" ? (
+                        <span className="text-foreground-600 text-small">
+                          {t("inProgress")}
+                        </span>
+                      ) : (
+                        <DetailsButton id={stat?.quizId} />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </NavbarContentContainer>

@@ -148,7 +148,7 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button onClick={closeModal}>{t("close")}</Button>
+                <Button onClick={closeModal}>{t("closeButton")}</Button>
               </motion.div>
             </ModalFooter>
           </ModalContent>

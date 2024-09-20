@@ -29,19 +29,65 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
       <ModalContent>
         <ModalHeader className="flex justify-around">
           <h1 className="text-2xl">{t("quizDetails")}</h1>
+
           <StatusChip
             status={selectedQuiz?.status as "Stopped" | "Finished" | "Started"}
           />
         </ModalHeader>
         <ModalBody className="max-h-[400px] overflow-y-auto">
           <div className="flex justify-between items-center">
-            <div className="text-xl flex flex-col text-foreground-700 font-semibold">
+            <div className=" flex flex-col text-foreground-700 font-semibold">
               <span>
                 {t("startDate")}:{" "}
                 {formatParticipationDate(
                   selectedQuiz?.participtionDateUtc as string
                 )}
               </span>
+              <div className="flex-col flex gap-2 pt-2">
+                <div className="flex gap-2 items-center">
+                  <label className="text-small uppercase text-foreground-600">
+                    Quiz title:
+                  </label>
+                  <span className="text-small">{selectedQuiz?.quizTitle}</span>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <label className="text-small uppercase text-foreground-600">
+                    score:
+                  </label>
+                  <span>
+                    {selectedQuiz?.quizResult?.correctAnswers}/
+                    {selectedQuiz?.quizResult?.totalQuestions}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <label className="text-small uppercase text-foreground-600">
+                    Total Questions:
+                  </label>
+                  <span className="text-small">
+                    {selectedQuiz?.quizResult?.totalQuestions}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <label className="text-small uppercase text-foreground-600">
+                    Correct answers:
+                  </label>
+                  <span className="text-small">
+                    {selectedQuiz?.quizResult?.correctAnswers}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <label className="text-small uppercase text-foreground-600">
+                    Started at:
+                  </label>
+                  {selectedQuiz && (
+                    <span className="text-small">
+                      {formatParticipationDate(
+                        selectedQuiz?.participtionDateUtc
+                      )}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           {selectedQuiz?.questions?.map((question, questionIndex) => {

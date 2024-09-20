@@ -47,7 +47,7 @@ export const useStats = () => {
       const extractedQuizId = quizId.trim();
       return statQuizId === extractedQuizId;
     }) || [];
-
+  console.log(filteredStats);
   return {
     stats: filteredStats, //
     isLoading: isUserLoading || isLoadingStats,

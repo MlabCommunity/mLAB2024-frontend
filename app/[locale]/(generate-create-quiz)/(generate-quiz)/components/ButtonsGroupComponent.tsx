@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "@/generate-quiz-components/TickCircle";
@@ -12,7 +11,6 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
-
 
 function ButtonGroupComponent() {
   const searchParams = useSearchParams();
@@ -55,13 +53,10 @@ function ButtonGroupComponent() {
       }[selectedQuantity] ?? 0;
     const formData = new FormData();
     formData.append("Content", Content as string);
-    formData.append("NumberOfQuestions", numberOfQuestions.toString()); //
-    formData.append("QuestionTypes", selectedType); //
-    Attachments?.forEach((attachement) => {
-      formData.append("Attachments", attachement);
-    });
-    formData.forEach((value, key) => {
-      console.log([key, value]);
+    formData.append("NumberOfQuestions", numberOfQuestions.toString());
+    formData.append("QuestionTypes", selectedType);
+    Attachments?.forEach((attachment) => {
+      formData.append("Attachments", attachment);
     });
 
     mutate(formData);
@@ -97,7 +92,7 @@ function ButtonGroupComponent() {
               <Button
                 key={type.value}
                 variant={selectedType === type.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg"
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
                 size="lg"
                 startContent={
                   selectedType === type.value ? <TickCircle /> : <EmptyCircle />
@@ -128,7 +123,7 @@ function ButtonGroupComponent() {
               <Button
                 key={quantity.value}
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg"
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
                 size="lg"
                 isDisabled={isPending}
                 startContent={
@@ -149,7 +144,6 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls isPending={isPending}>
-      
         <NextButton isPending={isPending} />
       </NavigationControls>
     </form>

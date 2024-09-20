@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@nextui-org/button";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import RightArrow from "../(generate-quiz)/components/buttons/RightArrow";
 import { useTranslations } from "next-intl";
 
@@ -14,19 +14,10 @@ const NextButton = ({ isPending }: NextButtonProps) => {
   const t = useTranslations("CreateQuiz");
 
   return (
-   
     <motion.div
-      whileHover={{
-        y: -10, 
-        transition: {
-          type: "spring",
-          stiffness: 500, 
-          damping: 10, 
-        },
-      }}
       whileTap={{
-        scale: 0.95, 
-        y: 0, 
+        scale: 0.95,
+        y: 0,
       }}
     >
       <Button

@@ -14,6 +14,7 @@
     "@dnd-kit/core": "^6.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.6",
+    "@react-oauth/google": "^0.12.1",
     "@tanstack/react-query": "^5.52.0",
     "@tanstack/react-query-devtools": "^5.53.2",
     "autoprefixer": "^10.4.20",
@@ -24,6 +25,7 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.441.0",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
     "next-intl": "^3.17.6",
     "react": "^18.3.1",
     "react-code-blocks": "^0.1.6",
@@ -56,5 +58,6 @@
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.8",
     "ts-node": "^10.9.2"
-  }
+  },
+  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1"
 }

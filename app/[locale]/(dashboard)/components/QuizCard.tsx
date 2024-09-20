@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
@@ -11,6 +12,7 @@ import { cn } from "@/lib";
 import Image from "next/image";
 import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
 import bin from "@/public/assets/bin.svg";
+import { motion } from "framer-motion";
 
 interface QuizCardProps {
   title: string;
@@ -56,13 +58,8 @@ const QuizCard = ({
 
   const { mutate: updateStatusMutate, isPending: isPendingStatus } =
     useMutation({
-      mutationFn: ({
-        id,
-        newStatus,
-      }: {
-        id: string;
-        newStatus: "Active" | "Inactive";
-      }) => updateQuizStatus(id, newStatus),
+      mutationFn: (data: { id: string; newStatus: "Active" | "Inactive" }) =>
+        updateQuizStatus(data.id, data.newStatus),
       onSuccess: (data) => {
         setCurrentStatus(data.newStatus);
         toast.success(t("statusUpdateSuccess"));
@@ -115,16 +112,16 @@ const QuizCard = ({
   };
 
   return (
-    <div
+    <motion.div
       className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-full sm:w-auto rounded-lg cursor-pointer"
       onClick={goQuizDetailsPage}
+      whileHover={{ scale: 1.01 }} 
+      transition={{ duration: 0.3 }} 
     >
       <div className="flex flex-row justify-between items-start">
         <div>
           <h3 className="font-semibold text-base text-default-700">{title}</h3>
-          <p className="text-base font-medium text-default-600 mt-1">
-            {description}
-          </p>
+          <p className="text-base font-medium text-default-600 mt-1">{description}</p>
         </div>
         <button
           className="ml-5 cursor-pointer"
@@ -134,19 +131,13 @@ const QuizCard = ({
           }}
           disabled={isDeleting}
         >
-          <Image
-            src={bin}
-            className="min-w-5 min-h-5 md:min-h-6 md:min-w-6"
-            alt="bin icon"
-          />
+          <Image src={bin} className="min-w-5 min-h-5 md:min-h-6 md:min-w-6" alt="bin icon" />
         </button>
       </div>
       <div>
         <div className="flex items-center justify-start gap-4 mt-4">
           <div className="flex items-center bg-blue-600 text-white px-2 py-1 rounded-lg">
-            <p className="text-white text-small">
-              {t("total")} {questions} {t("questions")}
-            </p>
+            <p className="text-white text-small">{t("total")} {questions} {t("questions")}</p>
           </div>
           <Button
             onClick={(e) => {
@@ -162,21 +153,13 @@ const QuizCard = ({
                 : "cursor-pointer"
             )}
           >
-            <p
-              className={cn(
-                currentStatus === "Active"
-                  ? "text-foreground-600"
-                  : "text-white"
-              )}
-            >
-              {isPendingStatus
-                ? t("updatingQuizStatus")
-                : translatedCurrentStatus}
+            <p className={cn(currentStatus === "Active" ? "text-foreground-600" : "text-white")}>
+              {isPendingStatus ? t("updatingQuizStatus") : translatedCurrentStatus}
             </p>
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

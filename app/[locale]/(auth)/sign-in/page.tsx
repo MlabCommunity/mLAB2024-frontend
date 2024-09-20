@@ -17,13 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
-
 const SignInPage = async () => {
   const t = await getTranslations("AuthPages");
+
   return (
     <div className="h-screen flex items-center justify-center px-4">
-      <div className="bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl">
-        <Image src={logo} alt="logo" className="mx-auto" />
+      <div className="bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500 ">
+        <Image
+          src={logo}
+          alt="logo"
+          className="mx-auto mb-4 transition-transform "
+        />
         <p className="text-sm font-semibold text-primary mt-4">
           {t("signInEnterText")}
         </p>

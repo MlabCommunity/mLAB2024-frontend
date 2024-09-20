@@ -26,6 +26,7 @@ function SignUpForm() {
     defaultValues: {
       email: "",
       password: "",
+      repeatPassword: "",
     },
   });
   type FormData = z.infer<typeof signUpSchema>;
@@ -42,13 +43,15 @@ function SignUpForm() {
       router.push(routes.signIn.pathname);
     },
   });
+
   const onSubmit = async (data: FormData) => {
     mutate(data);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
       <div className="flex flex-col gap-2">
-        <label className={"text-medium"} htmlFor="email">
+        <label className="text-medium" htmlFor="email">
           E-mail
         </label>
         <Input
@@ -58,11 +61,11 @@ function SignUpForm() {
           name="email"
           disabled={isPending}
           placeholder="E-mail"
-          autoComplete="off"
+          className="text-black"
         />
       </div>
       {errors?.email && (
-        <p className="text-red-500  text-sm">{errors?.email.message}</p>
+        <p className="text-red-500 text-sm">{errors?.email.message}</p>
       )}
       <div className="flex flex-col gap-2">
         <label htmlFor="password">{t("password")}</label>
@@ -74,10 +77,11 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
+          className="text-black"
         />
       </div>
       {errors?.password && (
-        <p className="text-red-500  text-sm">{errors?.password?.message}</p>
+        <p className="text-red-500 text-sm">{errors?.password?.message}</p>
       )}
       <div className="flex flex-col gap-2">
         <label htmlFor="repeatPassword">{t("repeatPassword")}</label>
@@ -91,10 +95,11 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
+          className="text-black"
         />
       </div>
       {errors?.repeatPassword && (
-        <p className="text-red-500  text-sm">
+        <p className="text-red-500 text-sm">
           {errors?.repeatPassword?.message}
         </p>
       )}
@@ -112,7 +117,7 @@ function SignUpForm() {
         type="submit"
         disabled={isPending}
         isLoading={isPending}
-        className="mt-5"
+        className="mt-5 transition-transform duration-300 ease-in-out transform hover:scale-105 hover:bg-primary-600 active:bg-primary-700"
       >
         {isPending ? t("pending") : t("register")}
       </Button>

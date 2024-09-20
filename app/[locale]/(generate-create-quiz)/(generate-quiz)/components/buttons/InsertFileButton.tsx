@@ -6,7 +6,7 @@ import React from "react";
 import fileIcon from "@/public/assets/file.svg";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 
 const InsertFileButton = () => {
   const { openModal } = useModalStore();
@@ -17,18 +17,9 @@ const InsertFileButton = () => {
   };
 
   return (
-    
     <motion.div
-      whileHover={{
-        y: -10, 
-        transition: {
-          type: "spring",
-          stiffness: 500, 
-          damping: 10, 
-        },
-      }}
       whileTap={{
-        scale: 0.9, 
+        scale: 0.9,
         y: 0,
       }}
     >

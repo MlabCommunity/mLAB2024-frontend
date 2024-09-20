@@ -40,8 +40,9 @@ axiosInstance.interceptors.response.use(
       Cookies.set("AccessToken", accessToken, {
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
+
       Cookies.set("RefreshToken", newRefreshToken, {
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
 
       axiosInstance.defaults.headers.common[

@@ -114,9 +114,9 @@
     "dataUpdated": "Dane zostały zaktualizowane",
     "changedQuestionSuccessfully": "Pytanie zostało zmienione",
     "deletedQuestionSuccess": "Usunięto pytanie",
-    "noQuizTaken": "Nie wziąłeś udziału w tym quizie.",
-    "quizTakenPreviewButton": "Wykres",
-    "Started": "Rozpoczety",
+    "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
+    "quizTakenPreviewButton": "Wizualizacja danych",
+    "Started": "Rozpoczęty",
     "startDate": "Data rozpoczęcia",
     "inProgress": "W trakcie "
   },
@@ -262,7 +262,7 @@
     "embedWebsiteDesc": "Wykorzystaj ćwiczenie na swojej stronie internetowej lub innej platformie",
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
-    "close": "Zamknij"
+    "closeButton": "Zamknij"
   },
   "ChartModal": {
     "noDataAvailable": "Brak dostępnych danych",

@@ -264,7 +264,7 @@
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
-    "close": "Close"
+    "closeButton": "Close"
   },
   "ChartModal": {
     "title": "Quiz statistics",

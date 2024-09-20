@@ -25,7 +25,7 @@ import DetailsModal from "../modals/DetailsModal";
 
 function Statistics() {
   const t = useTranslations("quizDetails");
-  const { stats, isLoading } = useStats();
+  const { stats } = useStats();
 
   const tableHeaders = [
     t("scoreTableHeader"),
@@ -35,11 +35,6 @@ function Statistics() {
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
-
-  useEffect(() => {
-    console.log(stats);
-  }, [stats]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -79,7 +74,7 @@ function Statistics() {
             ))}
           </TableHeader>
           <TableBody
-            emptyContent={t("noQuizTaken")}
+            emptyContent={t("noQuizTakenDialogue")}
             className="bg-white rounded-lg"
           >
             {stats &&

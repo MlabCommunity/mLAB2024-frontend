@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-} from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent, ModalFooter } from "@nextui-org/react";
 import ChartComponent from "../components/chart/Chart";
 import { useModalStore } from "@/store/modalStore";
 import CloseButton from "../components/statistics/buttons/CloseButton";

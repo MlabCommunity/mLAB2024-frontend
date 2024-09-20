@@ -29,13 +29,12 @@ export const useStats = () => {
         const result = await showStats(user?.id);
         return result;
       } catch (error) {
-        console.error("Error in showStats:", error);
         throw error;
       }
     },
     enabled: !!user?.id,
     retry: (failureCount, error) => {
-      if (error.message.includes("No stats found")) {
+      if (error.message) {
         return false;
       }
       return failureCount < 3;

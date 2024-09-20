@@ -229,7 +229,8 @@
     "joined": "Dołączono do quizu",
     "joining": "Dołączanie...",
     "calculating": "Liczenie wyniku...",
-    "quizResultSuccess": "Wynik quizu obliczony pomyślnie"
+    "quizResultSuccess": "Wynik quizu obliczony pomyślnie",
+    "wasInvalid": "Twój kod quizu był niepoprawny"
   },
   "NotFoundPage": {
     "goDashboard": "Przejdź do panelu",

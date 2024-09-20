@@ -233,7 +233,8 @@
     "joined": "Joined to the quiz",
     "joining": "Joining...",
     "calculating": "Calculating result...",
-    "quizResultSuccess": "Quiz result calculated successfully"
+    "quizResultSuccess": "Quiz result calculated successfully",
+    "wasInvalid": "Your quiz code was invalid"
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",

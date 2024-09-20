@@ -39,6 +39,10 @@ export const routes = {
     title: "Take Quiz",
     pathname: "/take-quiz/",
   },
+  takeQuizGuest: {
+    title: "Take Quiz Guest",
+    pathname: "/take-quiz-guest/",
+  },
   quizDetails: {
     title: "Quiz Details",
     pathname: "/quiz-details/",

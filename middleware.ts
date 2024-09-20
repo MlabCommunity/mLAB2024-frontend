@@ -1,7 +1,7 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { locales } from "./config/locales";
-const publicPages = ["/sign-in", "/sign-up"];
+const publicPages = ["/sign-in", "/sign-up", "/take-quiz-guest"];
 const redirectAfterLogin = "/dashboard";
 
 const intlMiddleware = createMiddleware({
@@ -38,4 +38,3 @@ export default async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
-

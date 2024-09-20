@@ -47,7 +47,10 @@ export default function LoginForm() {
   }
 
   return (
-    <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="mt-8 transition-transform duration-300 hover:scale-105"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="relative">
         <label htmlFor="email" className="text-medium text-foreground-100">
           E-mail
@@ -60,7 +63,7 @@ export default function LoginForm() {
           type="text"
           radius="sm"
           placeholder="Email"
-          className="text-foreground-500 mt-1 text-sm"
+          className="text-foreground-500 mt-1 text-sm transition-transform duration-300 hover:scale-105 focus:scale-105"
           disabled={isPending}
         />
         {errors?.email && (
@@ -78,7 +81,7 @@ export default function LoginForm() {
           id="password"
           type="password"
           name="password"
-          className="text-foreground-500 mt-1 text-sm"
+          className="text-foreground-500 mt-1 text-sm transition-transform duration-300 hover:scale-105 focus:scale-105"
           placeholder={t("password")}
           autoComplete="off"
           disabled={isPending}
@@ -116,7 +119,7 @@ export default function LoginForm() {
         type="submit"
         disabled={isPending}
         isLoading={isPending}
-        className="mt-5 w-full"
+        className="mt-5 w-full transition-transform duration-300 hover:scale-105 focus:scale-105"
       >
         {isPending ? t("pending") : t("login")}
       </Button>
@@ -126,7 +129,7 @@ export default function LoginForm() {
           variant="ghost"
           size="lg"
           radius="sm"
-          className="text-tiny sm:text-medium disabled:opacity-50"
+          className="text-tiny sm:text-medium disabled:opacity-50 transition-transform duration-300 hover:scale-105 focus:scale-105"
           color="primary"
           disabled={isPending}
         >
@@ -137,7 +140,7 @@ export default function LoginForm() {
           size="lg"
           radius="sm"
           color="primary"
-          className="text-tiny sm:text-medium disabled:opacity-50"
+          className="text-tiny sm:text-medium disabled:opacity-50 transition-transform duration-300 hover:scale-105 focus:scale-105"
           disabled={isPending}
         >
           {t("forgotPassword")}

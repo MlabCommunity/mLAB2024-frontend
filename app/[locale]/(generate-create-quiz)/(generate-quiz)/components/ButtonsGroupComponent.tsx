@@ -92,7 +92,7 @@ function ButtonGroupComponent() {
               <Button
                 key={type.value}
                 variant={selectedType === type.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-105 transition-transform duration-200 ease-in-out" 
                 size="lg"
                 startContent={
                   selectedType === type.value ? <TickCircle /> : <EmptyCircle />
@@ -123,7 +123,7 @@ function ButtonGroupComponent() {
               <Button
                 key={quantity.value}
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-105 transition-transform duration-200 ease-in-out" 
                 size="lg"
                 isDisabled={isPending}
                 startContent={

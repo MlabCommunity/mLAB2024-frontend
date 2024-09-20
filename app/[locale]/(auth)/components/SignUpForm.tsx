@@ -49,8 +49,11 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
-      <div className="flex flex-col gap-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-5 p-6 transition-transform duration-300 ease-in-out transform hover:scale-105"
+    >
+      <div className="flex flex-col gap-2 transition-all duration-300 ease-in-out">
         <label className="text-medium" htmlFor="email">
           E-mail
         </label>
@@ -61,13 +64,13 @@ function SignUpForm() {
           name="email"
           disabled={isPending}
           placeholder="E-mail"
-          className="text-black"
+          className="text-black focus:ring-2 focus:ring-primary-500 hover:scale-105 transition-transform duration-300 ease-in-out"
         />
       </div>
       {errors?.email && (
         <p className="text-red-500 text-sm">{errors?.email.message}</p>
       )}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 transition-all duration-300 ease-in-out">
         <label htmlFor="password">{t("password")}</label>
         <Input
           {...register("password", { required: true })}
@@ -77,13 +80,13 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
-          className="text-black"
+          className="text-black focus:ring-2 focus:ring-primary-500 hover:scale-105 transition-transform duration-300 ease-in-out"
         />
       </div>
       {errors?.password && (
         <p className="text-red-500 text-sm">{errors?.password?.message}</p>
       )}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 transition-all duration-300 ease-in-out">
         <label htmlFor="repeatPassword">{t("repeatPassword")}</label>
         <Input
           {...register("repeatPassword", {
@@ -95,7 +98,7 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
-          className="text-black"
+          className="text-black focus:ring-2 focus:ring-primary-500 hover:scale-105 transition-transform duration-300 ease-in-out"
         />
       </div>
       {errors?.repeatPassword && (

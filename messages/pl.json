@@ -118,7 +118,11 @@
     "quizTakenPreviewButton": "Wizualizacja danych",
     "Started": "Rozpoczęty",
     "startDate": "Data rozpoczęcia",
-    "inProgress": "W trakcie "
+    "inProgress": "W trakcie ",
+    "quizTitle": "Tytuł",
+    "quizScore": "Wynik:",
+    "quizTotalQuestions": "Liczba pytań:",
+    "correctAnswers": "Poprawne odpowiedzi:"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",

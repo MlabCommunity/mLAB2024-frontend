@@ -120,8 +120,12 @@
     "quizTakenPreviewButton": "Chart",
     "close": "Close",
     "Started": "Started",
-    "startDate": "Data rozpoczęcia",
-    "inProgress": "Quiz in progress"
+    "startDate": "Start date:",
+    "inProgress": "Quiz in progress",
+    "quizTitle": "Quiz title:",
+    "quizScore": "Score:",
+    "quizTotalQuestions": "Total Questions:",
+    "correctAnswers": "Correct answers"
   },
   "Header": {
     "userAvatar": "User avatar",

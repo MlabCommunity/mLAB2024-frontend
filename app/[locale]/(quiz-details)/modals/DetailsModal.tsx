@@ -46,13 +46,13 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
               <div className="flex-col flex gap-2 pt-2">
                 <div className="flex gap-2 items-center">
                   <label className="text-small uppercase text-foreground-600">
-                    Quiz title:
+                    {t("quizTitle")}
                   </label>
                   <span className="text-small">{selectedQuiz?.quizTitle}</span>
                 </div>
                 <div className="flex gap-2 items-center">
                   <label className="text-small uppercase text-foreground-600">
-                    score:
+                    {t("quizScore")}
                   </label>
                   <span>
                     {selectedQuiz?.quizResult?.correctAnswers}/
@@ -61,7 +61,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                 </div>
                 <div className="flex gap-2">
                   <label className="text-small uppercase text-foreground-600">
-                    Total Questions:
+                    {t("quizTotalQuestions")}
                   </label>
                   <span className="text-small">
                     {selectedQuiz?.quizResult?.totalQuestions}
@@ -69,7 +69,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                 </div>
                 <div className="flex gap-2">
                   <label className="text-small uppercase text-foreground-600">
-                    Correct answers:
+                    {t("correctAnswers")}
                   </label>
                   <span className="text-small">
                     {selectedQuiz?.quizResult?.correctAnswers}
@@ -77,7 +77,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                 </div>
                 <div className="flex gap-2">
                   <label className="text-small uppercase text-foreground-600">
-                    Started at:
+                    {t("startDate")}
                   </label>
                   {selectedQuiz && (
                     <span className="text-small">

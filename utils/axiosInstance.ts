@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -38,12 +37,11 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      // Replace old tokens with new ones
       Cookies.set("AccessToken", accessToken, {
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
       Cookies.set("RefreshToken", newRefreshToken, {
-        expires: new Date(Date.now() + 5 * 60 * 1000),
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       });
 
       axiosInstance.defaults.headers.common[

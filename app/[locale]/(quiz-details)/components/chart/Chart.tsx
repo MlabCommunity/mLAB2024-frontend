@@ -51,7 +51,11 @@ const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
   };
 
   if (!quiz || quiz.length === 0) {
-    return <div>No data available</div>;
+    return (
+      <div className="flex justify-center font-semibold items-center">
+        {t("noDataAvailable")}
+      </div>
+    );
   }
 
   const labels = quiz.map((item) => item.quizTitle);

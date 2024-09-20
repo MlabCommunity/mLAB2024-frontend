@@ -268,6 +268,7 @@
   },
   "ChartModal": {
     "title": "Quiz statistics",
-    "legend": "Score (%)"
+    "legend": "Score (%)",
+    "noDataAvailable": "No data available"
   }
 }

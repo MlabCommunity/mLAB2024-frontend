@@ -265,6 +265,7 @@
     "close": "Zamknij"
   },
   "ChartModal": {
+    "noDataAvailable": "Brak dostępnych danych",
     "title": "Statystyki quizu",
     "legend": "Wynik (%)"
   }

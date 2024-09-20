@@ -52,7 +52,6 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
 
   useEffect(() => {
     setActiveTab("Questions");
-    console.log(singleQuizData);
   }, []);
 
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {

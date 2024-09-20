@@ -37,6 +37,9 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
+
       Cookies.set("AccessToken", accessToken, {
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
@@ -51,8 +54,8 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     } catch (refreshError) {
-      Cookies.set("AccessToken", "", { expires: new Date(0) });
-      Cookies.set("RefreshToken", "", { expires: new Date(0) });
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
       return Promise.reject(refreshError);
     }
   }

@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,7 +11,6 @@ import { signInUser } from "@/utils/actions/auth/sign-in";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import AuthSchemas from "../schemas/authSchemas";
-
 
 export default function LoginForm() {
   const router = useRouter();
@@ -62,7 +60,6 @@ export default function LoginForm() {
           type="text"
           radius="sm"
           placeholder="Email"
-          autoComplete="off"
           className="text-foreground-500 mt-1 text-sm"
           disabled={isPending}
         />
@@ -111,7 +108,18 @@ export default function LoginForm() {
         </p>
       )}
 
-     
+      <Button
+        variant={isPending ? "bordered" : "solid"}
+        color="primary"
+        size="lg"
+        radius="sm"
+        type="submit"
+        disabled={isPending}
+        isLoading={isPending}
+        className="mt-5 w-full"
+      >
+        {isPending ? t("pending") : t("login")}
+      </Button>
 
       <div className="flex justify-between mt-6 gap-2">
         <Button

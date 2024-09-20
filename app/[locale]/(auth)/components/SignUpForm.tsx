@@ -61,8 +61,7 @@ function SignUpForm() {
           name="email"
           disabled={isPending}
           placeholder="E-mail"
-          autoComplete="off"
-          className="transition-transform duration-300 ease-in-out transform hover:scale-105 focus:scale-105"
+          className="text-black"
         />
       </div>
       {errors?.email && (
@@ -78,7 +77,7 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
-          className="transition-transform duration-300 ease-in-out transform hover:scale-105 focus:scale-105"
+          className="text-black"
         />
       </div>
       {errors?.password && (
@@ -96,7 +95,7 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
-          className="transition-transform duration-300 ease-in-out transform hover:scale-105 focus:scale-105"
+          className="text-black"
         />
       </div>
       {errors?.repeatPassword && (

@@ -20,7 +20,6 @@ export const registerParticipation = async (data: { urlId: string }) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error)
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);
     } else {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import animationData from "@/public/lotties/Animation - 1726765872665.json";
+import animationData from "@/public/lotties/TakeQuizLoading.json";
 import Lottie from "react-lottie";
 import { useMutation } from "@tanstack/react-query";
 import { registerParticipation } from "@/utils/actions/quiz/registerParticipation";

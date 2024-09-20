@@ -10,6 +10,21 @@ type SubscriberCallback = (
   refreshToken: TokenType
 ) => void;
 let subscribers: SubscriberCallback[] = [];
+
+const getDomain = () => {
+  const hostname = window.location.hostname;
+  return hostname.substring(
+    hostname.indexOf(".") >= 0 ? hostname.indexOf(".") + 1 : 0
+  );
+};
+
+const cookieOptions: Cookies.CookieAttributes = {
+  domain: getDomain(),
+  path: "/",
+  secure: true,
+  sameSite: "strict" as const,
+};
+
 const onRefreshed = (accessToken: TokenType, refreshToken: TokenType): void => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
   subscribers = [];
@@ -44,15 +59,15 @@ export const refreshToken = async () => {
     if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
-      Cookies.set("AccessToken", "", { expires: new Date(0) });
-      Cookies.set("RefreshToken", "", { expires: new Date(0) });
+      Cookies.remove("AccessToken", cookieOptions);
+      Cookies.remove("RefreshToken", cookieOptions);
 
       Cookies.set("AccessToken", accessToken, {
+        ...cookieOptions,
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
       Cookies.set("RefreshToken", newRefreshToken, {
+        ...cookieOptions,
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
 
@@ -61,10 +76,8 @@ export const refreshToken = async () => {
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
-    Cookies.remove("AccessToken");
-    Cookies.remove("RefreshToken");
-    Cookies.set("AccessToken", "", { expires: new Date(0) });
-    Cookies.set("RefreshToken", "", { expires: new Date(0) });
+    Cookies.remove("AccessToken", cookieOptions);
+    Cookies.remove("RefreshToken", cookieOptions);
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

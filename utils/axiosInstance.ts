@@ -7,6 +7,21 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+const getDomain = () => {
+  const hostname = window.location.hostname;
+  return hostname.substring(
+    hostname.indexOf(".") >= 0 ? hostname.indexOf(".") + 1 : 0
+  );
+};
+
+// Cookie options
+const cookieOptions: Cookies.CookieAttributes = {
+  domain: getDomain(),
+  path: "/",
+  secure: true,
+  sameSite: "strict" as const,
+};
+
 axiosInstance.interceptors.request.use(
   (request) => {
     const accessToken = Cookies.get("AccessToken");
@@ -37,16 +52,16 @@ axiosInstance.interceptors.response.use(
       const response = await axios.post(refreshTokenUrl, { refreshToken });
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
-      Cookies.set("AccessToken", "", { expires: new Date(0) });
-      Cookies.set("RefreshToken", "", { expires: new Date(0) });
+      Cookies.remove("AccessToken", cookieOptions);
+      Cookies.remove("RefreshToken", cookieOptions);
 
       Cookies.set("AccessToken", accessToken, {
+        ...cookieOptions,
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
 
       Cookies.set("RefreshToken", newRefreshToken, {
+        ...cookieOptions,
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
 
@@ -56,10 +71,8 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     } catch (refreshError) {
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
-      Cookies.set("AccessToken", "", { expires: new Date(0) });
-      Cookies.set("RefreshToken", "", { expires: new Date(0) });
+      Cookies.remove("AccessToken", cookieOptions);
+      Cookies.remove("RefreshToken", cookieOptions);
       return Promise.reject(refreshError);
     }
   }

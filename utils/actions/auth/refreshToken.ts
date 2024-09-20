@@ -44,10 +44,6 @@ export const refreshToken = async () => {
     if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-      Cookies.remove("AccessToken");
-      Cookies.remove("RefreshToken");
-
-      // Set cookies with expiration of 5 minutes
       Cookies.set("AccessToken", accessToken, {
         expires: new Date(Date.now() + 5 * 60 * 1000),
       });
@@ -60,8 +56,8 @@ export const refreshToken = async () => {
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
-    Cookies.remove("AccessToken");
-    Cookies.remove("RefreshToken");
+    Cookies.set("AccessToken", "", { expires: new Date(0) });
+    Cookies.set("RefreshToken", "", { expires: new Date(0) });
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

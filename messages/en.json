@@ -55,7 +55,8 @@
     "updatingQuizStatus": "Updating quiz status...",
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "takeQuizBtn": "Take quiz"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -115,9 +116,12 @@
     "changedQuestionSuccessfully": "Changed question successfully",
     "deletedQuestionSuccess": "Deleted question succesfully",
     "linkCopiedMsg": "Copied to clipboard",
-    "close": "Close",
     "noQuizTaken": "You didn't take this quiz.",
-    "quizTakenPreviewButton": "Chart"
+    "quizTakenPreviewButton": "Chart",
+    "close": "Close",
+    "Started": "Started",
+    "startDate": "Data rozpoczęcia",
+    "inProgress": "Quiz in progress"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -219,7 +223,22 @@
     "seeResults": "See results",
     "awesome": "Awesome!!!",
     "notYourDay": "This is not your day...",
-    "warningName": "Name must be at least 2 characters long"
+    "warningName": "Name must be at least 2 characters long",
+    "codeGeneratedSuccessfully": "Code generated successfully",
+    "enterQuizUrl": "Enter code to the quiz",
+    "generateCodeFirst": "Please generate code first",
+    "joiningQuiz": "Joining quiz with code: ",
+    "toImprove": "Take part in a quiz to improve your skills.",
+    "generateCode": "Generate Quiz Code",
+    "generateCode2": "Generate Code",
+    "join": "Join Quiz",
+    "willApearHere": "Your code will appear here",
+    "generatingQuizCode": "Generating quiz code...",
+    "charactersLong": "Quiz code must be exactly 8 characters long",
+    "joined": "Joined to the quiz",
+    "joining": "Joining...",
+    "calculating": "Calculating result...",
+    "quizResultSuccess": "Quiz result calculated successfully"
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",
@@ -240,6 +259,7 @@
   "ShareQuizModal": {
     "shareQuizTitle": "Share your quiz with others !",
     "shareAsLinkTitle": "Share as a link",
+    "shareAsCodeTitle": "Share as a code",
     "shareAsLinkDesc": "Share the link to the exercise with your colleagues or students",
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",

@@ -20,7 +20,6 @@ export const updateAvailability = async (
     }
 
     const payload = newAvailability;
-    console.log(payload);
 
     const result = await axiosInstance.patch(
       `${updateAvailabilityUrl}/${id}/availability`,

@@ -9,27 +9,17 @@ import {
 import ChartComponent from "../components/chart/Chart";
 import { useModalStore } from "@/store/modalStore";
 import CloseButton from "../components/statistics/buttons/CloseButton";
+import { QuizHistoryType } from "@/types";
 
-interface FinishedQuiz {
-  quizId: number;
-  name: string;
-  scorePercentage: number;
-}
-
-const ChartModal = ({ finishedQuiz }: { finishedQuiz: FinishedQuiz[] }) => {
+const ChartModal = ({ finishedQuiz }: { finishedQuiz: QuizHistoryType[] }) => {
   const { closeModal, isOpen, type } = useModalStore();
   const isModalOpen = type === "chartModal" && isOpen;
-
-  const chartData = finishedQuiz?.map((quiz) => ({
-    name: quiz.name,
-    scorePercentage: quiz.scorePercentage,
-  }));
 
   return (
     <Modal onOpenChange={closeModal} isOpen={isModalOpen} size="5xl">
       <ModalContent>
         <ModalBody>
-          <ChartComponent quiz={chartData} />
+          <ChartComponent quiz={finishedQuiz} />
         </ModalBody>
         <ModalFooter>
           <CloseButton close={closeModal} />

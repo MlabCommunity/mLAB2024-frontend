@@ -1,9 +1,10 @@
 import { create } from "zustand";
 type ModalDataT = {
-  title: string;
-  description: string;
-  status: string;
-  questions: number;
+  id?: string;
+  title?: string;
+  description?: string;
+  status?: string;
+  questions?: number;
   onConfirmDelete?: () => void;
   isPending?: boolean;
 };
@@ -27,6 +28,7 @@ export type ModalType =
   | "addQuestion"
   | "shareQuizz"
   | "chartModal"
+  | "detailsModal"
   | "";
 
 export const useModalStore = create<ModalStore>((set) => ({
@@ -36,6 +38,7 @@ export const useModalStore = create<ModalStore>((set) => ({
   openModal: (paylaod: ModalType) => set({ isOpen: true, type: paylaod }),
   closeModal: () => set({ isOpen: false }),
   modalData: {
+    id: "",
     title: "",
     description: "",
     status: "",

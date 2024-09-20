@@ -54,7 +54,8 @@
     "updatingQuizStatus": "Aktualizowanie statusu quizu...",
     "statusUpdateError": "Bład podczas aktualizacji statusu",
     "active": "Aktywny",
-    "inactive": "Nieaktywny"
+    "inactive": "Nieaktywny",
+    "takeQuizBtn": "Rozpocznij quiz"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -82,7 +83,7 @@
     "private": "Prywatny",
     "scoreTableHeader": "Wynik",
     "nameTableHeader": "Nazwa",
-    "timeTableHeader": "Czas",
+    "timeTableHeader": "Czas rozpoczęcia",
     "dateTableHeader": "Data",
     "detailsTableHeader": "Szczegóły",
     "statusFinishedTableHeader": "Ukończony",
@@ -114,7 +115,10 @@
     "changedQuestionSuccessfully": "Pytanie zostało zmienione",
     "deletedQuestionSuccess": "Usunięto pytanie",
     "noQuizTaken": "Nie wziąłeś udziału w tym quizie.",
-    "quizTakenPreviewButton": "Wykres"
+    "quizTakenPreviewButton": "Wykres",
+    "Started": "Rozpoczety",
+    "startDate": "Data rozpoczęcia",
+    "inProgress": "W trakcie "
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",
@@ -216,7 +220,22 @@
     "seeResults": "Zobacz wyniki",
     "awesome": "Niesamowicie!!!",
     "notYourDay": "To nie Twój dzień...",
-    "warningName": "Imię musi mieć co najmniej 2 znaki"
+    "warningName": "Imię musi mieć co najmniej 2 znaki",
+    "codeGeneratedSuccessfully": "Kod wygenerowany pomyślnie",
+    "enterQuizUrl": "Wprowadź kod do quizu",
+    "generateCodeFirst": "Proszę najpierw wygenerować kod",
+    "joiningQuiz": "Dołączanie do quizu z kodem: ",
+    "toImprove": "Weź udział w quizie, aby poprawić swoje umiejętności.",
+    "generateCode": "Wygeneruj kod quizu",
+    "generateCode2": "Wygeneruj kod",
+    "join": "Dołącz do quizu",
+    "willApearHere": "Twój kod pojawi się tutaj",
+    "generatingQuizCode": "Generowanie kodu quizu...",
+    "charactersLong": "Kod quizu musi mieć 8 znaków",
+    "joined": "Dołączono do quizu",
+    "joining": "Dołączanie...",
+    "calculating": "Liczenie wyniku...",
+    "quizResultSuccess": "Wynik quizu obliczony pomyślnie"
   },
   "NotFoundPage": {
     "goDashboard": "Przejdź do panelu",

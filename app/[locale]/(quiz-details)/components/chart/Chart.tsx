@@ -11,6 +11,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { useTranslations } from "next-intl";
+import { QuizHistoryType } from "@/types";
 
 ChartJS.register(
   CategoryScale,
@@ -21,13 +22,7 @@ ChartJS.register(
   Legend
 );
 
-interface QuizItem {
-  stat: "Finished" | "Stopped";
-  name: string;
-  scorePercentage: number;
-}
-
-const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
+const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
   const t = useTranslations("ChartModal");
   const title = t("title");
 
@@ -59,7 +54,7 @@ const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
     return <div>No data available</div>;
   }
 
-  const labels = quiz.map((item) => item.name);
+  const labels = quiz.map((item) => item.quizTitle);
   const label = t("legend");
 
   const data = {
@@ -67,9 +62,9 @@ const ChartComponent = ({ quiz }: { quiz: QuizItem[] }) => {
     datasets: [
       {
         label: label,
-        data: quiz.map((item) => item.scorePercentage),
+        data: quiz.map((item) => item.quizResult?.scorePercentage),
         backgroundColor: quiz.map((quiz) =>
-          quiz.scorePercentage > 60
+          quiz?.quizResult?.scorePercentage ?? 0 > 60
             ? "rgba(75, 192, 192, 0.6)"
             : "rgba(255, 99, 132, 0.6)"
         ),

@@ -10,6 +10,7 @@ import copyIcon from "@/public/assets/document-copy.svg";
 import Image from "next/image";
 import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { getJoinCode } from "@/utils/helpers";
+  
 const CreateQuizSuccessPage = () => {
   const t = useTranslations("CreateQuizSuccess");
   const { generatedQuizData } = useGenerateQuizStore();
@@ -18,7 +19,6 @@ const CreateQuizSuccessPage = () => {
   const handleCopyLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     navigator.clipboard.writeText(joinCode);
-  };
   return (
     <>
       <Confetti recycle={false} className="w-screen h-screen" />
@@ -38,6 +38,7 @@ const CreateQuizSuccessPage = () => {
             </p>
             <div className="bg-content2 p-6 gap-6 flex flex-col rounded-lg">
               <div className=" flex items-center h-[52px] bg-white p-3 gap-3 justify-center rounded-lg">
+
                 <span className="text-lg">{joinCode}</span>
                 <Popover>
                   <PopoverTrigger>
@@ -69,5 +70,6 @@ const CreateQuizSuccessPage = () => {
     </>
   );
 };
+}
 
 export default CreateQuizSuccessPage;

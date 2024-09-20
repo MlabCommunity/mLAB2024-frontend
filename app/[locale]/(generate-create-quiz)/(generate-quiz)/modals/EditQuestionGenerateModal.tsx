@@ -33,8 +33,6 @@ const EditQuestionGenerateModal = ({
   const [options, setOptions] = useState(questionData.options);
   const [isFormChanged, setIsFormChanged] = useState(false);
 
-  console.log(question);
-
   useEffect(() => {
     setQuestion(questionData.questionTitle);
     setOptions(questionData.options);

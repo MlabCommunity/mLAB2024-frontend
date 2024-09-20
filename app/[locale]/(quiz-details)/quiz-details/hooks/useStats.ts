@@ -1,64 +1,58 @@
 import { useQuery } from "@tanstack/react-query";
 import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import { showStats } from "@/utils/actions/quiz/showStatistics";
-
-export type QuizHistoryType = {
-  quizId: string;
-  quizTitle: string;
-  quizDescription: string;
-  participtionDateUtc: string;
-  status: string;
-  questions: Array<{
-    id: string;
-    title: string;
-    answers: Array<{ id: string; content: string; isCorrect: boolean }>;
-  }>;
-  userAnswers: any[]; // Consider defining a more specific type for userAnswers
-  quizResult: {
-    totalQuestions: number;
-    correctAnswers: number;
-    scorePercentage: number;
-  };
-};
-
-type User = {
-  id: string;
-};
-
-type StatsQueryResult = {
-  data: QuizHistoryType[];
-};
+import { usePathname } from "next/navigation";
 
 export const useStats = () => {
-  const userQuery = useQuery<User, Error>({
-    queryKey: ["currentProfile"],
-    queryFn: useGetCurrentProfile,
-  });
+  const path = usePathname();
+  const quizId = path.split("/")[2];
 
-  const statsQuery = useQuery<StatsQueryResult, Error>({
-    queryKey: ["stats", userQuery.data?.id],
-    queryFn: () => {
-      if (!userQuery.data?.id) {
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    isError: isUserError,
+    error: userError,
+  } = useGetCurrentProfile();
+  const {
+    data: statsData,
+    isLoading: isLoadingStats,
+    isError: isErrorStats,
+    error: statsError,
+  } = useQuery({
+    queryKey: ["stats", user?.id],
+    queryFn: async () => {
+      if (!user.id) {
         throw new Error("User ID is not available");
       }
-      return showStats(userQuery.data.id);
+
+      try {
+        const result = await showStats(user?.id);
+        return result;
+      } catch (error) {
+        console.error("Error in showStats:", error);
+        throw error;
+      }
     },
-    enabled: !!userQuery.data?.id,
+    enabled: !!user?.id,
     retry: (failureCount, error) => {
       if (error.message.includes("No stats found")) {
-        return false; // Don't retry for "no stats" scenarios
+        return false;
       }
-      return failureCount < 3; // Retry up to 3 times for other errors
+      return failureCount < 3;
     },
   });
 
+  const filteredStats =
+    statsData?.filter((stat) => {
+      const statQuizId = stat.quizId.trim();
+      const extractedQuizId = quizId.trim();
+      return statQuizId === extractedQuizId;
+    }) || [];
+
   return {
-    user: userQuery.data,
-    stats: statsQuery.data?.data,
-    isLoading: userQuery.isLoading || statsQuery.isLoading,
-    isFetching: userQuery.isFetching || statsQuery.isFetching,
-    isSuccess: userQuery.isSuccess && statsQuery.isSuccess,
-    isError: userQuery.isError || statsQuery.isError,
-    error: userQuery.error || statsQuery.error,
+    stats: filteredStats, //
+    isLoading: isUserLoading || isLoadingStats,
+    isError: isUserError || isErrorStats,
+    error: userError || statsError,
   };
 };

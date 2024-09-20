@@ -21,8 +21,6 @@ function Settings({ quizId }: SettingsProps) {
   const params = new URLSearchParams(searchParams);
   const currentPage = Number(params.get("currentPage"));
 
-  console.log(currentPage);
-
   const queryClient = useQueryClient();
   const t = useTranslations("quizDetails");
   const { mutate: updateAvailabilityMutate } = useMutation({
@@ -65,8 +63,6 @@ function Settings({ quizId }: SettingsProps) {
       toast.error(error.message || t("statusUpdateError"));
     },
   });
-
-  console.log(params);
 
   const { setAvailability, setStatus, availability, status } =
     useQuizDetailStore();

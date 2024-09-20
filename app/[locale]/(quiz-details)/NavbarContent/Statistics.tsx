@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect } from "react";
-import { format } from "date-fns";
 import {
   Table,
   TableHeader,
@@ -10,33 +9,37 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import DetailsButton from "../components/statistics/buttons/DetailsButton";
-import StatusChip from "../components/statistics/StatusChip/StatusChip";
-import EventDuration from "../components/statistics/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import ChartModal from "../modals/ChartModal";
 import { useStats } from "../quiz-details/hooks/useStats";
-function Statistics({ id }: { id: string }) {
-  const date = new Date();
-  const formatedDate = format(date, "dd.MM.yyyy");
-  const t = useTranslations("quizDetails");
+import {
+  formatQuizResult,
+  formatParticipationDate,
+  formatParticipationTime,
+} from "@/utils/helpers";
+import StatusChip from "../components/statistics/StatusChip/StatusChip";
+import { QuizHistoryType } from "@/types";
+import DetailsModal from "../modals/DetailsModal";
 
-  const { user, stats, isLoading, isError } = useStats();
-  useEffect(() => {
-    console.log(user, stats);
-  });
+function Statistics() {
+  const t = useTranslations("quizDetails");
+  const { stats, isLoading } = useStats();
 
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
-    "E-mail",
     "Status",
     t("timeTableHeader"),
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
-  const filterByQuizId = stats.;
+
+  useEffect(() => {
+    console.log(stats);
+  }, [stats]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -48,11 +51,11 @@ function Statistics({ id }: { id: string }) {
         <Table
           removeWrapper
           color="default"
-          className=" overflow-x-auto bg-content2  gap-6 p-6 rounded-lg w-full"
+          className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
         >
-          <TableHeader className=" flex justify-between rounded-lg ">
+          <TableHeader className="flex justify-between rounded-lg">
             {tableHeaders.map((tableHeader, index) => (
-              <TableColumn className="uppercase " key={index}>
+              <TableColumn className="uppercase" key={index}>
                 <div className="flex items-center justify-between gap-2">
                   <span>{tableHeader}</span>
                   <svg
@@ -61,6 +64,7 @@ function Statistics({ id }: { id: string }) {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Filter arrow"
                   >
                     <path
                       d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
@@ -75,35 +79,46 @@ function Statistics({ id }: { id: string }) {
             ))}
           </TableHeader>
           <TableBody
-            emptyContent={"You didn't take any quiz"}
+            emptyContent={t("noQuizTaken")}
             className="bg-white rounded-lg"
           >
             {stats &&
-              stats?.map((stat) => (
-                <TableRow className="bg-white rounded-lg" key={stat.quizId}>
-                  <TableCell>{stat.scorePercentage}</TableCell>
-                  <TableCell>{stat.name}</TableCell>
-                  <TableCell>{stat.email}</TableCell>
+              stats.map((stat: QuizHistoryType, index: number) => (
+                <TableRow className="bg-white rounded-lg" key={index}>
+                  <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
+                  <TableCell>{stat.quizTitle}</TableCell>
                   <TableCell>
-                    {stat.stat === "Stopped" && (
+                    {stat.status === "Started" && (
+                      <StatusChip status={"Started"}></StatusChip>
+                    )}
+                    {stat.status === "Stopped" && (
                       <StatusChip status={"Stopped"}></StatusChip>
                     )}
-                    {stat.stat === "Finished" && (
+                    {stat.status === "Finished" && (
                       <StatusChip status={"Finished"}></StatusChip>
                     )}
                   </TableCell>
-                  <TableCell className="text-center md:text-start">
-                    {stat.time}
+                  <TableCell className="text-center md:text-start ">
+                    {formatParticipationTime(stat.participtionDateUtc)}
                   </TableCell>
-                  <TableCell>{stat.date}</TableCell>
                   <TableCell>
-                    <DetailsButton />
+                    {formatParticipationDate(stat.participtionDateUtc)}
+                  </TableCell>
+                  <TableCell>
+                    {stat.status === "Started" ? (
+                      <span className="text-foreground-600 text-small">
+                        {t("inProgress")}
+                      </span>
+                    ) : (
+                      <DetailsButton id={stat?.quizId} />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </NavbarContentContainer>
+      <DetailsModal quiz={stats} />
       <ChartModal finishedQuiz={stats} />
     </motion.div>
   );

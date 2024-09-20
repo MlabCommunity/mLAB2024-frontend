@@ -34,7 +34,6 @@ export const updateQuizStatus = async (
         },
       }
     );
-    console.log(result.data);
 
     return result.data;
 

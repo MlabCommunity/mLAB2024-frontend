@@ -12,11 +12,13 @@ const NavbarContentContainer = ({
   className?: string;
 }) => {
   const { openModal } = useModalStore();
-
   const t = useTranslations("quizDetails");
   return (
     <>
-      <div className=" flex justify-between items-center mb-4">
+      <div
+        aria-label="navbar-content-container"
+        className=" flex justify-between items-center mb-4"
+      >
         <p className="mb-4">{t("manageSettings")}</p>
         <Button
           onClick={() => openModal("chartModal")}

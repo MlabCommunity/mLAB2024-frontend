@@ -3,12 +3,13 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import { Pagination, Skeleton } from "@nextui-org/react";
+import { Button, Pagination, Skeleton } from "@nextui-org/react";
 import { DashboardQuizItemT } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "../components/components/loading";
 import { motion } from "framer-motion";
+import { ListPlus } from "lucide-react";
 import usePaginator from "@/app/hooks/usePaginator";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 const DashboardPage = () => {
@@ -62,6 +63,12 @@ const DashboardPage = () => {
           <h2 className="text-4xl font-bold mb-4 sm:mb-0 text-foreground-700">
             {t("quizzes")}
           </h2>
+          <Link href="take-quiz-join">
+            <Button size="lg" className="gap-2" color="primary">
+              <ListPlus />
+              {t("takeQuizBtn")}
+            </Button>
+          </Link>
         </div>
         <p className="text-foreground-600 mb-4 text-medium md:text-large">
           {t("manageQuizz")}

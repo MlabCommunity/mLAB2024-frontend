@@ -14,23 +14,42 @@ export type UserPaginatorOptions = {
   fetch: <T>(page: number, limit: number) => Promise<PaginatedResponse<T>>;
   pageSize: number;
 };
-export type QuizHistoryType = {
+interface UserAnswer {
+  questionId: string;
+  answerId: string;
+}
+
+interface Answer {
+  id: string;
+  content: string;
+  isCorrect: boolean;
+}
+
+interface Answer {
+  id: string;
+  content: string;
+  isCorrect: boolean;
+}
+
+interface Question {
+  id: string;
+  title: string;
+  answers: Answer[];
+}
+
+export interface QuizResult {
+  totalQuestions: number;
+  correctAnswers: number;
+  scorePercentage: number;
+}
+
+export interface QuizHistoryType {
   quizId: string;
   quizTitle: string;
   quizDescription: string;
   participtionDateUtc: string;
-  status: string;
-  questions: [
-    {
-      id: string;
-      title: string;
-      answers: [{ id: string; content: string; isCorrect: boolean }];
-    }
-  ];
-  userAnswers: [];
-  quizResult: {
-    totalQuestions: number;
-    correctAnswers: number;
-    scorePercentage: number;
-  };
-};
+  status: "Stopped" | "Finished" | "Started";
+  quizResult?: QuizResult;
+  questions: Question[];
+  userAnswers: UserAnswer[]; //
+}

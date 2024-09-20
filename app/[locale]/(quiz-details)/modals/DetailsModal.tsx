@@ -129,10 +129,13 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                             </span>
                           </div>
                           {isSelected && answer.isCorrect && (
-                            <Image src={checkCircle} alt="Correct answer" />
+                            <Image src={checkCircle} alt={t("correctAnswer")} />
                           )}
                           {isSelected && !answer.isCorrect && (
-                            <Image src={cancelCircle} alt="Incorrect answer" />
+                            <Image
+                              src={cancelCircle}
+                              alt={t("incorrectAnswer")}
+                            />
                           )}
                         </div>
                       );

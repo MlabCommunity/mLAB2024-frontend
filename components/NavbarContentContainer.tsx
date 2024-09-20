@@ -17,7 +17,7 @@ const NavbarContentContainer = ({
     <>
       <div
         aria-label="navbar-content-container"
-        className=" flex justify-between items-center mb-4"
+        className=" flex justify-between items-center mb-4 md:flex-row flex-col"
       >
         <p className="mb-4">{t("manageSettings")}</p>
         <Button
@@ -25,7 +25,7 @@ const NavbarContentContainer = ({
           size="lg"
           color="success"
         >
-          <span className="text-white">{t("quizTakenPreviewButton")}</span>
+          <span className="text-white">{t("Chart")}</span>
         </Button>
       </div>
       <section className={className}>{children}</section>

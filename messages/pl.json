@@ -115,14 +115,17 @@
     "changedQuestionSuccessfully": "Pytanie zostało zmienione",
     "deletedQuestionSuccess": "Usunięto pytanie",
     "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
-    "quizTakenPreviewButton": "Wizualizacja danych",
+    "Chart": "Wizualizacja danych",
     "Started": "Rozpoczęty",
     "startDate": "Data rozpoczęcia",
     "inProgress": "W trakcie ",
     "quizTitle": "Tytuł",
     "quizScore": "Wynik:",
     "quizTotalQuestions": "Liczba pytań:",
-    "correctAnswers": "Poprawne odpowiedzi:"
+    "correctAnswers": "Poprawne odpowiedzi:",
+    "ariaLabel:": "Filtruj",
+    "correctAnswer": "Poprawna odpowiedź",
+    "incorrectAnswer": "Niepoprawna odpowiedź"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",

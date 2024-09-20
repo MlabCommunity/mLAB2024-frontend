@@ -23,7 +23,6 @@ import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import { QuizHistoryType } from "@/types";
 import DetailsModal from "../modals/DetailsModal";
 import { Skeleton } from "@nextui-org/react";
-import { stat } from "fs";
 
 function Statistics() {
   const t = useTranslations("quizDetails");
@@ -61,7 +60,7 @@ function Statistics() {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    aria-label="Filter arrow"
+                    aria-label={t("filterArrow")}
                   >
                     <path
                       d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
@@ -80,8 +79,7 @@ function Statistics() {
             className="bg-white rounded-lg"
           >
             {isLoading
-              ? // Skeleton wierszy tabeli, gdy dane są ładowane
-                [...Array(stats)].map((_, index) => (
+              ? [...Array(stats)].map((_, index) => (
                   <TableRow className="bg-white rounded-lg" key={index}>
                     <TableCell>
                       <Skeleton className="h-6 w-full" />

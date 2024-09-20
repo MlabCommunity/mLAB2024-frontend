@@ -1,3 +1,5 @@
+"use client";
+
 import { refreshTokenUrl } from "@/constants/api";
 import axiosInstance from "../../axiosInstance";
 import Cookies from "js-cookie";

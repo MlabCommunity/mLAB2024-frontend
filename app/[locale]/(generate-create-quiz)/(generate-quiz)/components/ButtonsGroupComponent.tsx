@@ -6,21 +6,25 @@ import NextButton from "@/generate-quiz-components/NextButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import { routes } from "@/routes";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
 
 function ButtonGroupComponent() {
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const t = useTranslations("ConfigureQuiz");
   const router = useRouter();
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const { Content, Attachments } = generateQuizData;
 
-  const [selectedType, setSelectedType] = useState("MultipleChoice");
+  const [selectedType, setSelectedType] = useState("SingleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    locale === "en" ? "English" : "Polish"
+  );
 
   const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
@@ -55,6 +59,7 @@ function ButtonGroupComponent() {
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
     formData.append("QuestionTypes", selectedType);
+    formData.append("Language", selectedLanguage);
     Attachments?.forEach((attachment) => {
       formData.append("Attachments", attachment);
     });
@@ -63,7 +68,7 @@ function ButtonGroupComponent() {
   };
 
   const questionTypes = [
-    { label: t("multipleChoice"), value: "MultipleChoice" },
+    { label: t("singleChoice"), value: "SingleChoice" },
     { label: t("trueFalse"), value: "TrueFalse" },
   ];
 
@@ -71,6 +76,11 @@ function ButtonGroupComponent() {
     { label: t("low"), value: "low" },
     { label: t("med"), value: "medium" },
     { label: t("high"), value: "high" },
+  ];
+
+  const languages = [
+    { label: "English", value: "English" },
+    { label: "Polish", value: "Polish" },
   ];
 
   return (
@@ -92,7 +102,7 @@ function ButtonGroupComponent() {
               <Button
                 key={type.value}
                 variant={selectedType === type.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
+                className="w-full justify-start md:w-auto rounded-lg "
                 size="lg"
                 startContent={
                   selectedType === type.value ? <TickCircle /> : <EmptyCircle />
@@ -123,7 +133,7 @@ function ButtonGroupComponent() {
               <Button
                 key={quantity.value}
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
+                className="w-full justify-start md:w-auto rounded-lg "
                 size="lg"
                 isDisabled={isPending}
                 startContent={
@@ -138,6 +148,39 @@ function ButtonGroupComponent() {
                 onClick={() => setSelectedQuantity(quantity.value)}
               >
                 <span>{quantity.label}</span>
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
+        <div className="gap-4 p-6 flex flex-col bg-content2 rounded-b-lg">
+          <span>{t("languages")}</span>
+          <ButtonGroup
+            className="flex-col w-full gap-2 items-start flex md:flex-row justify-start"
+            variant="solid"
+            color="primary"
+            radius="md"
+            size="md"
+            isDisabled={isPending}
+          >
+            {languages.map((language) => (
+              <Button
+                key={language.value}
+                variant={selectedLanguage === language.value ? "solid" : "flat"}
+                className="w-full justify-start md:w-auto rounded-lg "
+                size="lg"
+                isDisabled={isPending}
+                startContent={
+                  selectedLanguage === language.value ? (
+                    <TickCircle />
+                  ) : (
+                    <EmptyCircle />
+                  )
+                }
+                name={language.value}
+                aria-pressed={selectedLanguage === language.value}
+                onClick={() => setSelectedLanguage(language.value)}
+              >
+                <span>{language.label}</span>
               </Button>
             ))}
           </ButtonGroup>

@@ -26,7 +26,7 @@ const EditQuestionGenerateModal = ({
   questionData,
   setQuestions,
 }: EditQuestionGenerateModalProps) => {
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   const { closeModal, isOpen, type } = useModalStore();
 
   const [question, setQuestion] = useState(questionData.questionTitle);

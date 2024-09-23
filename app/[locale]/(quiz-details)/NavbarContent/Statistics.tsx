@@ -22,11 +22,13 @@ import {
 import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import { QuizHistoryType } from "@/types";
 import DetailsModal from "../modals/DetailsModal";
-import { Skeleton } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
+import { useModalStore } from "@/store/modalStore";
 
 function Statistics() {
   const t = useTranslations("quizDetails");
   const { stats, isLoading } = useStats();
+  const { openModal } = useModalStore();
 
   const tableHeaders = [
     t("scoreTableHeader"),
@@ -60,7 +62,7 @@ function Statistics() {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    aria-label={t("filterArrow")}
+                    aria-label={t("ariaLabel")}
                   >
                     <path
                       d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
@@ -136,7 +138,16 @@ function Statistics() {
                 ))}
           </TableBody>
         </Table>
+        <Button
+          className="flex justify-center mt-4 w-full"
+          onClick={() => openModal("chartModal")}
+          size="lg"
+          color="success"
+        >
+          <span className="text-white">{t("Chart")}</span>
+        </Button>
       </NavbarContentContainer>
+
       <DetailsModal quiz={stats} />
       <ChartModal finishedQuiz={stats} />
     </motion.div>

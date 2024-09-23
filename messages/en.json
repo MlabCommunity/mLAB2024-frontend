@@ -126,7 +126,7 @@
     "quizScore": "Score:",
     "quizTotalQuestions": "Total Questions:",
     "correctAnswers": "Correct answers",
-    "filterArrow": "Filter",
+    "ariaLabel": "Filter",
     "correctAnswer": "Correct answer",
     "incorrectAnswer": "Incorrect answer"
   },

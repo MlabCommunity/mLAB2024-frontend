@@ -20,13 +20,6 @@ const NavbarContentContainer = ({
         className=" flex justify-between items-center mb-4 md:flex-row flex-col"
       >
         <p className="mb-4">{t("manageSettings")}</p>
-        <Button
-          onClick={() => openModal("chartModal")}
-          size="lg"
-          color="success"
-        >
-          <span className="text-white">{t("Chart")}</span>
-        </Button>
       </div>
       <section className={className}>{children}</section>
     </>

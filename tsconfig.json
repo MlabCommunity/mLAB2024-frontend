@@ -21,9 +21,8 @@
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
       "@/generate-quiz-components/*": [
-    "./app/[locale]/(generate-create-quiz)/components/*"
-  ]
-
+        "./app/[locale]/(generate-create-quiz)/components/*"
+      ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

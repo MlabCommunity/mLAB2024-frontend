@@ -8,12 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import NavigationControls from "@/generate-quiz-components/NavigationControls";
-import NextButton from  "@/generate-quiz-components/NextButton";
+import NextButton from "@/generate-quiz-components/NextButton";
 import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { routes } from "@/routes";
-
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
@@ -70,7 +69,6 @@ const PromptForm = () => {
           </motion.div>
         )}
         <NavigationControls>
-          
           <NextButton />
           <InsertFileButton />
         </NavigationControls>

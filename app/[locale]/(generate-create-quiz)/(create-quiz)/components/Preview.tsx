@@ -18,7 +18,7 @@ import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQues
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 
 import { AnimatePresence } from "framer-motion";
-import BackButton from "../../(generate-quiz)/components/buttons/BackButton";
+
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -165,7 +165,7 @@ function Preview() {
         </AnimatePresence>
       </aside>
       <NavigationControls>
-        <BackButton />
+      
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (

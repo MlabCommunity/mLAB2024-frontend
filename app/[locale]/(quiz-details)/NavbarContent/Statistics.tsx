@@ -147,7 +147,6 @@ function Statistics() {
           <span className="text-white">{t("Chart")}</span>
         </Button>
       </NavbarContentContainer>
-
       <DetailsModal quiz={stats} />
       <ChartModal finishedQuiz={stats} />
     </motion.div>

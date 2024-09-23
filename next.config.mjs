@@ -1,6 +1,22 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/:quizCode",
+        destination: "/",
+        permanent: false,
+        has: [
+          {
+            type: "query",
+            key: "quizCode",
+            value: "(?!^.{8}$).*",
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

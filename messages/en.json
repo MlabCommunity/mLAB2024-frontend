@@ -127,6 +127,7 @@
     "quizTotalQuestions": "Total Questions:",
     "correctAnswers": "Correct answers",
     "ariaLabel": "Filter",
+    "filterArrow": "Filter",
     "correctAnswer": "Correct answer",
     "incorrectAnswer": "Incorrect answer"
   },
@@ -245,7 +246,8 @@
     "joined": "Joined to the quiz",
     "joining": "Joining...",
     "calculating": "Calculating result...",
-    "quizResultSuccess": "Quiz result calculated successfully"
+    "quizResultSuccess": "Quiz result calculated successfully",
+    "wasInvalid": "Your quiz code was invalid"
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",

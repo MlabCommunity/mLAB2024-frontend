@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -61,7 +60,6 @@ export default function LoginForm() {
           type="text"
           radius="sm"
           placeholder="Email"
-          autoComplete="off"
           className="text-foreground-500 mt-1 text-sm"
           disabled={isPending}
         />
@@ -122,6 +120,7 @@ export default function LoginForm() {
       >
         {isPending ? t("pending") : t("login")}
       </Button>
+
       <div className="flex justify-between mt-6 gap-2">
         <Button
           variant="ghost"

@@ -51,4 +51,8 @@ export const routes = {
     title: "Not Found",
     pathname: "/404",
   },
+  statistics: {
+    title: "Quiz Statistics",
+    pathname: "/statistics",
+  },
 };

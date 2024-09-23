@@ -40,15 +40,8 @@ export const useStats = () => {
       return failureCount < 3;
     },
   });
-
-  const filteredStats =
-    statsData?.filter((stat) => {
-      const statQuizId = stat.quizId.trim();
-      const extractedQuizId = quizId.trim();
-      return statQuizId === extractedQuizId;
-    }) || [];
   return {
-    stats: filteredStats, //
+    stats: statsData, //
     isLoading: isUserLoading || isLoadingStats,
     isError: isUserError || isErrorStats,
     error: userError || statsError,

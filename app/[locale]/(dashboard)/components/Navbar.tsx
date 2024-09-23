@@ -19,6 +19,10 @@ const Navbar = () => {
       label: t("profile"),
       route: routes.profile.pathname,
     },
+    {
+      label: t("statistics"),
+      route: routes.statistics.pathname,
+    },
   ];
 
   return (

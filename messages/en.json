@@ -56,7 +56,8 @@
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
     "inactive": "Inactive",
-    "takeQuizBtn": "Take quiz"
+    "takeQuizBtn": "Take quiz",
+    "statistics": "Statistics"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -138,7 +139,8 @@
     "loggedOut": "Logged out successfully"
   },
   "Navbar": {
-    "profile": "Profile"
+    "profile": "Profile",
+    "statistics": "Statistics"
   },
   "LanguageSwitcher": {
     "english": "English",

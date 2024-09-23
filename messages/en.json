@@ -57,7 +57,21 @@
     "active": "Active",
     "inactive": "Inactive",
     "takeQuizBtn": "Take quiz",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "inProgress": "In Progress",
+    "scoreTableHeader": "Score",
+    "nameTableHeader": "Name",
+    "detailsTableHeader": "Details",
+    "statusFinishedTableHeader": "Finished",
+    "statusStoppedTableHeader": "Stopped",
+    "timeTableHeader": "Time",
+    "dateTableHeader": "Date",
+    "detailsButton": "Details",
+    "amountOfTakenQuizzes": "Amount of quiz taken:",
+    "title": "Quiz statistics",
+    "legend": "Score (%)",
+    "noDataAvailable": "No data available",
+    "noQuizTakenDialogue": "No quiz taken"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -277,9 +291,5 @@
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close"
   },
-  "ChartModal": {
-    "title": "Quiz statistics",
-    "legend": "Score (%)",
-    "noDataAvailable": "No data available"
-  }
+  "ChartModal": {}
 }

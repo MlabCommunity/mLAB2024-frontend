@@ -55,6 +55,7 @@ function ButtonGroupComponent() {
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
     formData.append("QuestionTypes", selectedType);
+    formData.append("Language", "Polski");
     Attachments?.forEach((attachment) => {
       formData.append("Attachments", attachment);
     });

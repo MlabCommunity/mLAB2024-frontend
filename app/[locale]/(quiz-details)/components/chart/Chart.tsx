@@ -1,5 +1,6 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
+"use client";
+import React, { useEffect } from "react";
+import { Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +13,7 @@ import {
 } from "chart.js";
 import { useTranslations } from "next-intl";
 import { QuizHistoryType } from "@/types";
+import DoughnutChart from "./Doughnut";
 
 ChartJS.register(
   CategoryScale,
@@ -22,10 +24,12 @@ ChartJS.register(
   Legend
 );
 
-const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
-  const t = useTranslations("ChartModal");
+const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
+  const t = useTranslations("Dashboard");
   const title = t("title");
-
+  useEffect(() => {
+    console.log(quiz);
+  }, [quiz]);
   const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
@@ -49,7 +53,6 @@ const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
       },
     },
   };
-
   if (!quiz || quiz.length === 0) {
     return (
       <div className="flex justify-center font-semibold items-center">
@@ -60,7 +63,6 @@ const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
 
   const labels = quiz.map((item) => item.quizTitle);
   const label = t("legend");
-
   const data = {
     labels,
     datasets: [
@@ -78,9 +80,13 @@ const ChartComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
 
   return (
     <div className="w-full max-w-3xl mx-auto p-4">
+      <h1>
+        {t("amountOfTakenQuizzes")} {quiz.length}
+      </h1>
       <Bar options={options} data={data} />
+      <DoughnutChart quiz={quiz} />
     </div>
   );
 };
 
-export default ChartComponent;
+export default ChartsComponent;

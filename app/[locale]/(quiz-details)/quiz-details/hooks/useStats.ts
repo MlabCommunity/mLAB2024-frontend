@@ -4,46 +4,19 @@ import { showStats } from "@/utils/actions/quiz/showStatistics";
 import { usePathname } from "next/navigation";
 
 export const useStats = () => {
-  const path = usePathname();
-  const quizId = path.split("/")[2];
-
-  const {
-    data: user,
-    isLoading: isUserLoading,
-    isError: isUserError,
-    error: userError,
-  } = useGetCurrentProfile();
   const {
     data: statsData,
     isLoading: isLoadingStats,
     isError: isErrorStats,
     error: statsError,
   } = useQuery({
-    queryKey: ["stats", user?.id],
-    queryFn: async () => {
-      if (!user.id) {
-        throw new Error("User ID is not available");
-      }
-
-      try {
-        const result = await showStats(user?.id);
-        return result;
-      } catch (error) {
-        throw error;
-      }
-    },
-    enabled: !!user?.id,
-    retry: (failureCount, error) => {
-      if (error.message) {
-        return false;
-      }
-      return failureCount < 3;
-    },
+    queryKey: ["stats"],
+    queryFn: showStats,
   });
   return {
     stats: statsData, //
-    isLoading: isUserLoading || isLoadingStats,
-    isError: isUserError || isErrorStats,
-    error: userError || statsError,
+    isLoading: isLoadingStats,
+    isError: isErrorStats,
+    error: statsError,
   };
 };

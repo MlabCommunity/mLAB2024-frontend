@@ -56,7 +56,10 @@
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
     "inactive": "Inactive",
-    "takeQuizBtn": "Take quiz"
+    "takeQuizBtn": "Take quiz",
+    "avatar": "Profile image",
+    "avatarUploaded":"Avatar uploaded successfully",
+    "uploadError":"Error while uploading avatar"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",

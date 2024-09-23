@@ -14,9 +14,6 @@
     "pending": "Ładowanie",
     "signedIn": "Pomyślnie zalogowano!",
     "signedUp": "Pomyslnie zarejestrowano uzytkownika!"
-  
-   
-  
   },
   "AuthSchemas": {
     "enterValidEmail": "Proszę wprowadzić prawidłowy adres e-mail",
@@ -58,7 +55,10 @@
     "statusUpdateError": "Bład podczas aktualizacji statusu",
     "active": "Aktywny",
     "inactive": "Nieaktywny",
-    "takeQuizBtn": "Rozpocznij quiz"
+    "takeQuizBtn": "Rozpocznij quiz",
+    "avatar": "Zdjęcie profilowe",
+    "avatarUploaded": "Zdjęcie profilowe zostało zaktualizowane.",
+    "uploadError": "Przesyłanie zdjecia profilowego nie powiodło się."
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",

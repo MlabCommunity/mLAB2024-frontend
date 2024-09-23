@@ -1,66 +1,75 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button, Skeleton } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { Button, Avatar } from "@nextui-org/react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { routes } from "@/routes";
 import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "@/utils/actions/user/updateProfile";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import { UploadButton } from "@/utils/uploadThing";
 
 const ProfilePage = () => {
   const queryClient = useQueryClient();
   const { data: currentProfile } = useGetCurrentProfile();
-  const [nameValue, setNameValue] = useState<string>(
-    currentProfile?.displayName || ""
-  );
-  const [isChanged, setIsChanged] = useState<boolean>(false);
-
-  const router = useRouter();
+  const [formData, setFormData] = useState({
+    displayName: currentProfile?.displayName ? currentProfile?.displayName : "",
+    imageUrl: currentProfile?.imageUrl ? currentProfile?.imageUrl : "",
+  });
+  const [isFormChanged, setIsFormChanged] = useState(false);
   const t = useTranslations("Dashboard");
 
   useEffect(() => {
-    if (currentProfile?.userName) {
-      setNameValue(currentProfile.userName);
+    if (currentProfile) {
+      setFormData({
+        displayName: currentProfile?.displayName || "",
+        imageUrl: currentProfile?.imageUrl || "",
+      });
     }
   }, [currentProfile]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateProfile,
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error(error.message);
     },
     onSuccess: () => {
       toast.success(t("profileUpdated"));
-      setIsChanged(false);
+      setIsFormChanged(false);
     },
-
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
     },
   });
 
-  const handleUpdate = () => {
+  const handleUpdateProfile = useCallback(() => {
     mutate({
-      displayName: nameValue,
+      displayName: formData.displayName,
+      imageUrl: formData.imageUrl,
     });
-  };
+  }, [mutate, formData]);
 
-  const handleDelete = () => {
-    if (window.confirm(t("areYouSure"))) {
-      console.log("Delete account");
-      router.push(routes.signIn.pathname);
-    }
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setIsFormChanged(true);
+    },
+    []
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameValue(e.target.value);
-    setIsChanged(e.target.value !== currentProfile?.userName);
-  };
+  const handleAvatarUpload = useCallback(
+    (url: string) => {
+      setFormData((prev) => ({ ...prev, imageUrl: url }));
+      setIsFormChanged(true);
+      toast.success(t("avatarUploaded"));
+    },
+    [t]
+  );
 
+  const isUpdateDisabled =
+    !isFormChanged || !formData.displayName || !formData.imageUrl || isPending;
 
   return (
     <motion.section
@@ -78,22 +87,46 @@ const ProfilePage = () => {
       <hr className="mb-4" />
       <div className="bg-[#F4F4F5] rounded-md p-6 flex flex-col gap-8">
         <div className="flex flex-col gap-3">
+          <label className="text-gray-700" htmlFor="avatar">
+            {t("avatar")}
+          </label>
+          <div className="flex items-center gap-4">
+            <Avatar
+              src={formData.imageUrl}
+              alt="Profile"
+              className="w-20 h-20"
+            />
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (res && res[0]) {
+                  handleAvatarUpload(res[0].url);
+                }
+              }}
+              onUploadError={(error: Error) => {
+                toast.error(`${t("uploadError")}: ${error.message}`);
+              }}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
           <label className="text-gray-700" htmlFor="name">
             {t("name")}
           </label>
           <input
             id="name"
+            name="displayName"
             type="text"
-            value={nameValue}
-            onChange={handleChange}
+            value={formData.displayName}
+            onChange={handleInputChange}
             className="p-3 rounded-lg shadow-sm"
           />
           <p className="text-foreground-500 text-sm">{t("displayName")}</p>
           <Button
             variant="solid"
             className="bg-base-primary text-white w-min py-5 disabled:bg-base-primary/50"
-            onClick={handleUpdate}
-            disabled={isPending || !nameValue || !isChanged}
+            onClick={handleUpdateProfile}
+            disabled={isUpdateDisabled}
           >
             {t("updateButton")}
           </Button>
@@ -106,7 +139,6 @@ const ProfilePage = () => {
           </p>
           <Button
             className="transition-all hover:bg-danger-500 text-white px-4 text-medium w-min py-5 disabled:bg-danger-200"
-            onClick={handleDelete}
             variant="solid"
             color="danger"
             disabled={isPending}

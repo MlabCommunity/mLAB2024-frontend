@@ -14,9 +14,6 @@
     "pending": "Ładowanie",
     "signedIn": "Pomyślnie zalogowano!",
     "signedUp": "Pomyslnie zarejestrowano uzytkownika!"
-  
-   
-  
   },
   "AuthSchemas": {
     "enterValidEmail": "Proszę wprowadzić prawidłowy adres e-mail",
@@ -279,5 +276,27 @@
     "noDataAvailable": "Brak dostępnych danych",
     "title": "Statystyki quizu",
     "legend": "Wynik (%)"
+  },
+  "Guest": {
+    "convertedProperly": "Gość został poprawnie przekonwertowany",
+    "signUp": "Zarejestruj się",
+    "tookPart": "Wziąłeś udział w quizie jako gość. Teraz możesz zarejestrować się lub wrócić do panelu.",
+    "rememberMe": "Zapamiętaj mnie",
+    "toAuthPage": "Wróć do strony logowania",
+    "enterEmail": "Wpisz swój e-mail",
+    "enterPassword": "Wpisz swoje hasło",
+    "password": "Hasło",
+    "nameValidMin": "Imię musi mieć co najmniej 2 znaki",
+    "nameValidMax": "Imię nie może przekraczać 50 znaków",
+    "registrationFailed": "Rejestracja nie powiodła się. Spróbuj ponownie",
+    "failedToJoin": "Nie udało się dołączyć do quizu. Spróbuj ponownie",
+    "invalidQuizCode": "Nieprawidłowy kod quizu",
+    "unexpectedError": "Wystąpił nieoczekiwany błąd",
+    "takeQuiz": "Rozpocznij quiz",
+    "dontHaveAnAccount": "Widzimy, że nie masz konta. Aby wziąć udział w quizie, podaj swoje imię.",
+    "name": "Imię",
+    "enterName": "Wpisz swoje imię",
+    "joinQuiz": "Dołącz do quizu",
+    "joining": "Dołączanie..."
   }
 }

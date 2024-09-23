@@ -1,6 +1,7 @@
 "use client";
-import { format, parseISO } from "date-fns"; // Importing the required functions
 import { QuizResult } from "@/types";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 export const getPluralForm = (count: number, key: string) => {
   if (count === 1) return `${key}_one`;
   if (count > 1 && count < 5) return `${key}_few`;
@@ -41,3 +42,12 @@ export const formatParticipationTime = (utcDateString: string) => {
   }
   return "N/A";
 };
+
+export function getUserRoleFromJWT() {
+  const token = Cookies.get("AccessToken") as string;
+  const JWT_ROLE_CLAIM =
+    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+  const decoded = jwtDecode(token);
+  const role = decoded[JWT_ROLE_CLAIM as keyof typeof decoded];
+  return role;
+}

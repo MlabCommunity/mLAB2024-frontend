@@ -51,7 +51,6 @@ const ProfilePage = () => {
 
   const handleDelete = () => {
     if (window.confirm(t("areYouSure"))) {
-      console.log("Delete account");
       router.push(routes.signIn.pathname);
     }
   };
@@ -60,7 +59,6 @@ const ProfilePage = () => {
     setNameValue(e.target.value);
     setIsChanged(e.target.value !== currentProfile?.userName);
   };
-
 
   return (
     <motion.section

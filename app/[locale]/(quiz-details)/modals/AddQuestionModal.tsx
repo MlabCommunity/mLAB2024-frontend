@@ -39,7 +39,6 @@ function AddQuestionModal() {
     mutationFn: createNewQuestion,
 
     onSuccess: (data, variables) => {
-      console.log(data);
       toast.success(t("addedQuestionSuccess"));
       closeModal();
       queryClient.setQueryData(["singleQuiz"], (oldData: any) => {

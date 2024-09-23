@@ -13,16 +13,12 @@ export const updateQuizStatus = async (
 ): Promise<updateQuizStatusType> => {
   try {
     const access = cookies().get("AccessToken")?.value;
-    console.log(id);
-    console.log("AccessToken:", access);
 
     if (!access) {
       throw new Error("Access token is missing");
     }
 
     const payload = newStatus;
-
-    console.log("Payload:", JSON.stringify(payload));
 
     const result = await axios.patch(
       `${updateQuizStatusUrl}/${id}/status`,

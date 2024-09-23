@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import Container from "@/components/shared/Container";
 import QuizResults from "../../components/QuizResults";
 import HistoryResults from "../../components/HistoryResults";
@@ -11,7 +11,6 @@ import { useGetQuizParticipation } from "@/utils/hooks/useGetQuizParticipation";
 import { useTakeQuizStore } from "@/store/takeQuizStore";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import { set } from "date-fns";
 
 const TakeQuiz = ({ params }: { params: { id: string } }) => {
   const { data: quizParticipationData } = useGetQuizParticipation(params.id);

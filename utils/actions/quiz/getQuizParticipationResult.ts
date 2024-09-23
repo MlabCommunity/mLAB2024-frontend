@@ -3,7 +3,6 @@
 import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
 import { cookies } from "next/headers";
-import { getQuizParticipation } from "./getQuizParticipation";
 import { getQuizParticipationResultUrl } from "@/constants/api";
 
 export const getQuizParticipationResult = async (

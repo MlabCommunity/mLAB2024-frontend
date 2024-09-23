@@ -36,7 +36,6 @@ function SignUpForm() {
     mutationFn: signUp,
     onError: (error) => {
       toast.error("Registration failed");
-      console.log(error.message);
     },
     onSuccess: () => {
       toast.success(t("signedUp"));

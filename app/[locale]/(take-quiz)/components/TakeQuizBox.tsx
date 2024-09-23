@@ -7,6 +7,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TakeQuizBoxSkeleton from "./skeletons/TakeQuizBoxSkeleton";
+import { getUserRoleFromJWT } from "@/utils/helpers";
 
 interface TakeQuizBoxProps {
   setIsTakeQuizBoxVisible: (value: boolean) => void;
@@ -22,9 +23,17 @@ const TakeQuizBox = ({
   quizLength,
 }: TakeQuizBoxProps) => {
   const t = useTranslations("TakeQuiz");
+  const userRole = getUserRoleFromJWT();
+
+  const nameSchema =
+    userRole === "Guest"
+      ? z.string().optional()
+      : z.string().min(2, { message: t("warningName") });
+
   const takeQuizSchema = z.object({
-    name: z.string().min(2, { message: t("warningName") }),
+    name: nameSchema,
   });
+
   type FormData = z.infer<typeof takeQuizSchema>;
 
   const {
@@ -49,22 +58,24 @@ const TakeQuizBox = ({
         </p>
         <span className="text-foreground-600">{t("quizSubHeading")}</span>
       </div>
-      <div className="flex flex-col w-full -mt-2">
-        <label htmlFor="name" className="text-medium text-foreground-700">
-          {t("name")}
-        </label>
-        <input
-          id="name"
-          type="text"
-          placeholder={t("yourName")}
-          autoComplete="off"
-          className="text-foreground-500 mt-1 text-sm w-full rounded-lg p-3 outline-foreground-700 outline-1"
-          {...register("name", { required: true })}
-        />
-        {errors?.name && (
-          <p className="text-red-500 mt-2 text-sm">{errors?.name?.message}</p>
-        )}
-      </div>
+      {userRole !== "Guest" && (
+        <div className="flex flex-col w-full -mt-2">
+          <label htmlFor="name" className="text-medium text-foreground-700">
+            {t("name")}
+          </label>
+          <input
+            id="name"
+            type="text"
+            placeholder={t("yourName")}
+            autoComplete="off"
+            className="text-foreground-500 mt-1 text-sm w-full rounded-lg p-3 outline-foreground-700 outline-1"
+            {...register("name", { required: userRole !== "Guest" })}
+          />
+          {errors?.name && (
+            <p className="text-red-500 mt-2 text-sm">{errors?.name?.message}</p>
+          )}
+        </div>
+      )}
 
       {!isQuizDataLoaded ? (
         <TakeQuizBoxSkeleton />

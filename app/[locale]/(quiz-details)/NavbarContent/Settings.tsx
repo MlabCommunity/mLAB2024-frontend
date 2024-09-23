@@ -49,7 +49,6 @@ function Settings({ quizId }: SettingsProps) {
     onSuccess: (data) => {
       toast.success(t("statusUpdateSuccess"));
       queryClient.setQueryData(["quizList", currentPage], (oldData: any) => {
-        console.log(oldData);
         if (!oldData || !oldData.items) return oldData;
         return {
           ...oldData,

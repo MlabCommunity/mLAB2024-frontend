@@ -23,18 +23,72 @@ import StatusChip from "../../(quiz-details)/components/statistics/StatusChip/St
 import DetailsButton from "../../(quiz-details)/components/statistics/buttons/DetailsButton";
 import Chart from "../../(quiz-details)/components/chart/Chart";
 import { QuizHistoryType } from "@/types";
+
 const StatisticsPage = () => {
   const t = useTranslations("Dashboard");
   const { data: stats, isLoading, isFetching } = useStats();
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
-    "Status",
+    t("status"),
     t("timeTableHeader"),
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
   const quizStats: QuizHistoryType[] = stats || [];
+
+  const renderTableContent = () => {
+    if (isFetching || isLoading) {
+      return [...Array(5)].map((_, index) => (
+        <TableRow className="bg-white rounded-lg" key={index}>
+          <TableCell>
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+          <TableCell className="text-center md:text-start">
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-6 w-full" />
+          </TableCell>
+        </TableRow>
+      ));
+    }
+
+    return quizStats.map((stat: QuizHistoryType, index: number) => (
+      <TableRow className="bg-white rounded-lg" key={index}>
+        <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
+        <TableCell>{stat.quizTitle}</TableCell>
+        <TableCell>
+          <StatusChip status={stat.status} />
+        </TableCell>
+        <TableCell className="text-center md:text-start">
+          {formatParticipationTime(stat.participtionDateUtc)}
+        </TableCell>
+        <TableCell>
+          {formatParticipationDate(stat.participtionDateUtc)}
+        </TableCell>
+        <TableCell>
+          {stat.status === "Started" ? (
+            <span className="text-foreground-600 text-small">
+              {t("inProgress")}
+            </span>
+          ) : (
+            <DetailsButton id={stat?.quizId} />
+          )}
+        </TableCell>
+      </TableRow>
+    ));
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -74,72 +128,17 @@ const StatisticsPage = () => {
                       <path
                         d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
                         stroke="#11181C"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeMiterlimit="10"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </div>
                 </TableColumn>
               ))}
             </TableHeader>
-            <TableBody
-              emptyContent={t("noQuizTakenDialogue")}
-              className="bg-white rounded-lg"
-            >
-              {isFetching || isLoading ? (
-                [...Array(5)].map((_, index) => (
-                  <TableRow className="bg-white rounded-lg" key={index}>
-                    <TableCell>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                    <TableCell className="text-center md:text-start">
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : quizStats && quizStats.length > 0 ? (
-                quizStats.map((stat: QuizHistoryType, index: number) => (
-                  <TableRow className="bg-white rounded-lg" key={index}>
-                    <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
-                    <TableCell>{stat.quizTitle}</TableCell>
-                    <TableCell>
-                      <StatusChip status={stat.status} />
-                    </TableCell>
-                    <TableCell className="text-center md:text-start">
-                      {formatParticipationTime(stat.participtionDateUtc)}
-                    </TableCell>
-                    <TableCell>
-                      {formatParticipationDate(stat.participtionDateUtc)}
-                    </TableCell>
-                    <TableCell>
-                      {stat.status === "Started" ? (
-                        <span className="text-foreground-600 text-small">
-                          {t("inProgress")}
-                        </span>
-                      ) : (
-                        <DetailsButton id={stat?.quizId} />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={6}>{t("noQuizTakenDialogue")}</TableCell>
-                </TableRow>
-              )}
+            <TableBody emptyContent={t("noQuizTakenDialogue")}>
+              {renderTableContent()}
             </TableBody>
           </Table>
         </NavbarContentContainer>

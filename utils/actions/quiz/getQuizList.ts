@@ -33,7 +33,6 @@ export const getQuizList = async (
     return data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error(error);
       throw new Error(error.response?.data?.detail);
     } else {
       throw new Error("An unexpected error occurred");

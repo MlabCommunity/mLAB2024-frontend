@@ -15,7 +15,18 @@
     transition: background-color 0.3s;
     border: 2px solid #d1d5db;
   }
-  
+  body {
+  background-color: white;
+  color: black;
+}
+
+
+body.dark {
+  background-color: black;
+  color: white;
+}
+
+
   .custom-radio-checked {
     background-color: #d1d5db; 
   }

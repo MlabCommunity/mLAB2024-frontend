@@ -1,5 +1,4 @@
 "use client";
-
 import Container from "@/components/shared/Container";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
@@ -16,18 +15,20 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
+import { useTheme } from "@/app/context/ThemeContext"; 
+import { FaSun, FaMoon } from "react-icons/fa"; 
 const Header = () => {
   const { data: currentProfile } = useGetCurrentProfile();
   const router = useRouter();
   const t = useTranslations("Header");
+
+  const { theme, toggleTheme } = useTheme(); 
 
   const { mutate } = useMutation({
     mutationFn: logOutUser,
     onError: (error) => {
       toast.error(error.message);
     },
-
     onSuccess: () => {
       router.push(routes.signIn.pathname);
       toast.success(t("loggedOut"));
@@ -35,7 +36,10 @@ const Header = () => {
   });
 
   const handleLogout = () => {
-    mutate();
+    mutate(); 
+   
+    localStorage.setItem("theme", "light");
+    document.body.className = "light"; 
   };
 
   const avatarUrl = currentProfile?.imageUrl
@@ -49,8 +53,19 @@ const Header = () => {
       </div>
       <Container>
         <div className="flex items-center justify-end">
-          <div className="relative flex gap-2">
+          <div className="relative flex gap-4 items-center">
             <LanguageSwitcher />
+
+            
+            <button onClick={toggleTheme} aria-label="Toggle Theme">
+              {theme === "light" ? (
+                <FaMoon className="text-xl" /> 
+              ) : (
+                <FaSun className="text-xl" /> 
+              )}
+            </button>
+
+           
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Avatar

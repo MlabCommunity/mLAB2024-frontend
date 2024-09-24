@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@/utils";
+import { ThemeProvider } from "@/app/context/ThemeContext"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,17 +19,22 @@ export default async function RootLayout({
   params: { locale: string };
 }>) {
   const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <body className={inter.className}>
+     
         <NextIntlClientProvider messages={messages}>
-          <Providers>
-            <main className="flex-1">
-              {children}
-              <Toaster position="top-center" />
-            </main>
-          </Providers>
+        <ThemeProvider> 
+            <Providers>
+              <main className="flex-1">
+                {children}
+                <Toaster position="top-center" />
+              </main>
+            </Providers>
+            </ThemeProvider>
         </NextIntlClientProvider>
+      
       </body>
     </html>
   );

@@ -178,7 +178,7 @@
     "configureQuizHeading": "Konfiguracja quizu",
     "configureQuizMessage": "Tutaj możesz stworzyć quiz w oparciu o swoje preferencje.",
     "questionsType": "Jakie rodzaje pytań?",
-    "multipleChoice": "Wielokrotny wybór",
+    "singleChoice": "Pojedyńczy wybór",
     "trueFalse": "Prawda/Fałsz",
     "fillIn": "Uzupełnij lukę",
     "howManyQuestions": "Ilość pytań?",
@@ -187,7 +187,8 @@
     "high": "Duża",
     "man": "Ręcznie",
     "generatedSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
-    "generating": "Generowanie quizu..."
+    "generating": "Generowanie quizu...",
+    "languages": "Jaki język?"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",

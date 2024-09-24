@@ -38,6 +38,10 @@ const Header = () => {
     mutate();
   };
 
+  const avatarUrl = currentProfile?.imageUrl
+    ? currentProfile.imageUrl
+    : "https://images.unsplash.com/broken";
+
   return (
     <header className="flex justify-between items-center border-b border-gray-200 px-5 py-4 border-none">
       <div className="flex items-center">
@@ -50,10 +54,11 @@ const Header = () => {
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Avatar
+                  showFallback
                   isBordered
                   as="button"
                   className="transition-transform"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  src={avatarUrl}
                 />
               </DropdownTrigger>
               <DropdownMenu

@@ -74,7 +74,11 @@
     "incorrectAnswers": "Incorrect answers",
     "correctAnswers": "Correct answers",
     "noQuizTakenDialogue": "No quiz taken",
-    "answerDistribution": "Answers Distribution"
+    "answerDistribution": "Answers Distribution",
+    "avatar": "Profile image",
+    "avatarUploaded": "Avatar uploaded successfully",
+    "uploadError": "Error while uploading avatar",
+    "filterArrow": "Filter"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -199,7 +203,7 @@
     "configureQuizHeading": "Configure Quiz",
     "configureQuizMessage": "    Here, you can create quizz based on your prompt",
     "questionsType": "What type of questions?",
-    "multipleChoice": "Multiple Choice",
+    "singleChoice": "Single Choice",
     "trueFalse": "True/False",
     "fillIn": "Fill in the blank",
     "howManyQuestions": "How many questions?",
@@ -208,7 +212,8 @@
     "high": "High",
     "man": "Manual",
     "generatedSuccessfullyMsg": "Quiz generated successfully",
-    "generating": "Generating quiz..."
+    "generating": "Generating quiz...",
+    "languages": "Which language?"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",

@@ -143,8 +143,12 @@ const StatisticsPage = () => {
             </TableBody>
           </Table>
         </NavbarContentContainer>
+        {isFetching ? (
+          <Skeleton className="h-[400px]" />
+        ) : (
+          <Chart quiz={quizStats} />
+        )}
         <DetailsModal quiz={quizStats} />
-        <Chart quiz={quizStats} />
       </motion.div>
     </motion.section>
   );

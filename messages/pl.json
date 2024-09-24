@@ -72,7 +72,11 @@
     "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
     "incorrectAnswers": "Niepoprawne odpowiedzi",
     "correctAnswers": "Poprawne odpowiedzi:",
-    "answerDistribution": "Rozkład odpowiedzi"
+    "answerDistribution": "Rozkład odpowiedzi",
+    "avatar": "Zdjęcie profilowe",
+    "avatarUploaded": "Zdjęcie profilowe zostało zaktualizowane.",
+    "uploadError": "Przesyłanie zdjecia profilowego nie powiodło się.",
+    "filterArrow": "Filtruj"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -193,7 +197,7 @@
     "configureQuizHeading": "Konfiguracja quizu",
     "configureQuizMessage": "Tutaj możesz stworzyć quiz w oparciu o swoje preferencje.",
     "questionsType": "Jakie rodzaje pytań?",
-    "multipleChoice": "Wielokrotny wybór",
+    "singleChoice": "Pojedyńczy wybór",
     "trueFalse": "Prawda/Fałsz",
     "fillIn": "Uzupełnij lukę",
     "howManyQuestions": "Ilość pytań?",
@@ -202,7 +206,8 @@
     "high": "Duża",
     "man": "Ręcznie",
     "generatedSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
-    "generating": "Generowanie quizu..."
+    "generating": "Generowanie quizu...",
+    "languages": "Jaki język?"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",

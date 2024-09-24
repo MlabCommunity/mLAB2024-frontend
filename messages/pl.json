@@ -56,9 +56,27 @@
     "active": "Aktywny",
     "inactive": "Nieaktywny",
     "takeQuizBtn": "Rozpocznij quiz",
+    "statistics": "Statystyki",
+    "inProgress": "W trakcie",
+    "scoreTableHeader": "Wynik",
+    "nameTableHeader": "Nazwa",
+    "timeTableHeader": "Czas rozpoczęcia",
+    "dateTableHeader": "Data",
+    "detailsTableHeader": "Szczegóły",
+    "statusFinishedTableHeader": "Ukończony",
+    "statusStoppedTableHeader": "Wstrzymany",
+    "amountOfTakenQuizzes": "Liczba wypełnionych quizów:",
+    "noDataAvailable": "Brak dostępnych danych",
+    "title": "Statystyki quizu",
+    "legend": "Wynik (%)",
+    "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
+    "incorrectAnswers": "Niepoprawne odpowiedzi",
+    "correctAnswers": "Poprawne odpowiedzi:",
+    "answerDistribution": "Rozkład odpowiedzi",
     "avatar": "Zdjęcie profilowe",
     "avatarUploaded": "Zdjęcie profilowe zostało zaktualizowane.",
-    "uploadError": "Przesyłanie zdjecia profilowego nie powiodło się."
+    "uploadError": "Przesyłanie zdjecia profilowego nie powiodło się.",
+    "filterArrow": "Filtruj"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -126,7 +144,6 @@
     "quizScore": "Wynik:",
     "quizTotalQuestions": "Liczba pytań:",
     "correctAnswers": "Poprawne odpowiedzi:",
-    "ariaLabel:": "Filtruj",
     "correctAnswer": "Poprawna odpowiedź",
     "incorrectAnswer": "Niepoprawna odpowiedź"
   },
@@ -137,7 +154,8 @@
     "loggedOut": "Pomyślnie wylogowano!"
   },
   "Navbar": {
-    "profile": "Profil"
+    "profile": "Profil",
+    "statistics": "Statystyki"
   },
   "LanguageSwitcher": {
     "english": "Angielski",
@@ -275,11 +293,6 @@
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
     "closeButton": "Zamknij"
-  },
-  "ChartModal": {
-    "noDataAvailable": "Brak dostępnych danych",
-    "title": "Statystyki quizu",
-    "legend": "Wynik (%)"
   },
   "Guest": {
     "convertedProperly": "Gość został poprawnie przekonwertowany",

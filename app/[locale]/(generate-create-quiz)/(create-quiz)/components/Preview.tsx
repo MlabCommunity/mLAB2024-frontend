@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
@@ -18,7 +18,6 @@ import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQues
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 
 import { AnimatePresence } from "framer-motion";
-
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -119,7 +118,6 @@ function Preview() {
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
-
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
       <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">
@@ -165,7 +163,6 @@ function Preview() {
         </AnimatePresence>
       </aside>
       <NavigationControls>
-      
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (

@@ -11,7 +11,7 @@ function CopyToClipboardButton({ shareLink }: { shareLink: string }) {
   const handleCopyClick = (link: string) => {
     navigator.clipboard.writeText(link);
   };
-  const t = useTranslations("QuestionsOnAnswers");
+  const t = useTranslations("quizDetails");
   return (
     <Popover
       offset={10}

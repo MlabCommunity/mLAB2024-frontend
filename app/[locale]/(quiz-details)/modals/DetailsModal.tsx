@@ -21,7 +21,7 @@ import { useTranslations } from "next-intl";
 function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "detailsModal";
-  const selectedQuiz = quiz.find((q) => q.quizId === modalData.id);
+  const selectedQuiz = quiz?.find((q) => q.quizId === modalData.id);
   const t = useTranslations("quizDetails");
 
   return (

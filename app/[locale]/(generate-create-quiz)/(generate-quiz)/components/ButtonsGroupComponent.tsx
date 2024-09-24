@@ -59,11 +59,7 @@ function ButtonGroupComponent() {
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
     formData.append("QuestionTypes", selectedType);
-<<<<<<< HEAD
-    formData.append("Language", "Polski");
-=======
     formData.append("Language", selectedLanguage);
->>>>>>> a454fea6bb58de49c5b51a40df5fba577f4a1381
     Attachments?.forEach((attachment) => {
       formData.append("Attachments", attachment);
     });
@@ -137,11 +133,7 @@ function ButtonGroupComponent() {
               <Button
                 key={quantity.value}
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-<<<<<<< HEAD
-                className="w-full justify-start md:w-auto rounded-lg"
-=======
                 className="w-full justify-start md:w-auto rounded-lg "
->>>>>>> a454fea6bb58de49c5b51a40df5fba577f4a1381
                 size="lg"
                 isDisabled={isPending}
                 startContent={

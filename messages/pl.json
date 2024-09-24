@@ -208,7 +208,9 @@
     "man": "Ręcznie",
     "generatedSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
     "generating": "Generowanie quizu...",
-    "languages": "Jaki język?"
+    "languages": "Jaki język?",
+    "english": "Angielski",
+    "polish": "Polski"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",

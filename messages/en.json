@@ -79,7 +79,9 @@
     "avatarUploaded": "Avatar uploaded successfully",
     "uploadError": "Error while uploading avatar",
     "filterArrow": "Filter",
-    "status": "Status"
+    "status": "Status",
+    "image": "Image",
+    "uploading": "Uploading"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",

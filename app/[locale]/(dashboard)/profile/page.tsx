@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, Avatar } from "@nextui-org/react";
 import React, { useEffect, useState, useCallback } from "react";
+import { Button, Avatar } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -14,8 +14,8 @@ const ProfilePage = () => {
   const queryClient = useQueryClient();
   const { data: currentProfile } = useGetCurrentProfile();
   const [formData, setFormData] = useState({
-    displayName: currentProfile?.displayName ? currentProfile?.displayName : "",
-    imageUrl: currentProfile?.imageUrl ? currentProfile?.imageUrl : "",
+    displayName: currentProfile?.displayName || "",
+    imageUrl: currentProfile?.imageUrl || "",
   });
   const [isFormChanged, setIsFormChanged] = useState(false);
   const t = useTranslations("Dashboard");
@@ -23,8 +23,8 @@ const ProfilePage = () => {
   useEffect(() => {
     if (currentProfile) {
       setFormData({
-        displayName: currentProfile?.displayName || "",
-        imageUrl: currentProfile?.imageUrl || "",
+        displayName: currentProfile.displayName,
+        imageUrl: currentProfile.imageUrl,
       });
     }
   }, [currentProfile]);
@@ -61,11 +61,12 @@ const ProfilePage = () => {
 
   const handleAvatarUpload = useCallback(
     (url: string) => {
+      toast.dismiss("loading-toast");
       setFormData((prev) => ({ ...prev, imageUrl: url }));
       setIsFormChanged(true);
-      toast.success(t("avatarUploaded"));
+      mutate({ displayName: formData.displayName, imageUrl: url });
     },
-    [t]
+    [formData.displayName, t, mutate]
   );
 
   const isUpdateDisabled =
@@ -97,7 +98,18 @@ const ProfilePage = () => {
               className="w-20 h-20"
             />
             <UploadButton
+              disabled={isPending}
+              appearance={{
+                button: {
+                  background: "#006FEE",
+                  color: "white",
+                },
+              }}
+              content={{ button: <span className="z-50">{t("image")}</span> }}
               endpoint="imageUploader"
+              onUploadBegin={() => {
+                toast.loading(t("uploading"), { id: "loading-toast" });
+              }}
               onClientUploadComplete={(res) => {
                 if (res && res[0]) {
                   handleAvatarUpload(res[0].url);

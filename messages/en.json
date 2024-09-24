@@ -67,11 +67,14 @@
     "timeTableHeader": "Time",
     "dateTableHeader": "Date",
     "detailsButton": "Details",
-    "amountOfTakenQuizzes": "Amount of quiz taken:",
-    "title": "Quiz statistics",
+    "amountOfTakenQuizzes": "Amount of taken quizzes:",
+    "title": "Quiz Statistics",
     "legend": "Score (%)",
     "noDataAvailable": "No data available",
-    "noQuizTakenDialogue": "No quiz taken"
+    "incorrectAnswers": "Incorrect answers",
+    "correctAnswers": "Correct answers",
+    "noQuizTakenDialogue": "No quiz taken",
+    "answerDistribution": "Answers Distribution"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -290,6 +293,5 @@
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close"
-  },
-  "ChartModal": {}
+  }
 }

@@ -69,10 +69,12 @@
     "noDataAvailable": "Brak dostępnych danych",
     "title": "Statystyki quizu",
     "legend": "Wynik (%)",
-    "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie."
+    "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
+    "incorrectAnswers": "Niepoprawne odpowiedzi",
+    "correctAnswers": "Poprawne odpowiedzi:",
+    "answerDistribution": "Rozkład odpowiedzi"
   },
   "quizDetails": {
-    "incorrectAnswers": "Niepoprawne odpowiedźi",
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
     "availabilityUpdateError": "Bład podczas aktualizacji dostępności",
     "statusUpdateSuccess": "Status został zaktualizowany.",
@@ -287,10 +289,5 @@
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
     "closeButton": "Zamknij"
-  },
-  "ChartModal": {
-    "noDataAvailable": "Brak dostępnych danych",
-    "title": "Statystyki quizu",
-    "legend": "Wynik (%)"
   }
 }

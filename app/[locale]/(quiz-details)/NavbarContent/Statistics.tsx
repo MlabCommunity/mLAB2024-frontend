@@ -24,6 +24,7 @@ import { QuizHistoryType } from "@/types";
 import DetailsModal from "../modals/DetailsModal";
 import { Button, Skeleton } from "@nextui-org/react";
 import { useModalStore } from "@/store/modalStore";
+import StatisticsPage from "../../(dashboard)/statistics/page";
 
 function Statistics() {
   const t = useTranslations("quizDetails");
@@ -31,11 +32,12 @@ function Statistics() {
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
-    "Status",
+    t("status"),
     t("timeTableHeader"),
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

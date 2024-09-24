@@ -118,9 +118,6 @@ function Preview() {
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
-  useEffect(() => {
-    console.log(generatedQuizData);
-  }, [generatedQuizData]);
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
       <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">

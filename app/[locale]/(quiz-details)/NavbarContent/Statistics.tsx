@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -7,91 +6,132 @@ import {
   TableHeader,
   TableRow,
   TableCell,
+  Pagination,
+  Skeleton,
 } from "@nextui-org/react";
-import DetailsButton from "../components/statistics/buttons/DetailsButton";
-import NavbarContentContainer from "@/components/NavbarContentContainer";
-import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
-import ChartModal from "../modals/ChartModal";
-import { useStats } from "../quiz-details/hooks/useStats";
+import StatusChip from "../components/statistics/StatusChip/StatusChip";
 import {
-  formatQuizResult,
   formatParticipationDate,
   formatParticipationTime,
 } from "@/utils/helpers";
-import StatusChip from "../components/statistics/StatusChip/StatusChip";
-import { Participants, QuizDetail, QuizHistoryType } from "@/types";
-import DetailsModal from "../modals/DetailsModal";
-import { Button, Skeleton } from "@nextui-org/react";
-import { useModalStore } from "@/store/modalStore";
-import Stats from "@/components/shared/Stats";
+import { QuizDetail } from "@/types";
+import { usePathname } from "next/navigation";
+import usePaginatedStatistics from "@/utils/hooks/useDetailsStatistics";
+import { getPaginatedResults } from "@/utils/actions/quiz/getPaginatedResults";
+import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+import { Participants } from "@/types";
 
 function Statistics({ quiz }: { quiz: QuizDetail }) {
   const t = useTranslations("Dashboard");
+  const pathname = usePathname();
+  const {
+    data: paginatedData,
+    page,
+    setPage,
+    pages,
+    count,
+    isFetching,
+    isLoading,
+    isSuccess,
+  } = usePaginatedStatistics<Participants>({
+    queryKey: ["quizStats"],
+    fetch: getPaginatedResults,
+    quizId: pathname.split("/")[2],
+    pageSize: 4,
+  });
 
   const tableHeaders = [
-    t("scoreTableHeader"),
-    t("nameTableHeader"),
-    t("status"),
-    t("timeTableHeader"),
-    t("dateTableHeader"),
+    { key: "score", label: t("scoreTableHeader") },
+    { key: "name", label: t("nameTableHeader") },
+    { key: "status", label: t("status") },
+    { key: "time", label: t("timeTableHeader") },
+    { key: "date", label: t("dateTableHeader") },
   ];
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const renderCell = (participant: Participants, columnKey: React.Key) => {
+    switch (columnKey) {
+      case "score":
+        return participant.score !== undefined && participant.score !== null
+          ? `${participant.score}%`
+          : "N/A";
+      case "name":
+        return participant.displayName;
+      case "status":
+        return <StatusChip status={participant.status} />;
+      case "time":
+        return formatParticipationTime(participant.participationDateUtc);
+      case "date":
+        return formatParticipationDate(participant.participationDateUtc);
+      default:
+        return null;
+    }
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full"
-    >
-      <Table
-        removeWrapper
-        color="default"
-        className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full"
       >
-        <TableHeader className="flex justify-between rounded-lg">
-          {tableHeaders.map((tableHeader, index) => (
-            <TableColumn className="uppercase" key={index}>
-              <div className="flex items-center justify-between gap-2">
-                <span>{tableHeader}</span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-label={t("filterArrow")}
-                >
-                  <path
-                    d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
-                    stroke="#11181C"
-                    strokeMiterlimit="10"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </TableColumn>
-          ))}
-        </TableHeader>
-        <TableBody emptyContent={t("noQuizTakenDialogue")}>
-          {quiz.participants?.map((participant, index) => (
-            <TableRow key={index}>
-              <TableCell>{participant?.score + "%" ?? "N/A"}</TableCell>
-              <TableCell>{participant?.displayName}</TableCell>
-              <TableCell>
-                <StatusChip status={participant?.status} />
-              </TableCell>
-              <TableCell className="text-center md:text-start">
-                {formatParticipationTime(participant?.participationDateUtc)}
-              </TableCell>
-              <TableCell>
-                {formatParticipationDate(participant?.participationDateUtc)}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </motion.div>
+        <Table
+          aria-label="Quiz statistics table"
+          removeWrapper
+          color="default"
+          className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
+        >
+          <TableHeader columns={tableHeaders}>
+            {(column) => (
+              <TableColumn key={column.key} className="uppercase">
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={paginatedData?.items || []}
+            emptyContent={t("noQuizTakenDialogue")}
+            loadingContent={
+              <TableRow>
+                {tableHeaders.map((header) => (
+                  <TableCell key={header.key}>
+                    <Skeleton className="w-full h-8 rounded-lg" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            }
+            loadingState={isLoading || isFetching ? "loading" : "idle"}
+          >
+            {(item) => (
+              <TableRow key={item.displayName}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </motion.div>
+      {isSuccess && paginatedData ? (
+        <Pagination
+          className="flex justify-center w-full py-10"
+          total={pages}
+          initialPage={page || 1}
+          page={page}
+          onChange={handlePageChange}
+          isDisabled={isLoading || isFetching}
+        />
+      ) : (
+        <div className="flex justify-center w-full py-10">
+          <Skeleton className="w-64 h-10 rounded-lg" />
+        </div>
+      )}
+    </>
   );
 }
 

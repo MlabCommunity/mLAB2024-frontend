@@ -5,7 +5,11 @@ import { useState } from "react";
 import { PaginatedResponse } from "@/types";
 
 export interface UserPaginatorOptions<T> {
-  fetch: (page: number, pageSize: number) => Promise<PaginatedResponse<T>>;
+  fetch: (
+    page: number,
+    pageSize: number,
+    quizId?: string
+  ) => Promise<PaginatedResponse<T>>;
   queryKey: any[];
   pageSize: number;
 }
@@ -17,7 +21,7 @@ function usePaginator<T>(
     "queryKey" | "queryFn"
   > = {}
 ): UseQueryResult<PaginatedResponse<T>, Error> & {
-  count: number;
+  totalItemsCount: number;
   page: number;
   pages: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -33,12 +37,11 @@ function usePaginator<T>(
   });
 
   const { data } = query;
-
-  const { count = 0, items = [] } = data || {};
-  const pages = Math.ceil(count / p.pageSize);
+  const { totalItemsCount = 0, items = [] } = data || {};
+  const pages = Math.ceil(totalItemsCount / p.pageSize);
 
   return {
-    count,
+    totalItemsCount,
     page,
     pages,
     setPage,

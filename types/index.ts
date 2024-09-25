@@ -5,15 +5,29 @@ export type GenerateQuizT = {
   Attachments?: File[];
 };
 
-export type PaginatedResponse<T> = {
-  count: number;
+export interface PaginatedResponse<T> {
   items: T[];
-};
-export type UserPaginatorOptions = {
-  queryKey: string[];
-  fetch: <T>(page: number, limit: number) => Promise<PaginatedResponse<T>>;
-  pageSize: number;
-};
+  totalItemsCount: number;
+  totalPages: number;
+  itemsFrom: number;
+  itemsTo: number;
+}
+
+export interface UserPaginatorOptions<T> {
+  fetch: (
+    page: number,
+    pageSize: number,
+    quizId?: string
+  ) => Promise<PaginatedResponse<T>>;
+  queryKey: any[];
+  pageSize?: number; // Make pageSize optional here
+}
+
+export interface UsePaginatedStatisticsOptions<T>
+  extends UserPaginatorOptions<T> {
+  quizId: string;
+  page: number;
+}
 interface UserAnswer {
   questionId: string;
   answerId: string;

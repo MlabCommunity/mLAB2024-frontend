@@ -118,7 +118,7 @@ const Questions = () => {
             </div>
             <AnimatePresence mode="popLayout">
               <ul>
-                {questions.map((question, index) => (
+                {questions?.map((question, index) => (
                   <Question
                     key={question.id}
                     question={question}

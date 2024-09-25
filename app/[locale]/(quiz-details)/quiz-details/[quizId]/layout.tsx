@@ -6,7 +6,7 @@ import Link from "next/link";
 import { routes } from "@/routes";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
-import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
+
 import { absoluteUrl } from "@/lib";
 import { getSingleQuiz } from "@/utils/actions/quiz/getSingleQuiz";
 
@@ -18,12 +18,12 @@ export async function generateMetadata({
   const singleQuizData = await getSingleQuiz(params.quizId);
 
   return {
-    title: singleQuizData.title || "Quiz Details",
+    title: singleQuizData?.title || "Quiz Details",
     alternates: {
       canonical: `${routes.quizDetails.pathname}/${params.quizId}`,
     },
     openGraph: {
-      title: singleQuizData.title || "Quiz Details",
+      title: singleQuizData?.title || "Quiz Details",
       url: absoluteUrl(`${routes.quizDetails.pathname}/${params.quizId}`),
     },
   };

@@ -40,7 +40,6 @@ function Preview() {
   >(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Add this useEffect to update questions when generatedQuizData changes
   useEffect(() => {
     if (generatedQuizData?.generateQuestions) {
       setQuestions(generatedQuizData.generateQuestions);

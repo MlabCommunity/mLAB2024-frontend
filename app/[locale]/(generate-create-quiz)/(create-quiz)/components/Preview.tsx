@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
@@ -16,8 +18,8 @@ import { GeneratedQuestionT } from "../../types";
 import AddQuestionGenerateModal from "../../(generate-quiz)/modals/AddQuestionGenerateModal";
 import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
-
 import { AnimatePresence } from "framer-motion";
+import RegenerateQuizModal from "../../(generate-quiz)/modals/RegenerateQuizModal";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -37,6 +39,12 @@ function Preview() {
     number | null
   >(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (generatedQuizData?.generateQuestions) {
+      setQuestions(generatedQuizData.generateQuestions);
+    }
+  }, [generatedQuizData]);
 
   const { mutate } = useMutation({
     mutationFn: createQuiz,
@@ -118,6 +126,11 @@ function Preview() {
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
+
+  const handleOpenRegenerateQuestions = () => {
+    openModal("regenerateQuiz");
+  };
+
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
       <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">
@@ -140,12 +153,22 @@ function Preview() {
         </div>
         <Button
           color="primary"
-          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50"
+          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50 w-32"
           radius="md"
           onClick={handleOpenAddQuestion}
           isDisabled={!questions}
         >
           {t("addNewQuestionBtn")}
+        </Button>
+        <Button
+          color="default"
+          variant="solid"
+          className=" py-2 -mt-2 rounded-lg ml-auto disabled:bg-primary/50 w-32"
+          radius="md"
+          onClick={handleOpenRegenerateQuestions}
+          isDisabled={!questions}
+        >
+          {t("regenerateButton")}
         </Button>
         <AnimatePresence>
           {questions?.map((question, index) => (
@@ -165,6 +188,7 @@ function Preview() {
       <NavigationControls>
         <SaveQuiz />
       </NavigationControls>
+      <RegenerateQuizModal />
       {type === "addQuestion" && (
         <AddQuestionGenerateModal setQuestions={setQuestions} />
       )}

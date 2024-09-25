@@ -25,3 +25,4 @@ export const getQuizParticipationResultUrl = `${API_BASE_URL}/api/participations
 export const createGuestUserUrl = `${API_BASE_URL}/api/auth/guests/`;
 export const convertGuestUrl = `${API_BASE_URL}/api/profile/convert-guest`;
 export const getQuizParticipationsHistory = `${API_BASE_URL}/api/participations/history`;
+export const regenerateQuizUrl = `${API_BASE_URL}/api/quizzes/regenerate-quiz`;

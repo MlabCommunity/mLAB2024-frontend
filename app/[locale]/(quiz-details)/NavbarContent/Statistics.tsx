@@ -74,8 +74,8 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
           ))}
         </TableHeader>
         <TableBody emptyContent={t("noQuizTakenDialogue")}>
-          {quiz.participants?.map((participant) => (
-            <TableRow>
+          {quiz.participants?.map((participant, index) => (
+            <TableRow key={index}>
               <TableCell>{participant?.score + "%" ?? "N/A"}</TableCell>
               <TableCell>{participant?.displayName}</TableCell>
               <TableCell>

@@ -77,7 +77,9 @@
     "avatarUploaded": "Zdjęcie profilowe zostało zaktualizowane.",
     "uploadError": "Przesyłanie zdjecia profilowego nie powiodło się.",
     "filterArrow": "Filtruj",
-    "status": "Status"
+    "status": "Status",
+    "image": "Zdjęcie",
+    "uploading": "Przesyłanie"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
@@ -207,7 +209,9 @@
     "man": "Ręcznie",
     "generatedSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
     "generating": "Generowanie quizu...",
-    "languages": "Jaki język?"
+    "languages": "Jaki język?",
+    "english": "Angielski",
+    "polish": "Polski"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",

@@ -78,8 +78,8 @@ function ButtonGroupComponent() {
   ];
 
   const languages = [
-    { label: "English", value: "English" },
-    { label: "Polish", value: "Polish" },
+    { label: t("english"), value: "English" },
+    { label: t("polish"), value: "Polish" },
   ];
 
   return (

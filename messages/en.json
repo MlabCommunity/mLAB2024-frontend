@@ -79,7 +79,9 @@
     "avatarUploaded": "Avatar uploaded successfully",
     "uploadError": "Error while uploading avatar",
     "filterArrow": "Filter",
-    "status": "Status"
+    "status": "Status",
+    "image": "Image",
+    "uploading": "Uploading"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -213,7 +215,9 @@
     "man": "Manual",
     "generatedSuccessfullyMsg": "Quiz generated successfully",
     "generating": "Generating quiz...",
-    "languages": "Which language?"
+    "languages": "Which language?",
+    "english": "English",
+    "polish": "Polish"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",

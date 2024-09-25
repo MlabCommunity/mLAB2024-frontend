@@ -55,6 +55,8 @@ export const refreshToken = async () => {
       return { accessToken, newRefreshToken };
     }
   } catch (error) {
+    Cookies.remove("AccessToken");
+    Cookies.remove("RefreshToken");
     console.error("Failed to refresh token:", error);
     Cookies.set("AccessToken", "", { expires: new Date(0) });
     Cookies.set("RefreshToken", "", { expires: new Date(0) });

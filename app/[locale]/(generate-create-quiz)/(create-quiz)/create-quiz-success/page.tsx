@@ -45,6 +45,7 @@ const CreateQuizSuccessPage = () => {
                       onClick={handleCopyLink}
                       src={copyIcon}
                       alt="Document Icon"
+                      className="cursor-pointer"
                     />
                   </PopoverTrigger>
                   <PopoverContent>

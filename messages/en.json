@@ -229,7 +229,14 @@
     "createdSuccessfullyMsg": "Quiz created successfully",
     "creating": "Creating quiz...",
     "questions": "questions",
-    "total": "Total"
+    "total": "Total",
+    "regeneratedSuccessfullyMsg": "The quiz has been successfully updated!",
+    "regenerating": "Regenerating quiz...",
+    "regenerateQuizHeading": "Regenerate Quiz",
+    "regenerateQuizMessage": "Regenerating questions will create a new set of questions for your quiz based on the current settings.",
+    "regenerateQuizWarning": "Warning: Regenerating questions will replace all existing questions in this quiz. This action cannot be undone.",
+    "regenerateButton": "Regenerate Quiz",
+    "cancelButton": "Cancel"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",

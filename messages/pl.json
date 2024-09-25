@@ -223,7 +223,14 @@
     "createdSuccessfullyMsg": "Quiz został pomyślnie utworzony!",
     "creating": "Tworzenie quizu...",
     "questions": "pytań",
-    "total": "Razem"
+    "total": "Razem",
+    "regeneratedSuccessfullyMsg": "Quiz został pomyślnie zaktualizowany!",
+    "regenerating": "Regenerowanie quizu...",
+    "regenerateQuizHeading": "Regeneruj quiz",
+    "regenerateQuizMessage": "Regenerowanie pytań spowoduje utworzenie nowego zestawu pytań do Twojego quizu na podstawie bieżących ustawień.",
+    "regenerateQuizWarning": "Ostrzeżenie: Regenerowanie pytań zastąpi wszystkie istniejące pytania w tym quizie. Tej akcji nie można cofnąć.",
+    "regenerateButton": "Regeneruj quiz",
+    "cancelButton": "Anuluj"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Sukces",

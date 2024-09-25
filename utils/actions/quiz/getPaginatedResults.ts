@@ -13,7 +13,6 @@ export const getPaginatedResults = async (
   pageSize?: number
 ): Promise<PaginatedResponse<ItemsT>> => {
   const access = cookies().get("AccessToken")?.value;
-  console.log("Request Params:", { pageSize, quizId, page }); // Log the parameters
 
   if (!access) {
     throw new Error("Access token not found in cookies");
@@ -33,21 +32,18 @@ export const getPaginatedResults = async (
     const data: PaginatedResponse<ItemsT> = {
       items: response.data.participants.items || [],
       totalItemsCount: response.data.participants?.totalItemsCount || 0,
-      itemsFrom: response.data.participants.itemsFrom || 1, // Assuming page defaults to 1
-      itemsTo: response.data.participants.itemsTo, // Assuming pageSize defaults to 4
+      itemsFrom: response.data.participants.itemsFrom || 1,
+      itemsTo: response.data.participants.itemsTo,
       totalPages: response.data.participants.totalPages,
     };
 
-    console.log(data);
     return data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error("Axios error occurred:", error.response?.data); // Log error for debugging
       throw new Error(
         error.response?.data?.detail || "An unknown Axios error occurred"
       );
     } else {
-      console.error("An unexpected error occurred:", error); // Log any other errors
       throw new Error("An unknown error occurred");
     }
   }

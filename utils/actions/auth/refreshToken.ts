@@ -21,32 +21,30 @@ const subscribeTokenRefresh = (callback: SubscriberCallback): void => {
   subscribers.push(callback);
 };
 
-// Funkcja do określania bieżącej domeny
 const getCurrentDomain = (): string | undefined => {
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
-    // Nie ustawiamy domeny dla localhost, co pozwoli ciasteczkom działać na localhost i subdomenach
     if (hostname === "localhost" || hostname === "127.0.0.1") {
       return undefined;
     }
-    // Dla innych środowisk, użyj pełnej nazwy domeny
     return hostname;
   }
-  // Zwróć undefined dla SSR, co pozwoli przeglądarce użyć domyślnego zachowania
   return undefined;
 };
 
-const getCookieOptions = () => {
+const getCookieOptions = (isRefreshToken: boolean = false) => {
   const domain = getCurrentDomain();
   return {
-    expires: new Date(Date.now() + 5 * 60 * 1000),
+    expires: new Date(
+      Date.now() + (isRefreshToken ? 7 * 24 * 60 * 60 * 1000 : 5 * 60 * 1000)
+    ),
     secure:
       typeof window !== "undefined"
         ? window.location.protocol === "https:"
         : true,
     sameSite: "strict" as const,
     path: "/",
-    ...(domain ? { domain } : {}), // Dodaj domenę tylko jeśli jest zdefiniowana
+    ...(domain ? { domain } : {}),
   };
 };
 
@@ -74,25 +72,30 @@ export const refreshToken = async () => {
 
     if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
-      const cookieOptions = getCookieOptions();
+      const accessTokenOptions = getCookieOptions();
+      const refreshTokenOptions = getCookieOptions(true);
 
-      // Remove old cookies
-      Cookies.remove("AccessToken", cookieOptions);
-      Cookies.remove("RefreshToken", cookieOptions);
+      Cookies.remove("AccessToken", accessTokenOptions);
+      Cookies.remove("RefreshToken", refreshTokenOptions);
 
-      // Set new cookies
-      Cookies.set("AccessToken", accessToken, cookieOptions);
-      Cookies.set("RefreshToken", newRefreshToken, cookieOptions);
+      Cookies.set("AccessToken", accessToken, accessTokenOptions);
+      Cookies.set("RefreshToken", newRefreshToken, refreshTokenOptions);
 
       onRefreshed(accessToken, newRefreshToken);
       return { accessToken, newRefreshToken };
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
-    const cookieOptions = getCookieOptions();
-    // Clear cookies by setting them to expire in the past
-    Cookies.set("AccessToken", "", { ...cookieOptions, expires: new Date(0) });
-    Cookies.set("RefreshToken", "", { ...cookieOptions, expires: new Date(0) });
+    const accessTokenOptions = getCookieOptions();
+    const refreshTokenOptions = getCookieOptions(true);
+    Cookies.set("AccessToken", "", {
+      ...accessTokenOptions,
+      expires: new Date(0),
+    });
+    Cookies.set("RefreshToken", "", {
+      ...refreshTokenOptions,
+      expires: new Date(0),
+    });
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

@@ -29,7 +29,6 @@ function ButtonGroupComponent() {
   const { mutate, isPending } = useMutation({
     mutationFn: generateQuiz,
     onError: (error) => {
-      console.log(error);
       toast.error(error.message);
     },
     onSuccess: (data) => {

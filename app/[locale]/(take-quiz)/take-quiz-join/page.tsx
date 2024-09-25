@@ -27,8 +27,7 @@ const TakeQuizJoinPage = () => {
     onSuccess: ({ id }) => {
       router.push(`${routes.takeQuiz.pathname}${id}`);
     },
-    onMutate: () =>
-      toast.loading(t("joining"), { id: "loading-toast" }),
+    onMutate: () => toast.loading(t("joining"), { id: "loading-toast" }),
     onSettled: () => toast.dismiss("loading-toast"),
   });
 

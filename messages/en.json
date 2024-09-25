@@ -298,5 +298,27 @@
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close"
+  },
+  "Guest": {
+    "convertedProperly": "Converted guest properly",
+    "signUp": "Sign up",
+    "tookPart": "You took part in the quiz as a guest. Now you can sign up or go back to the panel.",
+    "rememberMe": "Remember me",
+    "toAuthPage": "Go back to the auth page",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "password": "Password",
+    "nameValidMin": "Name must be at least 2 characters",
+    "nameValidMax": "Name must not exceed 50 characters",
+    "registrationFailed": "Registration failed. Please try again",
+    "failedToJoin": "Failed to join the quiz. Please try again",
+    "invalidQuizCode": "Invalid quiz code",
+    "unexpectedError": "An unexpected error occurred",
+    "takeQuiz": "Take quiz",
+    "dontHaveAnAccount": "We see that you don't have an account. To participate in the quiz, please provide your name.",
+    "name": "Name",
+    "enterName": "Enter your name",
+    "joinQuiz": "Join quiz",
+    "joining": "Joining..."
   }
 }

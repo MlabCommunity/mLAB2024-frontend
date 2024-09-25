@@ -17,7 +17,6 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
     if (response.data) {
       return { message: "Sign-up succesful" };
     }
-    console.log(response.data);
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.detail);

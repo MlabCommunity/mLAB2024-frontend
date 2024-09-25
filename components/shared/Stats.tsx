@@ -16,6 +16,7 @@ import {
   formatParticipationDate,
   formatParticipationTime,
   formatQuizResult,
+  getLastAttempts,
 } from "@/utils/helpers";
 
 import { QuizDetail, QuizHistoryType } from "@/types";
@@ -25,11 +26,11 @@ import DetailsModal from "@/app/[locale]/(quiz-details)/modals/DetailsModal";
 import StatusChip from "@/app/[locale]/(quiz-details)/components/statistics/StatusChip/StatusChip";
 // Updated component to accept props
 function Stats({
-  quizStats,
+  quizStats = [],
   isLoading,
   isFetching,
 }: {
-  quizStats: [];
+  quizStats: QuizHistoryType[];
   isLoading: boolean;
   isFetching: boolean;
 }) {
@@ -43,6 +44,8 @@ function Stats({
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
+
+  const filteredStats = getLastAttempts(quizStats);
 
   const renderTableContent = () => {
     if (isFetching || isLoading) {
@@ -70,7 +73,7 @@ function Stats({
       ));
     }
 
-    return quizStats.map((stat: QuizHistoryType, index: number) => (
+    return filteredStats.map((stat: QuizHistoryType, index: number) => (
       <TableRow className="bg-white rounded-lg" key={index}>
         <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
         <TableCell>{stat.quizTitle}</TableCell>
@@ -78,10 +81,10 @@ function Stats({
           <StatusChip status={stat.status} />
         </TableCell>
         <TableCell className="text-center md:text-start">
-          {formatParticipationTime(stat.participtionDateUtc)}
+          {formatParticipationTime(stat.participationDateUtc)}
         </TableCell>
         <TableCell>
-          {formatParticipationDate(stat.participtionDateUtc)}
+          {formatParticipationDate(stat.participationDateUtc)}
         </TableCell>
         <TableCell>
           {stat.status === "Started" ? (
@@ -151,9 +154,9 @@ function Stats({
         {isFetching ? (
           <Skeleton className="h-[400px]" />
         ) : (
-          <Chart quiz={quizStats} />
+          <Chart quiz={filteredStats} />
         )}
-        <DetailsModal quiz={quizStats} />
+        <DetailsModal quiz={filteredStats} />
       </motion.div>
     </motion.section>
   );

@@ -40,7 +40,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
               <span>
                 {t("startDate")}:{" "}
                 {formatParticipationDate(
-                  selectedQuiz?.participtionDateUtc as string
+                  selectedQuiz?.participationDateUtc as string
                 )}
               </span>
               <div className="flex-col flex gap-2 pt-2">
@@ -82,7 +82,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                   {selectedQuiz && (
                     <span className="text-small">
                       {formatParticipationDate(
-                        selectedQuiz?.participtionDateUtc
+                        selectedQuiz?.participationDateUtc
                       )}
                     </span>
                   )}

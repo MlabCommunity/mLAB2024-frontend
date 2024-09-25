@@ -27,7 +27,7 @@ import { useModalStore } from "@/store/modalStore";
 import Stats from "@/components/shared/Stats";
 
 function Statistics({ quiz }: { quiz: QuizDetail }) {
-  const t = useTranslations("quizDetails");
+  const t = useTranslations("Dashboard");
 
   const tableHeaders = [
     t("scoreTableHeader"),
@@ -35,7 +35,6 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
     t("status"),
     t("timeTableHeader"),
     t("dateTableHeader"),
-    t("detailsTableHeader"),
   ];
   return (
     <motion.div
@@ -77,7 +76,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
         <TableBody emptyContent={t("noQuizTakenDialogue")}>
           {quiz.participants?.map((participant) => (
             <TableRow>
-              <TableCell>{participant?.score}</TableCell>
+              <TableCell>{participant?.score + "%" ?? "N/A"}</TableCell>
               <TableCell>{participant?.displayName}</TableCell>
               <TableCell>
                 <StatusChip status={participant?.status} />
@@ -87,15 +86,6 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
               </TableCell>
               <TableCell>
                 {formatParticipationDate(participant?.participationDateUtc)}
-              </TableCell>
-              <TableCell>
-                {participant.status === "Started" ? (
-                  <span className="text-foreground-600 text-small">
-                    {t("inProgress")}
-                  </span>
-                ) : (
-                  <DetailsButton id={participant?.id} />
-                )}
               </TableCell>
             </TableRow>
           ))}

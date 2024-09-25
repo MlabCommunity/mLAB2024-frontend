@@ -28,19 +28,15 @@ import Stats from "@/components/shared/Stats";
 const StatisticsPage = () => {
   const t = useTranslations("Dashboard");
   const { data: stats, isLoading, isFetching } = useStats();
-  const tableHeaders = [
-    t("scoreTableHeader"),
-    t("nameTableHeader"),
-    t("status"),
-    t("timeTableHeader"),
-    t("dateTableHeader"),
-    t("detailsTableHeader"),
-  ];
-
+  if (!stats || stats.length == 0) {
+    return (
+      <div className="flex w-full  font-semibold text-foreground-600 text-2xl items-center justify-center">
+        {t("noDataAvailable")}
+      </div>
+    );
+  }
   return (
-    <>
-      <Stats quizStats={stats} isLoading={isLoading} isFetching={isFetching} />
-    </>
+    <Stats quizStats={stats} isLoading={isLoading} isFetching={isFetching} />
   );
 };
 

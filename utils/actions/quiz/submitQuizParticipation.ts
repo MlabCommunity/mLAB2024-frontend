@@ -20,7 +20,6 @@ export const submitQuizParticipation = async (data: any) => {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log(error);
       throw new Error(error.response?.data?.detail);
     } else {
       throw new Error("An unexpected error occurred");

@@ -42,7 +42,7 @@ export interface QuizResult {
   correctAnswers: number;
   scorePercentage: number;
 }
-type Participants = {
+export type Participants = {
   displayName: string;
   score: number;
   status: "Finished" | "Stopped" | "Started";
@@ -52,7 +52,7 @@ export interface QuizHistoryType {
   quizId: string;
   quizTitle: string;
   quizDescription: string;
-  participtionDateUtc: string;
+  participationDateUtc: string;
   status: "Stopped" | "Finished" | "Started";
   quizResult?: QuizResult;
   questions: Question[];

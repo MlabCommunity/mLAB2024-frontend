@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { QuizHistoryType } from "@/types";
 import DoughnutChart from "./Doughnut";
 import { motion, AnimatePresence } from "framer-motion";
+import { shortenStatsLabel } from "@/utils/helpers";
 
 ChartJS.register(
   CategoryScale,
@@ -83,8 +84,8 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
       },
     },
   };
-
-  const labels = quiz.map((item) => item.quizTitle);
+  // const shortenedLabels=shortenStatsLabel(labels)
+  const labels = quiz.map((item) => shortenStatsLabel(item.quizTitle));
   const label = t("legend");
   const data = {
     labels,
@@ -142,7 +143,7 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         <AnimatePresence>
           {currentChart === "bar" ? (
             <motion.div
-              className="w-full h-full flex justify-center"
+              className="w-full h-full  flex justify-center"
               key="bar-chart"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

@@ -1,24 +1,25 @@
-
 import { refreshTokenUrl } from "@/constants/api";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import Cookies from "js-cookie";
 
 let isRefreshing = false;
-let subscribers: ((accessToken: string, refreshToken: string) => void)[] = [];
+type TokenType = string;
 
-
-const onRefreshed = (accessToken: string, refreshToken: string) => {
+type SubscriberCallback = (
+  accessToken: TokenType,
+  refreshToken: TokenType
+) => void;
+let subscribers: SubscriberCallback[] = [];
+const onRefreshed = (accessToken: TokenType, refreshToken: TokenType): void => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
   subscribers = [];
 };
 
-
-const subscribeTokenRefresh = (callback: (accessToken: string, refreshToken: string) => void) => {
+const subscribeTokenRefresh = (callback: SubscriberCallback): void => {
   subscribers.push(callback);
 };
 
-
-export const refreshToken = async (): Promise<{ accessToken: string, refreshToken: string }> => {
+export const refreshToken = async () => {
   if (isRefreshing) {
     return new Promise((resolve) => {
       subscribeTokenRefresh((accessToken: string, refreshToken: string) => {
@@ -36,31 +37,27 @@ export const refreshToken = async (): Promise<{ accessToken: string, refreshToke
       throw new Error("No refresh token available");
     }
 
- 
-    const response = await axiosInstance.post(refreshTokenUrl, { refreshToken });
+    const response = await axiosInstance.post(refreshTokenUrl, {
+      refreshToken,
+    });
 
-    if (response.status === 200 && response.data) {
+    if (response.status === 200) {
       const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-    
       Cookies.set("AccessToken", accessToken, {
-        expires: new Date(Date.now() + 5 * 60 * 1000), 
+        expires: new Date(Date.now() + 5 * 60 * 1000),
       });
-
       Cookies.set("RefreshToken", newRefreshToken, {
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), 
+        expires: new Date(Date.now() + 5 * 60 * 1000),
       });
 
-      
       onRefreshed(accessToken, newRefreshToken);
-      return { accessToken, refreshToken: newRefreshToken };
-    } else {
-      throw new Error("Failed to refresh token: Invalid response");
+      return { accessToken, newRefreshToken };
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
-    Cookies.remove("AccessToken");
-    Cookies.remove("RefreshToken");
+    Cookies.set("AccessToken", "", { expires: new Date(0) });
+    Cookies.set("RefreshToken", "", { expires: new Date(0) });
     throw new Error("Could not refresh token");
   } finally {
     isRefreshing = false;

@@ -1,3 +1,4 @@
+
 import { absoluteUrl } from "@/lib";
 import { routes } from "@/routes";
 import { Metadata } from "next";
@@ -19,3 +20,4 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default ProfileLayout;
+

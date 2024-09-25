@@ -25,17 +25,20 @@ export default async function RootLayout({
       <body className={inter.className}>
      
         <NextIntlClientProvider messages={messages}>
-        <ThemeProvider> 
+       
             <Providers>
+            <ThemeProvider> 
               <main className="flex-1">
                 {children}
                 <Toaster position="top-center" />
               </main>
+              </ThemeProvider>
             </Providers>
-            </ThemeProvider>
+            
         </NextIntlClientProvider>
       
       </body>
     </html>
   );
 }
+

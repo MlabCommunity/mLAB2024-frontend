@@ -38,7 +38,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
     queryKey: ["quizStats"],
     fetch: getPaginatedResults,
     quizId: pathname.split("/")[2],
-    pageSize: 4,
+    pageSize: 8,
   });
 
   const tableHeaders = [

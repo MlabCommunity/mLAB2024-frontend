@@ -16,8 +16,6 @@ import QuizDetailsInfo from "../../components/QuizDetailsInfo";
 import { motion, useScroll } from "framer-motion";
 import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
-import ChartModal from "../../modals/ChartModal";
-import { formatParticipationDate } from "@/utils/helpers";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,

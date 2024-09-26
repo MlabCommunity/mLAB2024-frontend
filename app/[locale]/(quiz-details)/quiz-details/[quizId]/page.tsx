@@ -100,7 +100,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
       }
       switch (activeTab) {
         case "Questions":
-          return <Questions />;
+          return <Questions quizId={params.quizId} />;
         case "Settings":
           return quizDetails ? (
             <Settings quizId={quizDetails?.id} />

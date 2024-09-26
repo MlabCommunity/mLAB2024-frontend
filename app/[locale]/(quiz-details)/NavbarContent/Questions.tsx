@@ -15,7 +15,7 @@ import QuestionsSkeleton from "../components/skeletons/QuestionsSkeleton";
 import Question from "./Question";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Questions = () => {
+const Questions = ({ quizId }: { quizId: string }) => {
   const [enabled, setEnabled] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
@@ -35,6 +35,7 @@ const Questions = () => {
       toast.error(error.message);
     },
     onSettled: (_data, _error, variables) => {
+      console.log(variables);
       queryClient.setQueryData(
         ["singleQuiz"],
         (oldData: GeneratedQuestionsT) => {
@@ -136,6 +137,7 @@ const Questions = () => {
         {currentQuestionIndex !== null && (
           <>
             <EditQuestionModal
+              quizId={quizId}
               questionData={{
                 questionTitle: questions[currentQuestionIndex]?.title,
                 options: questions[currentQuestionIndex]?.answers.map(

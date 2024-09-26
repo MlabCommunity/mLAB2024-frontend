@@ -25,8 +25,10 @@ type QuestionEditT = {
 
 const EditQuestionModal = ({
   questionData,
+  quizId,
 }: {
   questionData: QuestionEditT;
+  quizId: string;
 }) => {
   const queryClient = useQueryClient();
   const t = useTranslations("quizDetails");
@@ -48,26 +50,34 @@ const EditQuestionModal = ({
 
     setIsFormChanged(hasTitleChanged || haveOptionsChanged);
   }, [question, options, questionData]);
-
+  useEffect(() => {
+    console.log(question, options, isFormChanged);
+  }, [question, options, isFormChanged]);
   const { mutate } = useMutation({
     mutationFn: updateQuizQuestions,
-    onSuccess: (data) => {
-      console.log("Update successful, data:", data); // Add this line
-      toast.success(t("changedQuestionSuccessfully"));
+
+    onSuccess: (variables) => {
+      console.log("Update successful, data:");
+      toast.success(t("changedQuestionSuccessfully"), variables);
       closeModal();
     },
     onError: (error: any) => {
       console.error("Update failed, error:", error); // Add this line
       toast.error(error.message);
     },
-    onSettled: (_data, _error, variables) => {
-      queryClient.setQueryData(
-        ["singleQuiz"],
-        (oldData: GeneratedQuestionsT) => {
-          console.log(oldData);
-          if (!oldData) return oldData;
 
-          return {
+    onSettled: (_data, _error, variables) => {
+      console.log("onSettled called with:", { _data, _error, variables });
+
+      queryClient.setQueryData(
+        ["singleQuiz", quizId],
+        (oldData: GeneratedQuestionsT) => {
+          console.log(variables);
+          if (!oldData) {
+            console.log("No old data");
+            return oldData;
+          }
+          const updatedQuiz = {
             ...oldData,
             questions: oldData.questions.map((question) =>
               question.id === variables.id
@@ -79,8 +89,11 @@ const EditQuestionModal = ({
                 : question
             ),
           };
+          console.log("Updated quiz data:", updatedQuiz);
+          return updatedQuiz;
         }
       );
+      // queryClient.invalidateQueries({ queryKey: ["singleQuiz", quizId] });
     },
   });
 

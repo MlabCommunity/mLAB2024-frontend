@@ -43,7 +43,7 @@ function SignUpForm() {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     mutate(data);
   };
 

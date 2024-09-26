@@ -40,7 +40,7 @@ const Quiz = ({
   const isAnswerSelected = selectedAnswerIndex == undefined;
 
   return (
-    <div className="bg-default-100 px-6 py-6 pt-8 rounded-xl flex flex-col gap-8 items-center w-[700px]">
+    <div className="bg-white dark:bg-gray-800 px-6 py-6 pt-8 rounded-xl flex flex-col gap-8 items-center w-[700px]">
       <Progress
         aria-label="Progress"
         value={progressValue}
@@ -48,7 +48,7 @@ const Quiz = ({
         className="w-full"
       />
       <div className="w-full">
-        <p className="font-bold text-foreground-700">
+        <p className="font-bold text-gray-900 dark:text-white">
           {currentQuestionNumber}. {questionHeading}
         </p>
       </div>
@@ -61,13 +61,15 @@ const Quiz = ({
             <li
               key={index}
               className={cn(
-                "flex flex-row justify-start gap-3 items-center w-full bg-white p-2 rounded-lg cursor-pointer hover:bg-primary transition-all group",
-                selectedAnswerIndex === index && "bg-primary"
+                "flex flex-row justify-start gap-3 items-center w-full bg-gray-100 dark:bg-gray-700 p-2 rounded-lg cursor-pointer transition-all group",
+                selectedAnswerIndex === index
+                  ? "bg-primary text-white dark:bg-blue-700 dark:text-white"
+                  : "hover:bg-primary dark:hover:bg-blue-600"
               )}
             >
               <span
                 className={cn(
-                  "text-foreground-700 text-base w-6 h-6 border-r-1 border-foreground-300 group-hover:text-white pr-1",
+                  "text-gray-900 dark:text-white text-base w-6 h-6 border-r-1 border-gray-300 dark:border-gray-600 group-hover:text-white pr-1",
                   selectedAnswerIndex === index && "text-white border-white"
                 )}
               >
@@ -75,7 +77,7 @@ const Quiz = ({
               </span>
               <p
                 className={cn(
-                  "text-foreground-700 text-base group-hover:text-white",
+                  "text-gray-900 dark:text-white text-base group-hover:text-white",
                   selectedAnswerIndex === index && "text-white"
                 )}
               >

@@ -158,3 +158,4 @@ const TakeQuiz = ({ params }: { params: { id: string } }) => {
 };
 
 export default TakeQuiz;
+

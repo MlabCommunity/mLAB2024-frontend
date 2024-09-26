@@ -10,15 +10,20 @@ import copyIcon from "@/public/assets/document-copy.svg";
 import Image from "next/image";
 import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { getJoinCode } from "@/utils/helpers";
+import { useTheme } from "@/app/context/ThemeContext"; 
+
 const CreateQuizSuccessPage = () => {
   const t = useTranslations("CreateQuizSuccess");
   const { generatedQuizData } = useGenerateQuizStore();
+  const { theme } = useTheme(); 
 
   const joinCode = getJoinCode(generatedQuizData?.url);
+  
   const handleCopyLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     navigator.clipboard.writeText(joinCode);
   };
+
   return (
     <>
       <Confetti recycle={false} className="w-screen h-screen" />
@@ -33,18 +38,36 @@ const CreateQuizSuccessPage = () => {
             <h2 className="text-4xl font-semibold">
               {t("quizSuccessHeading")}
             </h2>
-            <p className="text-foreground-600 text-lg">
+            <p
+              className={`${
+                theme === "dark" ? "text-white" : "text-foreground-600"
+              } text-lg`}
+            >
               {t("quizSuccessMessage")}
             </p>
-            <div className="bg-content2 p-6 gap-6 flex flex-col rounded-lg">
-              <div className=" flex items-center h-[52px] bg-white p-3 gap-3 justify-center rounded-lg">
-                <span className="text-sm">{joinCode}</span>
+            <div
+              className={`bg-content2 p-6 gap-6 flex flex-col rounded-lg ${
+                theme === "dark" ? "bg-gray-800" : "bg-white"
+              }`}
+            >
+              <div
+                className={`flex items-center h-[52px] p-3 gap-3 justify-center rounded-lg ${
+                  theme === "dark" ? "bg-gray-900" : "bg-white"
+                }`}
+              >
+                
+                <span className={`text-sm ${theme === "dark" ? "text-white" : "text-black"}`}>
+                  {joinCode}
+                </span>
                 <Popover>
                   <PopoverTrigger>
                     <Image
                       onClick={handleCopyLink}
                       src={copyIcon}
                       alt="Document Icon"
+                    
+                      className="cursor-pointer"
+                      style={{ filter: "invert(0)" }} 
                     />
                   </PopoverTrigger>
                   <PopoverContent>

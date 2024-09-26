@@ -32,6 +32,19 @@
   input {
     transition: background-color 0.5s ease, color 0.5s ease;
   }
+
+  .dark .table-row {
+    background-color: #4a5568; 
+    color: #fff; 
+  }
+  
+  .dark .table-header {
+    background-color: #2d3748;
+  }
+  
+  .dark .text-black {
+    color: #fff; 
+  }
   
   input.dark {
     background-color: #333;
@@ -42,7 +55,13 @@
     background-color: white;
     color: black;
   }
-
+  .text-black {
+    color: black; 
+  }
+  
+  .dark .text-black {
+    color: white;
+  }
   .custom-radio-checked {
     background-color: #d1d5db; 
   }

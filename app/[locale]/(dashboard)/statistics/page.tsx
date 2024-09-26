@@ -1,4 +1,6 @@
+
 "use client";
+
 import React from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
@@ -40,7 +42,7 @@ const StatisticsPage = () => {
   const renderTableContent = () => {
     if (isFetching || isLoading) {
       return [...Array(5)].map((_, index) => (
-        <TableRow className="bg-white rounded-lg" key={index}>
+        <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
           <TableCell>
             <Skeleton className="h-6 w-full" />
           </TableCell>
@@ -64,21 +66,21 @@ const StatisticsPage = () => {
     }
 
     return quizStats.map((stat: QuizHistoryType, index: number) => (
-      <TableRow className="bg-white rounded-lg" key={index}>
-        <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
-        <TableCell>{stat.quizTitle}</TableCell>
+      <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
+        <TableCell className="text-black dark:text-white">{formatQuizResult(stat.quizResult)}</TableCell>
+        <TableCell className="text-black dark:text-white">{stat.quizTitle}</TableCell>
         <TableCell>
           <StatusChip status={stat.status} />
         </TableCell>
-        <TableCell className="text-center md:text-start">
+        <TableCell className="text-center md:text-start text-black dark:text-white">
           {formatParticipationTime(stat.participtionDateUtc)}
         </TableCell>
-        <TableCell>
+        <TableCell className="text-black dark:text-white">
           {formatParticipationDate(stat.participtionDateUtc)}
         </TableCell>
         <TableCell>
           {stat.status === "Started" ? (
-            <span className="text-foreground-600 text-small">
+            <span className="text-black dark:text-white text-small">
               {t("inProgress")}
             </span>
           ) : (
@@ -110,11 +112,11 @@ const StatisticsPage = () => {
           <Table
             removeWrapper
             color="default"
-            className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
+            className="overflow-x-auto gap-6 p-6 rounded-lg w-full"
           >
             <TableHeader className="flex justify-between rounded-lg">
               {tableHeaders.map((tableHeader, index) => (
-                <TableColumn className="uppercase" key={index}>
+                <TableColumn className="uppercase bg-gray-200 dark:bg-gray-800 text-black dark:text-white" key={index}>
                   <div className="flex items-center justify-between gap-2">
                     <span>{tableHeader}</span>
                     <svg
@@ -137,6 +139,7 @@ const StatisticsPage = () => {
                 </TableColumn>
               ))}
             </TableHeader>
+
             <TableBody emptyContent={t("noQuizTakenDialogue")}>
               {renderTableContent()}
             </TableBody>

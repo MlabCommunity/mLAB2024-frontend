@@ -21,15 +21,19 @@ export const metadata: Metadata = {
 async function SignUp() {
   const t = await getTranslations("AuthPages");
   return (
-    <main className=" h-screen text-white flex items-center p-4">
-      <div className="md:w-[34.38rem] w-full  place-self-center p-6 rounded-lg bg-content2-foreground mx-auto">
-        <picture>
-          <Image alt="learngo" className="mx-auto" src={learnGO} />
-        </picture>
-        <h2 className="p-5 text-sm font-semibold">{t("signUpEnterText")}</h2>
+    <div className="h-screen flex items-center justify-center px-4 w-xl text-white">
+      <div className="bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500 ">
+        <Image
+          src={learnGO}
+          alt="logo"
+          className="mx-auto mb-4 transition-transform "
+        />
+        <p className="text-sm font-semibold text-primary my-6">
+          {t("signUpEnterText")}
+        </p>
         <SignUpForm />
       </div>
-    </main>
+    </div>
   );
 }
 

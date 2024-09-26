@@ -1,13 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import TakeQuizBoxSkeleton from "./skeletons/TakeQuizBoxSkeleton";
-import { getUserRoleFromJWT } from "@/utils/helpers";
 
 interface TakeQuizBoxProps {
   setIsTakeQuizBoxVisible: (value: boolean) => void;
@@ -23,26 +19,6 @@ const TakeQuizBox = ({
   quizLength,
 }: TakeQuizBoxProps) => {
   const t = useTranslations("TakeQuiz");
-  const userRole = getUserRoleFromJWT();
-
-  const nameSchema =
-    userRole === "Guest"
-      ? z.string().optional()
-      : z.string().min(2, { message: t("warningName") });
-
-  const takeQuizSchema = z.object({
-    name: nameSchema,
-  });
-
-  type FormData = z.infer<typeof takeQuizSchema>;
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(takeQuizSchema),
-  });
 
   function onSubmit() {
     setIsTakeQuizBoxVisible(false);
@@ -58,25 +34,6 @@ const TakeQuizBox = ({
         </p>
         <span className="text-foreground-600">{t("quizSubHeading")}</span>
       </div>
-      {userRole !== "Guest" && (
-        <div className="flex flex-col w-full -mt-2">
-          <label htmlFor="name" className="text-medium text-foreground-700">
-            {t("name")}
-          </label>
-          <input
-            id="name"
-            type="text"
-            placeholder={t("yourName")}
-            autoComplete="off"
-            className="text-foreground-500 mt-1 text-sm w-full rounded-lg p-3 outline-foreground-700 outline-1"
-            {...register("name", { required: userRole !== "Guest" })}
-          />
-          {errors?.name && (
-            <p className="text-red-500 mt-2 text-sm">{errors?.name?.message}</p>
-          )}
-        </div>
-      )}
-
       {!isQuizDataLoaded ? (
         <TakeQuizBoxSkeleton />
       ) : (
@@ -101,7 +58,7 @@ const TakeQuizBox = ({
           <Button
             variant="solid"
             className="bg-base-primary text-white"
-            onClick={handleSubmit(onSubmit)}
+            onClick={onSubmit}
           >
             {t("takeQuiz")}
           </Button>

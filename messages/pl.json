@@ -33,7 +33,7 @@
     "cancel": "Anuluj",
     "delete": "Usuń",
     "questions": "pytań",
-    "total": "Łącznie",
+    "total": "Łączna liczba pytań: ",
     "userAvatar": "Awatar użytkownika",
     "profile": "Profil",
     "logOut": "Wyloguj się",
@@ -221,7 +221,6 @@
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",
     "quizPreviewMessage": "Tutaj możesz zobaczyć podgląd swojego quizu.",
-    "numberOfQuestions": "Łącznie 5 pytań",
     "addNewQuestionBtn": "Dodaj pytanie",
     "answers": "Odpowiedzi",
     "saveQuizButton": "Zapisz quiz",

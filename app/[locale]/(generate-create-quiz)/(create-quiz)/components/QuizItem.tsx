@@ -48,12 +48,12 @@ const QuizItem = ({
       <div className="flex flex-col gap-4 pt-4 border-[1.5px] border-dashed rounded-lg pb-4 pl-6 pr-6">
         <div className="flex justify-between items-start">
           <h2 className="font-bold text-[16px] leading-6 ">
-            {`${number}.`}
+            {`${number}. `}
             {question}
           </h2>
           <div className="flex  gap-2">
             <button
-              className="w-[22px]"
+              className="hover:scale-110 transition-all w-[22px]"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -63,7 +63,7 @@ const QuizItem = ({
               <Image src={edit} alt="edit" />
             </button>
             <button
-              className="w-[22px]"
+              className="hover:scale-110 transition-all w-[22px]"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();

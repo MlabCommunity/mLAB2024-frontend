@@ -33,7 +33,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "questions": "questions",
-    "total": "Total",
+    "total": "Total number of questions: ",
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",

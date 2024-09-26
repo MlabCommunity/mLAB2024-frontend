@@ -62,10 +62,16 @@ function Question({
         </div>
       </div>
       <div className="flex space-x-2">
-        <button onClick={() => handleEditQuestion(index)}>
+        <button
+          onClick={() => handleEditQuestion(index)}
+          className="hover:scale-110 transition-all"
+        >
           <Image src={editIcon} alt="edit icon" />
         </button>
-        <button onClick={() => handleDeleteQuestion(index)}>
+        <button
+          onClick={() => handleDeleteQuestion(index)}
+          className="hover:scale-110 transition-all"
+        >
           <Image src={binIcon} alt="bin icon" />
         </button>
       </div>

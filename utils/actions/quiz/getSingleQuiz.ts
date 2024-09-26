@@ -1,14 +1,15 @@
 "use server";
 
+import { QuizDetailsT } from "@/app/[locale]/(quiz-details)/types";
 import { singleQuizUrl } from "@/constants/api";
 import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 export const getSingleQuiz = async (
   quizId: string,
-  page?: string,
-  pageSize?: string
-) => {
+  page: number,
+  pageSize: number
+): Promise<QuizDetailsT> => {
   const token = cookies().get("AccessToken")?.value;
   try {
     const response = await axiosInstance.get(singleQuizUrl + quizId, {

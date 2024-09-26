@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore";
@@ -14,6 +15,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
 import { AnswerT, GeneratedQuestionsT } from "../types";
+import { quizData } from "@/constants";
 
 type QuestionEditT = {
   questionTitle: string;
@@ -49,17 +51,20 @@ const EditQuestionModal = ({
 
   const { mutate } = useMutation({
     mutationFn: updateQuizQuestions,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("Update successful, data:", data); // Add this line
       toast.success(t("changedQuestionSuccessfully"));
       closeModal();
     },
     onError: (error: any) => {
+      console.error("Update failed, error:", error); // Add this line
       toast.error(error.message);
     },
     onSettled: (_data, _error, variables) => {
       queryClient.setQueryData(
         ["singleQuiz"],
         (oldData: GeneratedQuestionsT) => {
+          console.log(oldData);
           if (!oldData) return oldData;
 
           return {

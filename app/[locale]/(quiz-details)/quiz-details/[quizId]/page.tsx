@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
 import { cn } from "@/lib";
@@ -18,6 +17,8 @@ import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
 import ChartModal from "../../modals/ChartModal";
 import { formatParticipationDate } from "@/utils/helpers";
+import usePaginatedStatistics from "@/utils/hooks/useDetailsStatistics";
+import { getSingleQuiz } from "@/utils/actions/quiz/getSingleQuiz";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -39,16 +40,38 @@ const General = dynamic(() => import("../../NavbarContent/General"), {
 const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { scrollYProgress } = useScroll();
   const { setStatus, setQuestionsData, setAvailability } = useQuizDetailStore();
-  const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
+  const {
+    page,
+    setPage,
+    pages,
+    paginatedData,
+    quizDetails,
+    isFetching,
+    isLoading,
+    isSuccess,
+  } = usePaginatedStatistics({
+    queryKey: ["singleQuiz", params.quizId],
+    quizId: params.quizId,
+    fetch: getSingleQuiz,
+    pageSize: 4,
+  });
+
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("quizDetails");
+
   useEffect(() => {
-    if (singleQuizData) {
-      setQuestionsData(singleQuizData?.questions || []);
-      setStatus(singleQuizData?.status || "Active");
-      setAvailability(singleQuizData?.availability || "Public");
+    if (paginatedData && quizDetails) {
+      console.log(paginatedData, quizDetails);
     }
-  }, [singleQuizData]);
+  }, [paginatedData, quizDetails]);
+
+  useEffect(() => {
+    if (quizDetails) {
+      setQuestionsData(quizDetails.questions || []);
+      setStatus(quizDetails.status || "Active");
+      setAvailability(quizDetails.availability || "Public");
+    }
+  }, [quizDetails]);
 
   useEffect(() => {
     setActiveTab("Questions");
@@ -67,7 +90,9 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("statistics"), value: "Statistics" },
     { label: t("general"), value: "General" },
   ];
+
   const { openModal } = useModalStore();
+
   const renderTabContent = useCallback(
     (activeTab: string) => {
       if (isFetching) {
@@ -77,19 +102,46 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings quizId={singleQuizData?.items?.id} />;
+          return quizDetails ? (
+            <Settings quizId={quizDetails?.id} />
+          ) : (
+            <SettingsSkeleton />
+          );
         case "Statistics":
-          return <Statistics quiz={singleQuizData} />;
-        case "General":
-          return (
-            <General
-              title={singleQuizData?.title}
-              description={singleQuizData?.description}
+          return paginatedData && quizDetails ? (
+            <Statistics
+              setPage={setPage}
+              participants={paginatedData}
+              isFetching={isFetching}
+              isLoading={isLoading}
+              isSuccess={isSuccess}
+              page={page}
+              pages={pages}
             />
+          ) : (
+            <StatisticsSkeleton />
+          );
+        case "General":
+          return quizDetails ? (
+            <General
+              title={quizDetails?.title}
+              description={quizDetails?.description}
+            />
+          ) : (
+            <GeneralSkeleton />
           );
       }
     },
-    [activeTab, singleQuizData, isFetching]
+    [
+      activeTab,
+      quizDetails,
+      isFetching,
+      paginatedData,
+      page,
+      pages,
+      isLoading,
+      isSuccess,
+    ]
   );
 
   return (
@@ -114,15 +166,16 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
             {isFetching ? (
               <QuizDetailsInfoSkeleton />
             ) : (
+              // Guard title and description when passing to QuizDetailsInfo
               <QuizDetailsInfo
-                title={singleQuizData?.title}
-                description={singleQuizData?.description}
+                title={quizDetails?.title || ""}
+                description={quizDetails?.description || ""}
               />
             )}
           </div>
           <nav
             onClick={handleNavbarChange}
-            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 roundA-lg overflow-x-auto"
+            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
           >
             {tabs.map((tab) => (
               <Link
@@ -144,7 +197,8 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           {renderTabContent(activeTab)}
         </div>
       </div>
-      <ShareQuizModal shareLink={singleQuizData?.shareLink} />
+      {/* Guard shareLink when passing to ShareQuizModal */}
+      <ShareQuizModal shareLink={quizDetails?.shareLink || ""} />
     </>
   );
 };

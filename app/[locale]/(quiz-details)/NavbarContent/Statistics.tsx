@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Table,
   TableBody,
@@ -21,26 +21,28 @@ import { getPaginatedResults } from "@/utils/actions/quiz/getPaginatedResults";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Participants } from "@/types";
+import { ParticipantsT } from "../types";
+import { pages } from "next/dist/build/templates/app-page";
 
-function Statistics({ quiz }: { quiz: QuizDetail }) {
+function Statistics({
+  participants,
+  page,
+  setPage,
+  pages,
+  isLoading,
+  isFetching,
+  isSuccess,
+}: {
+  participants: ParticipantsT;
+  isLoading: boolean;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  isFetching: boolean;
+
+  isSuccess: boolean;
+  pages: number;
+}) {
   const t = useTranslations("Dashboard");
-  const pathname = usePathname();
-  const {
-    data: paginatedData,
-    page,
-    setPage,
-    pages,
-    count,
-    isFetching,
-    isLoading,
-    isSuccess,
-  } = usePaginatedStatistics<Participants>({
-    queryKey: ["quizStats"],
-    fetch: getPaginatedResults,
-    quizId: pathname.split("/")[2],
-    pageSize: 4,
-  });
-
   const tableHeaders = [
     { key: "score", label: t("scoreTableHeader") },
     { key: "name", label: t("nameTableHeader") },
@@ -94,7 +96,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
             )}
           </TableHeader>
           <TableBody
-            items={paginatedData?.items || []}
+            items={participants.items}
             emptyContent={t("noQuizTakenDialogue")}
             loadingContent={
               <TableRow>
@@ -117,7 +119,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
           </TableBody>
         </Table>
       </motion.div>
-      {isSuccess && paginatedData ? (
+      {isSuccess && participants ? (
         <Pagination
           className="flex justify-center w-full py-10"
           total={pages}

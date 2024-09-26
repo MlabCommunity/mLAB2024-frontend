@@ -1,3 +1,5 @@
+import { ParticipantsT } from "@/app/[locale]/(quiz-details)/types";
+
 export type GenerateQuizT = {
   Content?: string;
   NumberOfQuestions?: number;
@@ -80,5 +82,5 @@ export interface QuizDetail {
   availability: "Public" | "Private";
   status: "Active" | "Inactive";
   questions: Question[];
-  participants: Participants[];
+  participants: ParticipantsT;
 }

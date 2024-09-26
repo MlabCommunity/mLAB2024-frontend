@@ -1,3 +1,5 @@
+import { Participants } from "@/types";
+
 export type QuestionsT = {
   id: string;
   title: string;
@@ -18,6 +20,7 @@ export type GeneratedQuestionsT = {
   availibility: string;
   description: string;
   questions: QuestionsT[];
+  participants: ParticipantsT;
 };
 export type ParticipantsT = {
   items: ItemsT[];
@@ -40,5 +43,5 @@ export type QuizDetailsT = {
   availability: "Public | Private";
   status: "Active" | "Inactive";
   questions: QuestionsT[];
-  participants: ParticipantsT[];
+  participants: ParticipantsT;
 };

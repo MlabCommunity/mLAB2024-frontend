@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { API_BASE_URL, refreshTokenUrl } from "@/constants/api";
+import { refreshToken } from "./actions/auth/refreshToken";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -20,42 +21,28 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (originalRequest._retry) {
-      return Promise.reject(error);
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // @ts-ignore
+        const { accessToken } = await refreshToken();
+        axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+        return Promise.reject(refreshError);
+      }
     }
 
-    originalRequest._retry = true;
-
-    const refreshToken = Cookies.get("RefreshToken");
-
-    try {
-      const response = await axios.post(refreshTokenUrl, { refreshToken });
-      const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-      // Replace old tokens with new ones
-      Cookies.set("AccessToken", accessToken, {
-        expires: new Date(Date.now() + 5 * 60 * 1000),
-      });
-      Cookies.set("RefreshToken", newRefreshToken, {
-        expires: new Date(Date.now() + 5 * 60 * 1000),
-      });
-
-      axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${accessToken}`;
-
-      return axiosInstance(originalRequest);
-    } catch (refreshError) {
-      Cookies.set("AccessToken", "", { expires: new Date(0) });
-      Cookies.set("RefreshToken", "", { expires: new Date(0) });
-      return Promise.reject(refreshError);
-    }
+    return Promise.reject(error);
   }
 );
 

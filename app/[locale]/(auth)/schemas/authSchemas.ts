@@ -25,7 +25,7 @@ export const AuthSchemas = () => {
       .regex(/[0-9]/, {
         message: t("passwordNumber"),
       })
-      .regex(/[@$!%*?&#]/, {
+      .regex(/[@$!%*?&#\-]/, {
         message: t("passwordSpecialChar"),
       }),
     rememberMe: z.boolean(),
@@ -47,7 +47,7 @@ export const AuthSchemas = () => {
         .regex(/[0-9]/, {
           message: t("passwordNumber"),
         })
-        .regex(/[@$!%*?&#]/, {
+        .regex(/[@$!%*?&#\-]/, {
           message: t("passwordSpecialChar"),
         }),
       repeatPassword: z.string(),

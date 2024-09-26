@@ -211,7 +211,11 @@
     "generating": "Generowanie quizu...",
     "languages": "Jaki język?",
     "english": "Angielski",
-    "polish": "Polski"
+    "polish": "Polski",
+    "german": "Niemiecki",
+    "spanish": "Hiszpański",
+    "french": "Francuski",
+    "italian": "Włoski"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Podgląd",
@@ -296,7 +300,7 @@
     "addedQuestionSuccess": "Dodano pytanie do quizu"
   },
   "ShareQuizModal": {
-    "shareQuizTitle": "Udostępnij swój quiz innym !",
+    "shareQuizTitle": "Udostępnij swój quiz innym!",
     "shareAsLinkTitle": "Udostępnij jako link ",
     "shareAsCodeTitle": "Udostępnij do swojej strony internetowej",
     "shareAsLinkDesc": "Podziel się quizem z Twoimi przyjaciółmi",
@@ -304,7 +308,9 @@
     "embedWebsiteDesc": "Wykorzystaj ćwiczenie na swojej stronie internetowej lub innej platformie",
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
-    "closeButton": "Zamknij"
+    "closeButton": "Zamknij",
+    "copiedToClipboard": "Skopiowano do schowka",
+    "failedToCopy": "Nie udało się skpiować do schowka. Spróbuj ponownie"
   },
   "Guest": {
     "convertedProperly": "Gość został poprawnie przekonwertowany",

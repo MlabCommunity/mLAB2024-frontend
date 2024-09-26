@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import { useModalStore } from "@/store/modalStore";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 
 const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
   const { isOpen, closeModal, type } = useModalStore();
@@ -35,12 +36,14 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
 
   const handleCopy = async () => {
     try {
+      toast.success(t("copiedToClipboard"));
       if (activeTab === "link") {
         await navigator.clipboard.writeText(shareLink);
       } else if (activeTab === "code") {
         await navigator.clipboard.writeText(code);
       }
     } catch (err) {
+      toast.error(t("failedToCopy"));
       console.error("Failed to copy: ", err);
     }
   };
@@ -137,7 +140,6 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
             </ModalBody>
             <ModalFooter>
               <motion.div
-                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button variant="ghost" color="default" onClick={handleCopy}>
@@ -145,10 +147,9 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                 </Button>
               </motion.div>
               <motion.div
-                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button onClick={closeModal}>{t("closeButton")}</Button>
+                <Button color="primary" onClick={closeModal}>{t("closeButton")}</Button>
               </motion.div>
             </ModalFooter>
           </ModalContent>

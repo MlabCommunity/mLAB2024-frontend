@@ -19,7 +19,7 @@ import {
   getLastAttempts,
 } from "@/utils/helpers";
 
-import { QuizDetail, QuizHistoryType } from "@/types";
+import { QuizHistoryType } from "@/types";
 import DetailsButton from "@/app/[locale]/(quiz-details)/components/statistics/buttons/DetailsButton";
 import Chart from "@/app/[locale]/(quiz-details)/components/chart/Chart";
 import DetailsModal from "@/app/[locale]/(quiz-details)/modals/DetailsModal";

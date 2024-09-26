@@ -217,7 +217,11 @@
     "generating": "Generating quiz...",
     "languages": "Which language?",
     "english": "English",
-    "polish": "Polish"
+    "polish": "Polish",
+    "german": "German",
+    "spanish": "Spanish",
+    "french": "French",
+    "italian": "Italian"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",
@@ -308,7 +312,9 @@
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
-    "closeButton": "Close"
+    "closeButton": "Close",
+    "copiedToClipboard":"Copied to clipboard",
+    "failedToCopy":"Failed to copy"
   },
   "Guest": {
     "convertedProperly": "Converted guest properly",

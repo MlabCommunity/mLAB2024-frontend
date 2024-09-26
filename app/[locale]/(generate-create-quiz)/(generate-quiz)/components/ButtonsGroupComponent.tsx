@@ -68,9 +68,9 @@ function ButtonGroupComponent() {
       { label: t("trueFalse"), value: "TrueFalse" },
     ],
     quantities: [
-      { label: t("low"), value: "low" },
-      { label: t("med"), value: "medium" },
-      { label: t("high"), value: "high" },
+      { label: 5, value: "low" },
+      { label: 10, value: "medium" },
+      { label: 15, value: "high" },
     ],
     languages: [
       { label: t("english"), value: "English" },
@@ -84,7 +84,7 @@ function ButtonGroupComponent() {
 
   const renderButtonGroup = (
     title: string,
-    items: { label: string; value: string }[],
+    items: { label: number | string; value: string }[],
     selectedValue: string,
     setSelectedValue: (value: string) => void
   ) => (

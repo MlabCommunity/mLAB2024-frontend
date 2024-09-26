@@ -30,7 +30,6 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
     page,
     setPage,
     pages,
-    count,
     isFetching,
     isLoading,
     isSuccess,
@@ -40,7 +39,6 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
     quizId: pathname.split("/")[2],
     pageSize: 8,
   });
-
   const tableHeaders = [
     { key: "score", label: t("scoreTableHeader") },
     { key: "name", label: t("nameTableHeader") },
@@ -81,7 +79,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
         className="w-full"
       >
         <Table
-          aria-label="Quiz statistics table"
+          aria-label={t("table")}
           removeWrapper
           color="default"
           className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"

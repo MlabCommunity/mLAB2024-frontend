@@ -1,13 +1,14 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useState } from "react";
 import { PaginatedResponse } from "@/types";
+
 interface UsePaginatedStatisticsOptions<T> {
   queryKey: any[];
   fetch: (
     quizId: string,
     page: number,
     pageSize: number
-  ) => Promise<PaginatedResponse<T>>;
+  ) => Promise<PaginatedResponse<T>>; // PaginatedResponse that holds the generic type `T`
   quizId: string;
   pageSize: number;
 }
@@ -27,9 +28,8 @@ function usePaginatedStatistics<T>(
     queryFn: () => fetch(quizId, page, pageSize),
     ...queryOptions,
   });
-
-  const paginatedData = query.data;
-  const count = paginatedData?.totalItemsCount ?? 0;
+  const paginatedData = query.data?.items;
+  const count = query.data?.totalItemsCount ?? 0;
   const pages = Math.ceil(count / pageSize);
 
   return {

@@ -79,7 +79,8 @@
     "filterArrow": "Filtruj",
     "status": "Status",
     "image": "Zdjęcie",
-    "uploading": "Przesyłanie"
+    "uploading": "Przesyłanie",
+    "table": "Tabela statystyk"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",

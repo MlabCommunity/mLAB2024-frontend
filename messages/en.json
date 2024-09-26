@@ -81,7 +81,8 @@
     "filterArrow": "Filter",
     "status": "Status",
     "image": "Image",
-    "uploading": "Uploading"
+    "uploading": "Uploading",
+    "table": "Statistics table"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",

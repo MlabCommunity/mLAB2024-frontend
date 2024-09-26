@@ -107,8 +107,9 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
             }
             loadingState={isLoading || isFetching ? "loading" : "idle"}
           >
+            {/* Switch for participantId in the future */}
             {(item) => (
-              <TableRow key={item.displayName}>
+              <TableRow key={item.participationDateUtc}>
                 {(columnKey) => (
                   <TableCell>{renderCell(item, columnKey)}</TableCell>
                 )}

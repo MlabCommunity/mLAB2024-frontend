@@ -51,7 +51,7 @@ const EditQuestionModal = ({
     setIsFormChanged(hasTitleChanged || haveOptionsChanged);
   }, [question, options, questionData]);
   useEffect(() => {
-    console.log(question, options, isFormChanged);
+    console.log(question, questionData, options, isFormChanged);
   }, [question, options, isFormChanged]);
   const { mutate } = useMutation({
     mutationFn: updateQuizQuestions,

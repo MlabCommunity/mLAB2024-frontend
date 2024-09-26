@@ -37,7 +37,7 @@ const Questions = ({ quizId }: { quizId: string }) => {
     onSettled: (_data, _error, variables) => {
       console.log(variables);
       queryClient.setQueryData(
-        ["singleQuiz"],
+        ["singleQuiz", quizId],
         (oldData: GeneratedQuestionsT) => {
           if (!oldData) return oldData;
           return {

@@ -83,7 +83,7 @@ function Statistics({
         className="w-full"
       >
         <Table
-          aria-label="Quiz statistics table"
+          aria-label="Quiz "
           removeWrapper
           color="default"
           className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"

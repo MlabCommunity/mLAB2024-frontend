@@ -160,7 +160,8 @@
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
-    "loggedOut": "Logged out successfully"
+    "loggedOut": "Logged out successfully",
+    "statistics": "Statystyki"
   },
   "Navbar": {
     "profile": "Profile",
@@ -314,8 +315,8 @@
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close",
-    "copiedToClipboard":"Copied to clipboard",
-    "failedToCopy":"Failed to copy"
+    "copiedToClipboard": "Copied to clipboard",
+    "failedToCopy": "Failed to copy"
   },
   "Guest": {
     "convertedProperly": "Converted guest properly",

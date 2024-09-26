@@ -34,6 +34,7 @@ function StepperProvider({ children }: { children: ReactNode }) {
   const currentRoute = usePathname();
 
   const updateLocalStorageRoutes = () => {
+    localStorage.removeItem("visitedRoutes");
     const storedRoutes = JSON.parse(
       localStorage.getItem("visitedRoutes") || "[]"
     );

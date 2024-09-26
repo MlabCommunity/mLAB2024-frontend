@@ -87,14 +87,14 @@ const DashboardPage = () => {
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />
           )}
-          <div className="w-full border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
-            <Link href={routes.generateQuiz.pathname}>
-              <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
+          <button className="text-white w-full h-full hover:text-gray-200 transition-colors flex flex-col items-center">
+            <Link className="w-full" href={routes.generateQuiz.pathname}>
+              <div className="w-full cursor-pointer border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
                 <span className="text-4xl mb-2">+</span>
                 <span>{t("addQuizzButton")}</span>
-              </button>
+              </div>
             </Link>
-          </div>
+          </button>
         </div>
       </section>
     </motion.div>

@@ -95,7 +95,7 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         data: quiz.map((item) => item.quizResult?.scorePercentage),
         backgroundColor: quiz.map((quiz) =>
           quiz?.quizResult?.scorePercentage ?? 0 > 60
-            ? "rgba(75, 192, 192, 0.6)"
+            ? "rgba(39, 208, 85, 0.8)"
             : "rgba(255, 99, 132, 0.6)"
         ),
       },

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup } from "@nextui-org/button";
+import { Button } from "@nextui-org/button";
 import TickCircle from "@/generate-quiz-components/TickCircle";
 import EmptyCircle from "@/generate-quiz-components/EmptyCircle";
 import NextButton from "@/generate-quiz-components/NextButton";
@@ -49,11 +49,7 @@ function ButtonGroupComponent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const numberOfQuestions =
-      {
-        low: 5,
-        medium: 10,
-        high: 15,
-      }[selectedQuantity] ?? 0;
+      { low: 5, medium: 10, high: 15 }[selectedQuantity] ?? 0;
     const formData = new FormData();
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
@@ -66,125 +62,81 @@ function ButtonGroupComponent() {
     mutate(formData);
   };
 
-  const questionTypes = [
-    { label: t("singleChoice"), value: "SingleChoice" },
-    { label: t("trueFalse"), value: "TrueFalse" },
-  ];
+  const options = {
+    questionTypes: [
+      { label: t("singleChoice"), value: "SingleChoice" },
+      { label: t("trueFalse"), value: "TrueFalse" },
+    ],
+    quantities: [
+      { label: 5, value: "low" },
+      { label: 10, value: "medium" },
+      { label: 15, value: "high" },
+    ],
+    languages: [
+      { label: t("english"), value: "English" },
+      { label: t("polish"), value: "Polish" },
+      { label: t("german"), value: "German" },
+      { label: t("spanish"), value: "Spanish" },
+      { label: t("french"), value: "French" },
+      { label: t("italian"), value: "Italian" },
+    ],
+  };
 
-  const quantities = [
-    { label: t("low"), value: "low" },
-    { label: t("med"), value: "medium" },
-    { label: t("high"), value: "high" },
-  ];
-
-  const languages = [
-    { label: t("english"), value: "English" },
-    { label: t("polish"), value: "Polish" },
-  ];
+  const renderButtonGroup = (
+    title: string,
+    items: { label: number | string; value: string }[],
+    selectedValue: string,
+    setSelectedValue: (value: string) => void
+  ) => (
+    <div className="flex flex-col bg-content2 gap-4 p-6 rounded-lg">
+      <span className="text-lg font-semibold">{title}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 auto-cols-fr">
+        {items.map((item) => (
+          <Button
+            key={item.value}
+            color="primary"
+            variant={selectedValue === item.value ? "solid" : "flat"}
+            className="w-full justify-start rounded-lg flex-1 min-h-[48px]"
+            size="lg"
+            isDisabled={isPending}
+            startContent={
+              selectedValue === item.value ? <TickCircle /> : <EmptyCircle />
+            }
+            name={item.value}
+            aria-pressed={selectedValue === item.value}
+            onClick={() => setSelectedValue(item.value)}
+          >
+            <span>{item.label}</span>
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="md:w-full rounded-lg flex flex-col"
+      className="w-full rounded-lg flex flex-col gap-4"
     >
-      <div className="flex flex-col bg-content2 gap-4 p-6 rounded-t-lg">
-        <span>{t("questionsType")}</span>
-        <div className="w-full flex">
-          <ButtonGroup
-            className="flex flex-col md:flex-row justify-start gap-2 items-start w-full"
-            variant="solid"
-            color="primary"
-            radius="md"
-            size="md"
-          >
-            {questionTypes.map((type) => (
-              <Button
-                key={type.value}
-                variant={selectedType === type.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg "
-                size="lg"
-                startContent={
-                  selectedType === type.value ? <TickCircle /> : <EmptyCircle />
-                }
-                name={type.value}
-                aria-pressed={selectedType === type.value}
-                onClick={() => setSelectedType(type.value)}
-                isDisabled={isPending}
-              >
-                <span>{type.label}</span>
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
-      </div>
-      <div>
-        <div className="gap-4 p-6 flex flex-col bg-content2 rounded-b-lg">
-          <span>{t("howManyQuestions")}</span>
-          <ButtonGroup
-            className="flex-col w-full gap-2 items-start flex md:flex-row justify-start"
-            variant="solid"
-            color="primary"
-            radius="md"
-            size="md"
-            isDisabled={isPending}
-          >
-            {quantities.map((quantity) => (
-              <Button
-                key={quantity.value}
-                variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg "
-                size="lg"
-                isDisabled={isPending}
-                startContent={
-                  selectedQuantity === quantity.value ? (
-                    <TickCircle />
-                  ) : (
-                    <EmptyCircle />
-                  )
-                }
-                name={quantity.value}
-                aria-pressed={selectedQuantity === quantity.value}
-                onClick={() => setSelectedQuantity(quantity.value)}
-              >
-                <span>{quantity.label}</span>
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
-        <div className="gap-4 p-6 flex flex-col bg-content2 rounded-b-lg">
-          <span>{t("languages")}</span>
-          <ButtonGroup
-            className="flex-col w-full gap-2 items-start flex md:flex-row justify-start"
-            variant="solid"
-            color="primary"
-            radius="md"
-            size="md"
-            isDisabled={isPending}
-          >
-            {languages.map((language) => (
-              <Button
-                key={language.value}
-                variant={selectedLanguage === language.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg "
-                size="lg"
-                isDisabled={isPending}
-                startContent={
-                  selectedLanguage === language.value ? (
-                    <TickCircle />
-                  ) : (
-                    <EmptyCircle />
-                  )
-                }
-                name={language.value}
-                aria-pressed={selectedLanguage === language.value}
-                onClick={() => setSelectedLanguage(language.value)}
-              >
-                <span>{language.label}</span>
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
-      </div>
+      {renderButtonGroup(
+        t("questionsType"),
+        options.questionTypes,
+        selectedType,
+        setSelectedType
+      )}
+      {renderButtonGroup(
+        t("howManyQuestions"),
+        options.quantities,
+        selectedQuantity,
+        setSelectedQuantity
+      )}
+      {renderButtonGroup(
+        t("languages"),
+        options.languages,
+        selectedLanguage,
+        setSelectedLanguage
+      )}
+
       <NavigationControls isPending={isPending}>
         <NextButton isPending={isPending} />
       </NavigationControls>

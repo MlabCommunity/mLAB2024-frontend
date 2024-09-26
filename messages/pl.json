@@ -154,7 +154,8 @@
     "userAvatar": "Awatar użytkownika",
     "profile": "Profil",
     "logOut": "Wyloguj się",
-    "loggedOut": "Pomyślnie wylogowano!"
+    "loggedOut": "Pomyślnie wylogowano!",
+    "statistics": "Statystyki"
   },
   "Navbar": {
     "profile": "Profil",

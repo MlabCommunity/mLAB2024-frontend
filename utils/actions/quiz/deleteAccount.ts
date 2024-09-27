@@ -1,3 +1,4 @@
+"use server";
 import { deleteAccountUrl } from "@/constants/api";
 import axiosInstance from "@/utils/axiosInstance";
 import { AxiosError } from "axios";

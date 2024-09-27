@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { updateQuizQuestions } from "@/utils/actions/quiz/updateQuizQuestions";
 import { AnswerT, GeneratedQuestionsT } from "../types";
+import { useTheme } from "@/app/context/ThemeContext"; 
 
 type QuestionEditT = {
   questionTitle: string;
@@ -21,14 +22,11 @@ type QuestionEditT = {
   options: AnswerT[];
 };
 
-const EditQuestionModal = ({
-  questionData,
-}: {
-  questionData: QuestionEditT;
-}) => {
+const EditQuestionModal = ({ questionData }: { questionData: QuestionEditT }) => {
   const queryClient = useQueryClient();
   const t = useTranslations("quizDetails");
   const { closeModal, isOpen, type } = useModalStore();
+  const { theme } = useTheme(); 
 
   const [question, setQuestion] = useState(questionData.questionTitle);
   const [options, setOptions] = useState(questionData.options);
@@ -156,7 +154,13 @@ const EditQuestionModal = ({
           <label className="text-lg text-foreground-700 font-semibold">
             {t("answers")}:
           </label>
-          <ul className="bg-white py-1 px-4 rounded-lg border-dashed border-2">
+          <ul
+            className={`${
+              theme === "dark"
+                ? "bg-gray-800 text-white border-gray-600"
+                : "bg-white text-black border-gray-200"
+            } py-1 px-4 rounded-lg border-dashed border-2`}
+          >
             {options?.map((option, index) => (
               <li key={index} className="flex items-center space-x-2 mb-2">
                 <div
@@ -169,7 +173,11 @@ const EditQuestionModal = ({
                   type="text"
                   value={option.content}
                   onChange={(e) => handleOptionChange(index, e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg outline-black"
+                  className={`w-full px-3 py-2 rounded-lg outline-none ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white"
+                      : "bg-white text-black"
+                  }`}
                 />
               </li>
             ))}

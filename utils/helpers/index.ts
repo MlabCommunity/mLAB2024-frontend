@@ -1,5 +1,5 @@
 "use client";
-import { QuizResult } from "@/types";
+import { QuizHistoryType, QuizResult } from "@/types";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 export const getPluralForm = (count: number, key: string) => {
@@ -51,3 +51,20 @@ export function getUserRoleFromJWT() {
   const role = decoded[JWT_ROLE_CLAIM as keyof typeof decoded];
   return role;
 }
+export const getLastAttempts = (stats: QuizHistoryType[]) => {
+  const lastAttempts = stats?.reduce((acc, stat) => {
+    if (
+      !acc[stat.quizId] ||
+      new Date(stat.participationDateUtc) >
+        new Date(acc[stat.quizId].participationDateUtc)
+    ) {
+      acc[stat.quizId] = stat;
+    }
+    return acc;
+  }, {} as Record<string, QuizHistoryType>);
+
+  return Object.values(lastAttempts);
+};
+export const shortenStatsLabel = (label: string) => {
+  return label.length > 15 ? label.slice(0, 15) + "..." : label;
+};

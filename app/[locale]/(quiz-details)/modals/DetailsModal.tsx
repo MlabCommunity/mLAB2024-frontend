@@ -1,5 +1,4 @@
 "use client";
-
 import { useModalStore } from "@/store/modalStore";
 import {
   Button,
@@ -26,7 +25,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
   const selectedQuiz = quiz?.find((q) => q.quizId === modalData.id);
   const t = useTranslations("quizDetails");
 
-  // Ustalamy, czy jest ciemny motyw
+  
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
 
@@ -46,7 +45,9 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
             <div className="flex flex-col">
               <span className={`font-semibold ${isDarkTheme ? 'text-white' : 'text-gray-700'}`}>
                 {t("startDate")}:{" "}
-                {formatParticipationDate(selectedQuiz?.participtionDateUtc as string)}
+                {formatParticipationDate(
+                  selectedQuiz?.participationDateUtc as string
+                )}
               </span>
               <div className="flex-col flex gap-2 pt-2">
                 <div className="flex gap-2 items-center">
@@ -88,7 +89,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                   </label>
                   {selectedQuiz && (
                     <span className={`text-small ${isDarkTheme ? 'text-white' : 'text-black'}`}>
-                      {formatParticipationDate(selectedQuiz?.participtionDateUtc)}
+                      {formatParticipationDate(selectedQuiz?.participationDateUtc)}
                     </span>
                   )}
                 </div>

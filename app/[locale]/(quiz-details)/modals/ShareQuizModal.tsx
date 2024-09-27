@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { CodeBlock, solarizedDark } from "react-code-blocks";
 import { Key } from "@react-types/shared";
@@ -15,11 +15,27 @@ import {
 } from "@nextui-org/react";
 import { useModalStore } from "@/store/modalStore";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-hot-toast";
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
+};
+
+const tabContentVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, x: 20, transition: { duration: 0.2 } },
+};
 
 const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
   const { isOpen, closeModal, type } = useModalStore();
   const [activeTab, setActiveTab] = useState<Key>("link");
   const t = useTranslations("ShareQuizModal");
+
+  const sharedCode = shareLink?.split("/").pop();
+  const sharedLink = `${window.location.origin}/${sharedCode}`;
 
   const code = `<iframe
    src="${shareLink}" 
@@ -29,35 +45,22 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
    style="border:1px solid #EAEAEA">
   </iframe>`;
 
-  const handleTabChange = (key: Key) => {
+  const handleTabChange = useCallback((key: Key) => {
     setActiveTab(key);
-  };
+  }, []);
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
-      if (activeTab === "link") {
-        await navigator.clipboard.writeText(shareLink);
-      } else if (activeTab === "code") {
-        await navigator.clipboard.writeText(code);
-      }
+      const textToCopy = activeTab === "link" ? sharedLink : code;
+      await navigator.clipboard.writeText(textToCopy);
+      toast.success(t("copiedToClipboard"));
     } catch (err) {
+      toast.error(t("failedToCopy"));
       console.error("Failed to copy: ", err);
     }
-  };
+  }, [activeTab, sharedLink, code, t]);
 
   const isModalOpen = isOpen && type === "shareQuizz";
-
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
-  };
-
-  const tabContentVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-    exit: { opacity: 0, x: 20, transition: { duration: 0.2 } },
-  };
 
   return (
     <AnimatePresence>
@@ -68,9 +71,7 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
           size="5xl"
           className="bg-content2"
           closeButton={
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <button
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -87,7 +88,7 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
               }}
             >
               X
-            </motion.button>
+            </button>
           }
           motionProps={{
             variants: modalVariants,
@@ -108,10 +109,10 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                   >
                     <Input
                       type="text"
-                      value={shareLink}
+                      value={sharedLink}
                       readOnly
                       variant="flat"
-                      className="p-2"
+                      className="w-full bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg"
                     />
                   </motion.div>
                 </Tab>
@@ -136,19 +137,15 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
               </Tabs>
             </ModalBody>
             <ModalFooter>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileTap={{ scale: 0.95 }}>
                 <Button variant="ghost" color="default" onClick={handleCopy}>
                   {t("copyToClipboard")}
                 </Button>
               </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button onClick={closeModal}>{t("closeButton")}</Button>
+              <motion.div whileTap={{ scale: 0.95 }}>
+                <Button color="primary" onClick={closeModal}>
+                  {t("closeButton")}
+                </Button>
               </motion.div>
             </ModalFooter>
           </ModalContent>

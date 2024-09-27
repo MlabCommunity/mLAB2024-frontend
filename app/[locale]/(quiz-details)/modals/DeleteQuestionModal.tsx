@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useTheme } from "@/app/context/ThemeContext"; 
 
 interface DeleteQuestionModalProps {
   onConfirmDelete: () => void;
@@ -20,6 +21,7 @@ const DeleteQuestionModal = ({
 }: DeleteQuestionModalProps) => {
   const t = useTranslations("quizDetails");
   const { closeModal, isOpen, type } = useModalStore();
+  const { theme } = useTheme(); 
 
   if (!(isOpen && type === "deleteQuestion")) return null;
 
@@ -61,7 +63,14 @@ const DeleteQuestionModal = ({
           </div>
         </ModalHeader>
         <ModalBody>
-          <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
+          
+          <div
+            className={`${
+              theme === "dark"
+                ? "bg-gray-800 text-white border-gray-600"
+                : "bg-white text-black border-gray-200"
+            } py-2 px-4 rounded-lg border-dashed border-2`}
+          >
             <p className="text-foreground-700 font-semibold">{questionTitle}</p>
           </div>
         </ModalBody>

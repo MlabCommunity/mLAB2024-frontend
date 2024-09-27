@@ -1,27 +1,41 @@
 "use client";
-
 import React from "react";
 import { useTranslations } from "next-intl";
-import { useStats } from "../../(quiz-details)/quiz-details/hooks/useStats";
-import Stats from "@/components/shared/Stats";
 import { motion } from "framer-motion";
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
-import { Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import DetailsButton from "../../(quiz-details)/components/statistics/buttons/DetailsButton";
+import {
+  Table,
+  TableBody,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  TableCell,
+  Skeleton,
+} from "@nextui-org/react";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
-import StatusChip from "../../(quiz-details)/components/statistics/StatusChip/StatusChip";
-import DetailsModal from "../../(quiz-details)/modals/DetailsModal";
+import {
+  formatParticipationDate,
+  formatParticipationTime,
+  formatQuizResult,
+  getLastAttempts,
+} from "@/utils/helpers";
+
 import { QuizHistoryType } from "@/types";
-import { formatParticipationDate, formatParticipationTime, formatQuizResult } from "@/utils/helpers";
-
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-const StatisticsPage = () => {
+import DetailsButton from "@/app/[locale]/(quiz-details)/components/statistics/buttons/DetailsButton";
+import Chart from "@/app/[locale]/(quiz-details)/components/chart/Chart";
+import DetailsModal from "@/app/[locale]/(quiz-details)/modals/DetailsModal";
+import StatusChip from "@/app/[locale]/(quiz-details)/components/statistics/StatusChip/StatusChip";
+// Updated component to accept props
+function Stats({
+  quizStats = [],
+  isLoading,
+  isFetching,
+}: {
+  quizStats: QuizHistoryType[];
+  isLoading: boolean;
+  isFetching: boolean;
+}) {
   const t = useTranslations("Dashboard");
-  const { data: stats, isLoading, isFetching } = useStats();
+
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
@@ -30,12 +44,13 @@ const StatisticsPage = () => {
     t("dateTableHeader"),
     t("detailsTableHeader"),
   ];
-  const quizStats: QuizHistoryType[] = stats || [];
+
+  const filteredStats = getLastAttempts(quizStats);
 
   const renderTableContent = () => {
     if (isFetching || isLoading) {
       return [...Array(5)].map((_, index) => (
-        <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
+        <TableRow className="bg-white rounded-lg" key={index}>
           <TableCell>
             <Skeleton className="h-6 w-full" />
           </TableCell>
@@ -58,22 +73,22 @@ const StatisticsPage = () => {
       ));
     }
 
-    return quizStats.map((stat: QuizHistoryType, index: number) => (
-      <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
-        <TableCell className="text-black dark:text-white">{formatQuizResult(stat.quizResult)}</TableCell>
-        <TableCell className="text-black dark:text-white">{stat.quizTitle}</TableCell>
+    return filteredStats.map((stat: QuizHistoryType, index: number) => (
+      <TableRow className="bg-white rounded-lg" key={index}>
+        <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
+        <TableCell>{stat.quizTitle}</TableCell>
         <TableCell>
           <StatusChip status={stat.status} />
         </TableCell>
-        <TableCell className="text-center md:text-start text-black dark:text-white">
+        <TableCell className="text-center md:text-start">
           {formatParticipationTime(stat.participationDateUtc)}
         </TableCell>
-        <TableCell className="text-black dark:text-white">
+        <TableCell>
           {formatParticipationDate(stat.participationDateUtc)}
         </TableCell>
         <TableCell>
           {stat.status === "Started" ? (
-            <span className="text-black dark:text-white text-small">
+            <span className="text-foreground-600 text-small">
               {t("inProgress")}
             </span>
           ) : (
@@ -83,26 +98,6 @@ const StatisticsPage = () => {
       </TableRow>
     ));
   };
-
-  const chartData = {
-    labels: quizStats.map(stat => formatParticipationDate(stat.participationDateUtc)),
-    datasets: [
-      {
-        label: 'Quiz Scores',
-        data: quizStats.map(stat => stat.quizResult),
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      },
-    ],
-  };
-
-  if (!stats || stats.length === 0) {
-    return (
-      <div className="flex w-full  font-semibold text-foreground-600 text-2xl items-center justify-center">
-        {t("noDataAvailable")}
-      </div>
-    );
-  }
 
   return (
     <motion.section
@@ -114,7 +109,6 @@ const StatisticsPage = () => {
       <h2 className="text-4xl font-bold mb-4 text-foreground-700">
         {t("statistics")}
       </h2>
-      <p className="text-foreground-600 mb-4 text-medium md:text-large"></p>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -125,11 +119,11 @@ const StatisticsPage = () => {
           <Table
             removeWrapper
             color="default"
-            className="overflow-x-auto gap-6 p-6 rounded-lg w-full"
+            className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
           >
             <TableHeader className="flex justify-between rounded-lg">
               {tableHeaders.map((tableHeader, index) => (
-                <TableColumn className="uppercase bg-gray-200 dark:bg-gray-800 text-black dark:text-white" key={index}>
+                <TableColumn className="uppercase" key={index}>
                   <div className="flex items-center justify-between gap-2">
                     <span>{tableHeader}</span>
                     <svg
@@ -152,22 +146,20 @@ const StatisticsPage = () => {
                 </TableColumn>
               ))}
             </TableHeader>
-
             <TableBody emptyContent={t("noQuizTakenDialogue")}>
               {renderTableContent()}
             </TableBody>
           </Table>
         </NavbarContentContainer>
-
         {isFetching ? (
           <Skeleton className="h-[400px]" />
         ) : (
-          <Line data={chartData} />
+          <Chart quiz={filteredStats} />
         )}
-        <DetailsModal quiz={quizStats} />
+        <DetailsModal quiz={filteredStats} />
       </motion.div>
     </motion.section>
   );
-};
+}
 
-export default StatisticsPage;
+export default Stats;

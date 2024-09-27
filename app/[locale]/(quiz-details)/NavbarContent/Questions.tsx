@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore";
@@ -14,16 +15,17 @@ import { useQuizDetailStore } from "@/store/quizDetailsStore";
 import QuestionsSkeleton from "../components/skeletons/QuestionsSkeleton";
 import Question from "./Question";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/app/context/ThemeContext"; 
 
 const Questions = () => {
   const [enabled, setEnabled] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
-    number | null
-  >(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const { openModal, setModalData, closeModal, type } = useModalStore();
   const t = useTranslations("quizDetails");
   const { questions, setQuestionsData } = useQuizDetailStore();
   const queryClient = useQueryClient();
+  const { theme } = useTheme(); 
+  const isDarkTheme = theme === "dark"; 
 
   const { mutate } = useMutation({
     mutationFn: deleteQuestion,
@@ -35,18 +37,13 @@ const Questions = () => {
       toast.error(error.message);
     },
     onSettled: (_data, _error, variables) => {
-      queryClient.setQueryData(
-        ["singleQuiz"],
-        (oldData: GeneratedQuestionsT) => {
-          if (!oldData) return oldData;
-          return {
-            ...oldData,
-            questions: oldData.questions.filter(
-              (question) => question.id !== variables
-            ),
-          };
-        }
-      );
+      queryClient.setQueryData(["singleQuiz"], (oldData: GeneratedQuestionsT) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          questions: oldData.questions.filter(question => question.id !== variables),
+        };
+      });
     },
   });
 
@@ -66,8 +63,7 @@ const Questions = () => {
         description: questions[questionIndex].title,
         status: "Error",
         questions: 2,
-        onConfirmDelete: () =>
-          handleConfirmDelete(questionIndex, questions[questionIndex].id),
+        onConfirmDelete: () => handleConfirmDelete(questionIndex, questions[questionIndex].id),
       });
     }
   };
@@ -95,7 +91,7 @@ const Questions = () => {
           transition={{ duration: 0.5 }}
           className="w-full"
         >
-          <div className="bg-content2 py-4 px-4 rounded-lg">
+          <div className={`bg-content2 py-4 px-4 rounded-lg ${isDarkTheme ? 'bg-gray-800' : 'bg-white'}`}>
             <div className="flex justify-between items-center mb-6 mt-2 px-2">
               <div className="flex justify-end items-center">
                 <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
@@ -103,7 +99,7 @@ const Questions = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-black text-sm">{t("answers")}</span>
+                <span className={`text-${isDarkTheme ? 'white' : 'black'} text-sm`}>{t("answers")}</span>
                 <Switch checked={enabled} onValueChange={setEnabled} />
               </div>
             </div>
@@ -118,7 +114,7 @@ const Questions = () => {
             </div>
             <AnimatePresence mode="popLayout">
               <ul>
-                {questions.map((question, index) => (
+                {questions?.map((question, index) => (
                   <Question
                     key={question.id}
                     question={question}
@@ -126,6 +122,7 @@ const Questions = () => {
                     handleEditQuestion={handleEditQuestion}
                     showAnswers={enabled}
                     index={index}
+                    isDarkTheme={isDarkTheme} 
                   />
                 ))}
               </ul>
@@ -138,13 +135,11 @@ const Questions = () => {
             <EditQuestionModal
               questionData={{
                 questionTitle: questions[currentQuestionIndex]?.title,
-                options: questions[currentQuestionIndex]?.answers.map(
-                  (answer) => ({
-                    content: answer.content,
-                    id: answer.id,
-                    isCorrect: answer.isCorrect,
-                  })
-                ),
+                options: questions[currentQuestionIndex]?.answers.map(answer => ({
+                  content: answer.content,
+                  id: answer.id,
+                  isCorrect: answer.isCorrect,
+                })),
                 questionId: questions[currentQuestionIndex]?.id,
               }}
             />

@@ -18,6 +18,7 @@ type Props = {
   handleDeleteQuestion: (index: number) => void;
   showAnswers: boolean;
   index: number;
+  isDarkTheme: boolean; 
 };
 
 function Question({
@@ -26,6 +27,7 @@ function Question({
   handleDeleteQuestion,
   showAnswers,
   index,
+  isDarkTheme, 
 }: Props) {
   return (
     <motion.li
@@ -35,13 +37,15 @@ function Question({
       animate="visible"
       exit="exit"
       variants={itemVariants}
-      className="bg-default-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm list-none"
+      className={`p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm list-none ${isDarkTheme ? 'bg-gray-700' : 'bg-default-100'}`}
     >
       <div className="w-full">
-        <h4 className="font-bold mb-2 text-foreground-700">
+        <h4 className={`font-bold mb-2 ${isDarkTheme ? 'text-white' : 'text-foreground-700'}`}>
           {index + 1}. {question?.title}
         </h4>
-        <p className="text-foreground-500 mb-4">{question?.description}</p>
+        <p className={`mb-4 ${isDarkTheme ? 'text-gray-300' : 'text-foreground-500'}`}>
+          {question?.description}
+        </p>
 
         <div className="space-y-2 mt-2">
           {question?.answers?.map((answer: any, i: number) => (
@@ -49,14 +53,16 @@ function Question({
               key={i}
               className={cn(
                 "flex items-center p-2 rounded-lg cursor-pointer",
-                answer.isCorrect && showAnswers ? "bg-success-100" : "bg-white"
+                answer.isCorrect && showAnswers ? "bg-success-100" : (isDarkTheme ? 'bg-gray-600' : 'bg-white')
               )}
             >
-              <span className="font-medium text-foreground-700">
+              <span className={`font-medium ${isDarkTheme ? 'text-white' : 'text-foreground-700'}`}>
                 {String.fromCharCode(65 + i)}
               </span>
-              <div className="border-l border-b-gray-700 h-6 mx-2" />
-              <span className="text-foreground-700">{answer.content}</span>
+              <div className={`border-l border-b-gray-700 h-6 mx-2`} />
+              <span className={`text-foreground-700 ${isDarkTheme ? 'text-gray-200' : 'text-foreground-700'}`}>
+                {answer.content}
+              </span>
             </motion.div>
           ))}
         </div>

@@ -59,10 +59,6 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
     });
   };
 
-  useEffect(() => {
-    console.log(generateQuizData);
-  }, [generateQuizData]);
-
   const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
     useDropzone({
       onDrop: (acceptedFiles) => validateFiles(acceptedFiles),

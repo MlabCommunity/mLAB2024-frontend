@@ -5,6 +5,7 @@ import Preview from "../components/Preview";
 import { useTranslations } from "next-intl";
 import PreviewSkeleton from "../components/skeletons/PreviewSkeleton";
 import { motion, useScroll } from "framer-motion";
+import { Button } from "@nextui-org/react";
 
 const PreviewPage = () => {
   const { scrollYProgress } = useScroll();
@@ -28,15 +29,15 @@ const PreviewPage = () => {
           <h2 className="text-4xl font-semibold pt-5 pb-2">
             {t("quizPreviewHeading")}
           </h2>
-          <p
-            className="text-lg
-  font-normal text-foreground-600"
-          >
+          <p className="text-lg font-normal text-foreground-600">
             {t("quizPreviewMessage")}
           </p>
           <Suspense fallback={<PreviewSkeleton />}>
             <Preview />
           </Suspense>
+          
+          
+            
         </section>
       </motion.div>
     </>

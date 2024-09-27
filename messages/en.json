@@ -79,7 +79,10 @@
     "avatarUploaded": "Avatar uploaded successfully",
     "uploadError": "Error while uploading avatar",
     "filterArrow": "Filter",
-    "status": "Status"
+    "status": "Status",
+    "image": "Image",
+    "uploading": "Uploading",
+    "table": "Statistics table"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -213,7 +216,13 @@
     "man": "Manual",
     "generatedSuccessfullyMsg": "Quiz generated successfully",
     "generating": "Generating quiz...",
-    "languages": "Which language?"
+    "languages": "Which language?",
+    "english": "English",
+    "polish": "Polish",
+    "german": "German",
+    "spanish": "Spanish",
+    "french": "French",
+    "italian": "Italian"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",
@@ -225,7 +234,14 @@
     "createdSuccessfullyMsg": "Quiz created successfully",
     "creating": "Creating quiz...",
     "questions": "questions",
-    "total": "Total"
+    "total": "Total",
+    "regeneratedSuccessfullyMsg": "The quiz has been successfully updated!",
+    "regenerating": "Regenerating quiz...",
+    "regenerateQuizHeading": "Regenerate Quiz",
+    "regenerateQuizMessage": "Regenerating questions will create a new set of questions for your quiz based on the current settings.",
+    "regenerateQuizWarning": "Warning: Regenerating questions will replace all existing questions in this quiz. This action cannot be undone.",
+    "regenerateButton": "Regenerate Quiz",
+    "cancelButton": "Cancel"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",
@@ -297,7 +313,9 @@
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
-    "closeButton": "Close"
+    "closeButton": "Close",
+    "copiedToClipboard":"Copied to clipboard",
+    "failedToCopy":"Failed to copy"
   },
   "Guest": {
     "convertedProperly": "Converted guest properly",

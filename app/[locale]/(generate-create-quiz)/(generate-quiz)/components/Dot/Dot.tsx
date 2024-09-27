@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib";
+import { cn } from "@/lib";  
 
 interface DotProps {
   step: number;
@@ -63,7 +63,7 @@ const Dot = ({ step, visited }: DotProps) => {
       <motion.div
         className={cn(
           "size-8 rounded-full flex items-center justify-center relative",
-          visited ? "border-black" : "border-gray-300",
+          visited ? "border-black dark:border-white" : "border-gray-300 dark:border-gray-600", 
           "border-2"
         )}
         variants={dotVariants}
@@ -71,7 +71,10 @@ const Dot = ({ step, visited }: DotProps) => {
         animate={visited ? "visited" : "animate"}
       >
         <motion.div
-          className="absolute inset-0.5 bg-black rounded-full"
+          className={cn(
+            "absolute inset-0.5 rounded-full",
+            visited ? "bg-black dark:bg-white" : "bg-transparent" 
+          )}
           variants={fillVariants}
           initial="initial"
           animate="animate"
@@ -79,7 +82,7 @@ const Dot = ({ step, visited }: DotProps) => {
         <motion.span
           className={cn(
             "absolute z-10 text-sm font-medium",
-            visited ? "text-white" : "text-gray-500"
+            visited ? "text-white dark:text-black" : "text-gray-500 dark:text-gray-400" 
           )}
           variants={numberVariants}
           initial="initial"
@@ -89,7 +92,7 @@ const Dot = ({ step, visited }: DotProps) => {
         </motion.span>
         {visited && (
           <motion.svg
-            className="absolute w-4 h-4 text-white"
+            className="absolute w-4 h-4"
             viewBox="0 0 24 24"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -97,6 +100,7 @@ const Dot = ({ step, visited }: DotProps) => {
           >
             <path
               fill="currentColor"
+              className="text-white dark:text-black" 
               d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
             />
           </motion.svg>
@@ -104,13 +108,13 @@ const Dot = ({ step, visited }: DotProps) => {
       </motion.div>
       {step < 2 && (
         <motion.div
-          className={cn("h-0.5 w-20 bg-gray-300 relative overflow-hidden")}
+          className="h-0.5 w-20 relative overflow-hidden bg-gray-300 dark:bg-gray-600" 
           variants={lineVariants}
           initial="initial"
           animate="animate"
         >
           <motion.div
-            className="absolute inset-0 bg-black origin-left"
+            className="absolute inset-0 origin-left bg-black dark:bg-white" 
             initial={{ scaleX: 0 }}
             animate={{ scaleX: visited ? 1 : 0 }}
             transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }}

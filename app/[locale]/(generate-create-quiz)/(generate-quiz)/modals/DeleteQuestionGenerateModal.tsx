@@ -34,7 +34,7 @@ const DeleteQuestionGenerateModal = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#292D32",
+            backgroundColor: "#292D32", 
             color: "white",
             width: 22,
             height: 22,
@@ -49,27 +49,29 @@ const DeleteQuestionGenerateModal = ({
         </button>
       }
     >
-      <ModalContent className="rounded-lg shadow-lg relative bg-content2">
+      <ModalContent className="rounded-lg shadow-lg relative bg-content2 dark:bg-gray-800"> 
         <ModalHeader className="flex flex-col">
           <div className="flex flex-col justify-start">
-            <p className="text-lg text-foreground-700 font-semibold">
+            <p className="text-lg font-semibold text-black dark:text-white"> 
               {t("areYouSure")}
             </p>
-            <p className="text-base text-foreground-500 font-medium mt-1">
+            <p className="text-base font-medium mt-1 text-gray-600 dark:text-gray-300"> 
               {t("cannotUndo")}
             </p>
           </div>
         </ModalHeader>
         <ModalBody>
-          <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
-            <p className="text-foreground-700 font-semibold">{questionTitle}</p>
+          <div className="py-2 px-4 rounded-lg border-dashed border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-900"> 
+            <p className="text-black dark:text-white font-semibold"> 
+              {questionTitle}
+            </p>
           </div>
         </ModalBody>
         <ModalFooter>
           <div className="flex justify-end space-x-2">
             <button
               onClick={closeModal}
-              className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md "
+              className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md dark:bg-primary-700 dark:text-white"
             >
               {t("cancel")}
             </button>

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useGetSingleQuiz } from "@/utils/hooks/useGetSingleQuiz";
@@ -16,8 +17,7 @@ import QuizDetailsInfo from "../../components/QuizDetailsInfo";
 import { motion, useScroll } from "framer-motion";
 import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
-import ChartModal from "../../modals/ChartModal";
-import { formatParticipationDate } from "@/utils/helpers";
+import { useTheme } from "@/app/context/ThemeContext"; 
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -42,6 +42,9 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("quizDetails");
+  const { theme } = useTheme(); 
+  const isDarkTheme = theme === "dark";
+
   useEffect(() => {
     if (singleQuizData) {
       setQuestionsData(singleQuizData?.questions || []);
@@ -67,7 +70,9 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("statistics"), value: "Statistics" },
     { label: t("general"), value: "General" },
   ];
+  
   const { openModal } = useModalStore();
+  
   const renderTabContent = useCallback(
     (activeTab: string) => {
       if (isFetching) {
@@ -77,14 +82,14 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings quizId={singleQuizData?.id} />;
+          return <Settings quizId={singleQuizData?.items?.id} />;
         case "Statistics":
-          return <Statistics />;
+          return <Statistics quiz={singleQuizData} />;
         case "General":
           return (
             <General
-              title={singleQuizData.title}
-              description={singleQuizData.description}
+              title={singleQuizData?.title}
+              description={singleQuizData?.description}
             />
           );
       }
@@ -98,10 +103,12 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         style={{ scaleX: scrollYProgress }}
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left"
       />
-      <div className="bg-white w-full md:max-w-7xl">
-        <div className="bg-white p-4 md:p-6 rounded-lg">
+      <div className={`bg-${isDarkTheme ? 'gray-800' : 'white'} w-full md:max-w-7xl`}>
+        <div className={`bg-${isDarkTheme ? 'gray-700' : 'white'} p-4 md:p-6 rounded-lg`}>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">{t("detailQuizzHeading")}</h2>
+            <h2 className={`text-xl font-semibold ${isDarkTheme ? 'text-white' : 'text-black'}`}>
+              {t("detailQuizzHeading")}
+            </h2>
             <Button
               color="primary"
               onClick={() => openModal("shareQuizz")}
@@ -110,7 +117,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
               {t("shareQuizzButton")}
             </Button>
           </div>
-          <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
+          <div className={`bg-${isDarkTheme ? 'gray-800' : 'foreground-100'} p-4 mb-6 rounded-lg shadow-md`}>
             {isFetching ? (
               <QuizDetailsInfoSkeleton />
             ) : (
@@ -122,7 +129,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           </div>
           <nav
             onClick={handleNavbarChange}
-            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
+            className={`flex gap-2 w-full md:w-min space-x-6 mb-6 bg-${isDarkTheme ? 'gray-700' : 'default-100'} p-2 rounded-lg overflow-x-auto`}
           >
             {tabs.map((tab) => (
               <Link
@@ -131,8 +138,8 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
                 className={cn(
                   "px-2 py-2 rounded-lg whitespace-nowrap",
                   activeTab === tab.value
-                    ? "bg-white text-default-foreground"
-                    : "text-default-500",
+                    ? `bg-${isDarkTheme ? 'gray-800' : 'white'} text-default-foreground`
+                    : `text-${isDarkTheme ? 'gray-400' : 'default-500'}`,
                   isFetching && "pointer-events-none"
                 )}
                 data-navbar-item={tab.value}

@@ -11,7 +11,7 @@ export default function TakeQuizLayout({
   return (
     <>
       <Header />
-      <Container>
+      <Container className="min-h-screen bg-white dark:bg-black">
         <section className="flex flex-col items-start md:flex-row md:gap-8 w-full">
           <Navbar />
           {children}

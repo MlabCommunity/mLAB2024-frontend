@@ -65,9 +65,8 @@ const CreateQuizSuccessPage = () => {
                       onClick={handleCopyLink}
                       src={copyIcon}
                       alt="Document Icon"
-                    
                       className="cursor-pointer"
-                      style={{ filter: "invert(0)" }} 
+                      style={{ filter: theme === "dark" ? "invert(1)" : "invert(0)" }} 
                     />
                   </PopoverTrigger>
                   <PopoverContent>

@@ -37,7 +37,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ setIsHistoryVisible }) => {
   const reactionImage = isGoodScore ? happyReaction : badReaction;
 
   return (
-    <div className="bg-default-100 px-6 py-8 rounded-xl flex flex-col gap-8 items-center w-[700px]">
+    <div className="bg-default-100 px-6 py-8 rounded-xl flex flex-col gap-8 items-center w-[700px] min-h-screen justify-center">
       <Progress
         aria-label="Progress"
         value={100}

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
@@ -16,8 +18,8 @@ import { GeneratedQuestionT } from "../../types";
 import AddQuestionGenerateModal from "../../(generate-quiz)/modals/AddQuestionGenerateModal";
 import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
-
 import { AnimatePresence } from "framer-motion";
+import RegenerateQuizModal from "../../(generate-quiz)/modals/RegenerateQuizModal";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -29,14 +31,16 @@ function Preview() {
   const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
 
-  const [questions, setQuestions] = useState<GeneratedQuestionT[]>(
-    generatedQuizData?.generateQuestions
-  );
+  const [questions, setQuestions] = useState<GeneratedQuestionT[]>(generatedQuizData?.generateQuestions);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
-    number | null
-  >(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (generatedQuizData?.generateQuestions) {
+      setQuestions(generatedQuizData.generateQuestions);
+    }
+  }, [generatedQuizData]);
 
   const { mutate } = useMutation({
     mutationFn: createQuiz,
@@ -102,9 +106,7 @@ function Preview() {
       setCurrentQuestionIndex(null);
       closeModal();
     } else {
-      setCurrentQuestionIndex(
-        Math.min(currentQuestionIndex as number, updatedQuizData.length - 1)
-      );
+      setCurrentQuestionIndex(Math.min(currentQuestionIndex as number, updatedQuizData.length - 1));
     }
   };
 
@@ -118,6 +120,11 @@ function Preview() {
   const handleOpenAddQuestion = () => {
     openModal("addQuestion");
   };
+
+  const handleOpenRegenerateQuestions = () => {
+    openModal("regenerateQuiz");
+  };
+
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
       <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">
@@ -128,7 +135,8 @@ function Preview() {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-black text-sm">{t("answers")}</span>
+            
+            <span className="text-black dark:text-white text-sm">{t("answers")}</span>
             <Switch
               className="order-0"
               size="md"
@@ -140,12 +148,22 @@ function Preview() {
         </div>
         <Button
           color="primary"
-          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50"
+          className="py-2 rounded-lg ml-auto disabled:bg-gray-500 disabled:text-white w-32"
           radius="md"
           onClick={handleOpenAddQuestion}
           isDisabled={!questions}
         >
           {t("addNewQuestionBtn")}
+        </Button>
+        <Button
+          color="default"
+          variant="solid"
+          className="py-2 -mt-2 rounded-lg ml-auto disabled:bg-gray-500 disabled:text-white w-32"
+          radius="md"
+          onClick={handleOpenRegenerateQuestions}
+          isDisabled={!questions}
+        >
+          {t("regenerateButton")}
         </Button>
         <AnimatePresence>
           {questions?.map((question, index) => (
@@ -165,9 +183,8 @@ function Preview() {
       <NavigationControls>
         <SaveQuiz />
       </NavigationControls>
-      {type === "addQuestion" && (
-        <AddQuestionGenerateModal setQuestions={setQuestions} />
-      )}
+      <RegenerateQuizModal />
+      {type === "addQuestion" && <AddQuestionGenerateModal setQuestions={setQuestions} />}
       {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
         <>
           <DeleteQuestionGenerateModal

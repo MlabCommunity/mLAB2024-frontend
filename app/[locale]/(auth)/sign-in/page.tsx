@@ -1,3 +1,4 @@
+
 import SignInForm from "../components/SignInForm";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
@@ -22,16 +23,22 @@ const SignInPage = async () => {
 
   return (
     <div className="h-screen flex items-center justify-center px-4">
-      <div className="bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500 ">
+      <div className="bg-[#1a1a1a] p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl">
+        {/* Logo */}
         <Image
           src={logo}
           alt="logo"
-          className="mx-auto mb-4 transition-transform "
+          className="mx-auto mb-4"
         />
-        <p className="text-sm font-semibold text-primary mt-4">
+        <p className="text-sm font-semibold text-[#007bff] mt-4">
           {t("signInEnterText")}
         </p>
+
+       
         <SignInForm />
+
+   
+       
       </div>
     </div>
   );

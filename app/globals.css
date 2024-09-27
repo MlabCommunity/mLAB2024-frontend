@@ -15,53 +15,95 @@
     transition: background-color 0.3s;
     border: 2px solid #d1d5db;
   }
-  body {
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
   
-  body.light {
-    background-color: white;
-    color: black;
-  }
-  
-  body.dark {
-    background-color: black;
-    color: white;
-  }
-  
-  input {
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 
-  .dark .table-row {
-    background-color: #4a5568; 
-    color: #fff; 
-  }
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: black;
+  color: white;
+}
+
+
+body.dark .modal-content {
+  background-color: #4a5568; 
+  color: #fff; 
+}
+
+body.light .modal-content {
+  background-color: #fff;
+  color: #000;
+}
+
+
+body.dark .button {
+  background-color: #292D32;
+  color: white;
+}
+
+
+body.dark .disabled-button {
+  background-color: #4a5568; 
+  color: #a0aec0; 
+}
+
+body.light .disabled-button {
+  background-color: #e2e8f0; 
+  color: #718096; 
+}
+
+
+body.dark input {
+  background-color: #555;
+  color: white;
+}
+
+body.light input {
+  background-color: white;
+  color: black;
+}
+
+
+body.dark .table-row {
+  background-color: #4a5568;
+  color: white;
+}
+
+body.dark .table-header {
+  background-color: #2d3748;
+}
+
+.modal-content {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark .modal-content {
+  background-color: #4a5568; 
+  color: #fff;
+}
+
+body.light .modal-content {
+  background-color: #fff;
+  color: #000;
+}
+
+
+body.dark .answers-label {
+  color: #fff; 
+}
+
+body.light .answers-label {
+  color: #000; 
+}
   
-  .dark .table-header {
-    background-color: #2d3748;
-  }
+
   
-  .dark .text-black {
-    color: #fff; 
-  }
-  
-  input.dark {
-    background-color: #333;
-    color: white;
-  }
-  
-  input.light {
-    background-color: white;
-    color: black;
-  }
-  .text-black {
-    color: black; 
-  }
-  
-  .dark .text-black {
-    color: white;
-  }
   .custom-radio-checked {
     background-color: #d1d5db; 
   }

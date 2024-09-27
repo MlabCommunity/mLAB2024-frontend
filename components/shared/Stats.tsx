@@ -46,6 +46,13 @@ function Stats({
   ];
 
   const filteredStats = getLastAttempts(quizStats);
+  if (!quizStats || quizStats.length === 0) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        {t("noDataAvailable")}
+      </div>
+    );
+  }
 
   const renderTableContent = () => {
     if (isFetching || isLoading) {

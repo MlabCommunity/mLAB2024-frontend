@@ -155,6 +155,7 @@
     "userAvatar": "Awatar użytkownika",
     "profile": "Profil",
     "logOut": "Wyloguj się",
+    "statistics": "Statystyki",
     "loggedOut": "Pomyślnie wylogowano!"
   },
   "Navbar": {
@@ -300,6 +301,9 @@
     "addedQuestionSuccess": "Dodano pytanie do quizu"
   },
   "ShareQuizModal": {
+    "copiedToClipboard": "Skopiowano do schowka",
+    "failedToCopy": "Nie udało się skopiować do schowka. Spróbuj ponownie",
+    "scanQRCodeToShare": "Skanuj kod QR do udostępnienia quizu",
     "shareQuizTitle": "Udostępnij swój quiz innym!",
     "shareAsLinkTitle": "Udostępnij jako link ",
     "shareAsCodeTitle": "Udostępnij do swojej strony internetowej",
@@ -308,10 +312,7 @@
     "embedWebsiteDesc": "Wykorzystaj ćwiczenie na swojej stronie internetowej lub innej platformie",
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
-    "closeButton": "Zamknij",
-    "copiedToClipboard": "Skopiowano do schowka",
-    "failedToCopy": "Nie udało się skpiować do schowka. Spróbuj ponownie",
-    "scanQRCodeToShare": "Skanuj kod QR do udostępnienia quizu"
+    "closeButton": "Zamknij"
   },
   "Guest": {
     "convertedProperly": "Gość został poprawnie przekonwertowany",

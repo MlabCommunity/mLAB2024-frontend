@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Dodaj to na samym początku pliku
 
 import React, { useEffect, useState } from "react";
 import QuizItem from "./QuizItem";
@@ -20,6 +20,7 @@ import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQues
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 import { AnimatePresence } from "framer-motion";
 import RegenerateQuizModal from "../../(generate-quiz)/modals/RegenerateQuizModal";
+import { useStepperStore } from "@/store/stepperStore";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -31,6 +32,7 @@ function Preview() {
   const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
 
+  const { setCurrentRoute, addVisitedRoute } = useStepperStore();
   const [questions, setQuestions] = useState<GeneratedQuestionT[]>(generatedQuizData?.generateQuestions);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
@@ -50,6 +52,8 @@ function Preview() {
     },
     onSuccess: (data) => {
       setGeneratedQuizData(data);
+      setCurrentRoute(routes.quizSuccess.pathname);
+      addVisitedRoute(routes.quizSuccess.pathname);
       toast.success(t("createdSuccessfullyMsg"));
       router.push(routes.quizSuccess.pathname);
       setIsSubmitting(false);

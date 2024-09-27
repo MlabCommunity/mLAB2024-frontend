@@ -41,7 +41,7 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">{renderCorrespondingIcon()}</div>
         <div className="flex flex-col ">
-          <span className="md:text-lg md:w-3/4 w-1/2 text-sm break-words border">
+          <span className="md:text-lg md:w-3/4 w-1/2 text-sm truncate ">
             {file}
           </span>
 
@@ -55,7 +55,6 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        {/* Rounded delete button with trash icon */}
         <Button
           isIconOnly
           size="sm"
@@ -65,7 +64,6 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
           <Image src={trashIcon} alt="trash" />
         </Button>
 
-        {/* Rounded download button */}
         <Link href={"#"} target="_blank" download={fileName}>
           <Button isIconOnly size="sm" variant="flat">
             <Image src={downloadIcon} alt="download" />

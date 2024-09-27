@@ -13,12 +13,13 @@ import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { routes } from "@/routes";
+import { useStepperStore } from "@/store/stepperStore";
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
   const router = useRouter();
-
+  const { setCurrentRoute, addVisitedRoute } = useStepperStore();
   const promptSchema = z.object({
     prompt: z
       .string()
@@ -38,7 +39,10 @@ const PromptForm = () => {
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
 
   const onSubmit = (data: FormValue) => {
+    setCurrentRoute(routes.configureQuiz.pathname);
+    addVisitedRoute(routes.generateQuiz.pathname); //
     router.push(routes.configureQuiz.pathname);
+
     setGenerateQuizData({
       ...generateQuizData,
       Content: data.prompt,

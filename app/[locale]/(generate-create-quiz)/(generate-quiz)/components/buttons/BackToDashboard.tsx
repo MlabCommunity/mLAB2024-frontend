@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
+import { useStepperStore } from "@/store/stepperStore";
 
 function BackToDashboard({
   quizId,
@@ -14,8 +15,10 @@ function BackToDashboard({
 }) {
   const router = useRouter();
   const t = useTranslations("CreateQuizSuccess");
+  const { resetVisitedRoutes, setCurrentRoute } = useStepperStore();
   const handleBackToDashboard = async () => {
-    localStorage.removeItem("visitedRoutes");
+    resetVisitedRoutes();
+    setCurrentRoute("");
     router.push(routes.dashboard.pathname);
   };
 

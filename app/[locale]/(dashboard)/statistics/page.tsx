@@ -1,27 +1,35 @@
-"use client";
-
 import React from "react";
 import { useTranslations } from "next-intl";
-import { useStats } from "../../(quiz-details)/quiz-details/hooks/useStats";
-import Stats from "@/components/shared/Stats";
 import { motion } from "framer-motion";
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
-import { Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import DetailsButton from "../../(quiz-details)/components/statistics/buttons/DetailsButton";
+import {
+  Table,
+  TableBody,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  TableCell,
+  Skeleton,
+} from "@nextui-org/react";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
-import StatusChip from "../../(quiz-details)/components/statistics/StatusChip/StatusChip";
 import DetailsModal from "../../(quiz-details)/modals/DetailsModal";
+import {
+  formatParticipationDate,
+  formatParticipationTime,
+  formatQuizResult,
+} from "@/utils/helpers";
+import StatusChip from "../../(quiz-details)/components/statistics/StatusChip/StatusChip";
+import DetailsButton from "../../(quiz-details)/components/statistics/buttons/DetailsButton";
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { useStats } from "../../(quiz-details)/quiz-details/hooks/useStats";
 import { QuizHistoryType } from "@/types";
-import { formatParticipationDate, formatParticipationTime, formatQuizResult } from "@/utils/helpers";
-
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const StatisticsPage = () => {
   const t = useTranslations("Dashboard");
   const { data: stats, isLoading, isFetching } = useStats();
+  
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
@@ -36,24 +44,12 @@ const StatisticsPage = () => {
     if (isFetching || isLoading) {
       return [...Array(5)].map((_, index) => (
         <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
-          <TableCell>
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell>
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell>
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell className="text-center md:text-start">
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell>
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
-          <TableCell>
-            <Skeleton className="h-6 w-full" />
-          </TableCell>
+          <TableCell><Skeleton className="h-6 w-full" /></TableCell>
+          <TableCell><Skeleton className="h-6 w-full" /></TableCell>
+          <TableCell><Skeleton className="h-6 w-full" /></TableCell>
+          <TableCell className="text-center md:text-start"><Skeleton className="h-6 w-full" /></TableCell>
+          <TableCell><Skeleton className="h-6 w-full" /></TableCell>
+          <TableCell><Skeleton className="h-6 w-full" /></TableCell>
         </TableRow>
       ));
     }
@@ -62,9 +58,7 @@ const StatisticsPage = () => {
       <TableRow className="bg-gray-200 dark:bg-gray-800 rounded-lg" key={index}>
         <TableCell className="text-black dark:text-white">{formatQuizResult(stat.quizResult)}</TableCell>
         <TableCell className="text-black dark:text-white">{stat.quizTitle}</TableCell>
-        <TableCell>
-          <StatusChip status={stat.status} />
-        </TableCell>
+        <TableCell><StatusChip status={stat.status} /></TableCell>
         <TableCell className="text-center md:text-start text-black dark:text-white">
           {formatParticipationTime(stat.participationDateUtc)}
         </TableCell>
@@ -73,9 +67,7 @@ const StatisticsPage = () => {
         </TableCell>
         <TableCell>
           {stat.status === "Started" ? (
-            <span className="text-black dark:text-white text-small">
-              {t("inProgress")}
-            </span>
+            <span className="text-black dark:text-white text-small">{t("inProgress")}</span>
           ) : (
             <DetailsButton id={stat?.quizId} />
           )}
@@ -85,20 +77,20 @@ const StatisticsPage = () => {
   };
 
   const chartData = {
-    labels: quizStats.map(stat => formatParticipationDate(stat.participationDateUtc)),
+    labels: quizStats.map((stat) => formatParticipationDate(stat.participationDateUtc)),
     datasets: [
       {
-        label: 'Quiz Scores',
-        data: quizStats.map(stat => stat.quizResult),
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        label: "Quiz Scores",
+        data: quizStats.map((stat) => stat.quizResult),
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
     ],
   };
 
   if (!stats || stats.length === 0) {
     return (
-      <div className="flex w-full  font-semibold text-foreground-600 text-2xl items-center justify-center">
+      <div className="flex w-full font-semibold text-foreground-600 text-2xl items-center justify-center">
         {t("noDataAvailable")}
       </div>
     );
@@ -114,7 +106,6 @@ const StatisticsPage = () => {
       <h2 className="text-4xl font-bold mb-4 text-foreground-700">
         {t("statistics")}
       </h2>
-      <p className="text-foreground-600 mb-4 text-medium md:text-large"></p>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -122,11 +113,7 @@ const StatisticsPage = () => {
         className="w-full"
       >
         <NavbarContentContainer>
-          <Table
-            removeWrapper
-            color="default"
-            className="overflow-x-auto gap-6 p-6 rounded-lg w-full"
-          >
+          <Table removeWrapper color="default" className="overflow-x-auto gap-6 p-6 rounded-lg w-full">
             <TableHeader className="flex justify-between rounded-lg">
               {tableHeaders.map((tableHeader, index) => (
                 <TableColumn className="uppercase bg-gray-200 dark:bg-gray-800 text-black dark:text-white" key={index}>
@@ -152,7 +139,6 @@ const StatisticsPage = () => {
                 </TableColumn>
               ))}
             </TableHeader>
-
             <TableBody emptyContent={t("noQuizTakenDialogue")}>
               {renderTableContent()}
             </TableBody>

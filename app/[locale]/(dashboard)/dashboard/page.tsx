@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import { ListPlus } from "lucide-react";
 import usePaginator from "@/app/hooks/usePaginator";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
+import { useStepperStore } from "@/store/stepperStore";
+import { useRouter } from "next/navigation";
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   const {
@@ -26,7 +28,13 @@ const DashboardPage = () => {
     queryKey: ["quizList"],
     pageSize: 4,
   });
-
+  const { addVisitedRoute, setCurrentRoute } = useStepperStore();
+  const router = useRouter();
+  const redirectToQuizCreation = () => {
+    addVisitedRoute(routes.generateQuiz.pathname);
+    setCurrentRoute(routes.generateQuiz.pathname);
+    router.push(routes.generateQuiz.pathname);
+  };
   const queryClient = useQueryClient();
 
   const renderQuizCards = () => {
@@ -87,14 +95,16 @@ const DashboardPage = () => {
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />
           )}
-          <Link href={routes.generateQuiz.pathname}>
-            <div className="w-full border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
-              <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
-                <span className="text-4xl mb-2">+</span>
-                <span className="w-full">{t("addQuizzButton")}</span>
-              </button>
+
+          <button
+            className="text-white w-full h-full hover:text-gray-200 transition-colors flex flex-col items-center"
+            onClick={redirectToQuizCreation}
+          >
+            <div className="w-full cursor-pointer border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
+              <span className="text-4xl mb-2">+</span>
+              <span>{t("addQuizzButton")}</span>
             </div>
-          </Link>
+          </button>
         </div>
       </section>
     </motion.div>

@@ -83,7 +83,7 @@
     "image": "Image",
     "uploading": "Uploading",
     "table": "Statistics table",
-    "deleteAccountWarning": "Warning",
+    "warning": "Warning",
     "deleteFirstWarning": "All your data will be permanenty delete, including personal information, settings, and any saved content",
     "deleteSecondWarning": "You will lose access to all services and features associated with this account",
     "deleteThirdWarning": "If you are sure you want to procees, please confirm below. If you have any questions or need help, consider contacting support before finalizing this action.",

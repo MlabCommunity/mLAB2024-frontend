@@ -77,7 +77,7 @@ function Preview() {
     mutate({
       title: generatedQuizData.title,
       description: generatedQuizData.description,
-      questionType: selectedType,
+      questionTypes: selectedType,
       createQuizQuestions: questions.map((question) => {
         return {
           title: question.title,

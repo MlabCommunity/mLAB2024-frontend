@@ -20,8 +20,11 @@ function ButtonGroupComponent() {
   const router = useRouter();
   const { generateQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const { Content, Attachments } = generateQuizData;
+
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([
+    "SingleChoice",
+  ]);
   const { addVisitedRoute, setCurrentRoute } = useStepperStore();
-  const [selectedType, setSelectedType] = useState("SingleChoice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
   const [selectedLanguage, setSelectedLanguage] = useState(
     locale === "en" ? "English" : "Polish"
@@ -35,10 +38,11 @@ function ButtonGroupComponent() {
     onSuccess: (data) => {
       const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
+      params.set("selectedType", selectedTypes.join(","));
       addVisitedRoute(routes.quizPreview.pathname); // Update this line
       setCurrentRoute(routes.quizPreview.pathname); // Set the current route
 
-      params.set("selectedType", selectedType);
+      params.set("selectedType", selectedTypes.join(","));
       router.push(`${routes.quizPreview.pathname}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
@@ -58,7 +62,9 @@ function ButtonGroupComponent() {
     const formData = new FormData();
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
-    formData.append("QuestionTypes", selectedType);
+    selectedTypes.forEach((type) => {
+      formData.append("QuestionTypes[]", type);
+    });
     formData.append("Language", selectedLanguage);
     Attachments?.forEach((attachment) => {
       formData.append("Attachments", attachment);
@@ -87,10 +93,20 @@ function ButtonGroupComponent() {
     ],
   };
 
+  const toggleQuestionType = (value: string) => {
+    setSelectedTypes((prev) => {
+      if (prev.includes(value)) {
+        return prev.length === 1 ? prev : prev.filter((type) => type !== value);
+      } else {
+        return prev.length < 2 ? [...prev, value] : prev;
+      }
+    });
+  };
+
   const renderButtonGroup = (
     title: string,
     items: { label: number | string; value: string }[],
-    selectedValue: string,
+    selectedValue: string | string[],
     setSelectedValue: (value: string) => void
   ) => (
     <div className="flex flex-col bg-content2 gap-4 p-6 rounded-lg">
@@ -100,16 +116,42 @@ function ButtonGroupComponent() {
           <Button
             key={item.value}
             color="primary"
-            variant={selectedValue === item.value ? "solid" : "flat"}
+            variant={
+              Array.isArray(selectedValue)
+                ? selectedValue.includes(item.value)
+                  ? "solid"
+                  : "flat"
+                : selectedValue === item.value
+                ? "solid"
+                : "flat"
+            }
             className="w-full justify-start rounded-lg flex-1 min-h-[48px]"
             size="lg"
             isDisabled={isPending}
             startContent={
-              selectedValue === item.value ? <TickCircle /> : <EmptyCircle />
+              Array.isArray(selectedValue) ? (
+                selectedValue.includes(item.value) ? (
+                  <TickCircle />
+                ) : (
+                  <EmptyCircle />
+                )
+              ) : selectedValue === item.value ? (
+                <TickCircle />
+              ) : (
+                <EmptyCircle />
+              )
             }
             name={item.value}
-            aria-pressed={selectedValue === item.value}
-            onClick={() => setSelectedValue(item.value)}
+            aria-pressed={
+              Array.isArray(selectedValue)
+                ? selectedValue.includes(item.value)
+                : selectedValue === item.value
+            }
+            onClick={() =>
+              title === t("questionsType")
+                ? toggleQuestionType(item.value)
+                : setSelectedValue(item.value)
+            }
           >
             <span>{item.label}</span>
           </Button>
@@ -126,8 +168,8 @@ function ButtonGroupComponent() {
       {renderButtonGroup(
         t("questionsType"),
         options.questionTypes,
-        selectedType,
-        setSelectedType
+        selectedTypes,
+        toggleQuestionType
       )}
       {renderButtonGroup(
         t("howManyQuestions"),

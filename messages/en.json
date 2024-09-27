@@ -160,8 +160,8 @@
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
-    "loggedOut": "Logged out successfully",
-    "statistics": "Statystyki"
+    "statistics": "Statistics",
+    "loggedOut": "Logged out successfully"
   },
   "Navbar": {
     "profile": "Profile",

@@ -9,6 +9,8 @@ import { updateProfile } from "@/utils/actions/user/updateProfile";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { UploadButton } from "@/utils/uploadThing";
+import { useModalStore } from "@/store/modalStore";
+import DeleteAccountModal from "./modals/DeleteAccountModal";
 
 const ProfilePage = () => {
   const queryClient = useQueryClient();
@@ -18,6 +20,7 @@ const ProfilePage = () => {
     imageUrl: currentProfile?.imageUrl || "",
   });
   const [isFormChanged, setIsFormChanged] = useState(false);
+  const { openModal } = useModalStore();
   const t = useTranslations("Dashboard");
 
   useEffect(() => {
@@ -162,11 +165,13 @@ const ProfilePage = () => {
             variant="solid"
             color="danger"
             disabled={isPending}
+            onClick={() => openModal("deleteAccountModal")}
           >
             {t("delete")}
           </Button>
         </div>
       </div>
+      <DeleteAccountModal />
     </motion.section>
   );
 };

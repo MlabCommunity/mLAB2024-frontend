@@ -11,7 +11,7 @@
     "register": "Register",
     "signInEnterText": "Please enter your user information.",
     "signUpEnterText": "Please enter your user information.",
-    "pending": "Przetwarzanie...",
+    "pending": "Processing...",
     "signedUp": "Successfully signed up!",
     "signedIn": "Successfully signed in!"
   },
@@ -82,7 +82,12 @@
     "status": "Status",
     "image": "Image",
     "uploading": "Uploading",
-    "table": "Statistics table"
+    "table": "Statistics table",
+    "warning": "Warning",
+    "deleteFirstWarning": "All your data will be permanenty delete, including personal information, settings, and any saved content",
+    "deleteSecondWarning": "You will lose access to all services and features associated with this account",
+    "deleteThirdWarning": "If you are sure you want to procees, please confirm below. If you have any questions or need help, consider contacting support before finalizing this action.",
+    "accountDeletedSuccess": "Account succesfully deleted"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -160,8 +165,8 @@
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
-    "statistics": "Statistics",
-    "loggedOut": "Logged out successfully"
+    "loggedOut": "Logged out successfully",
+    "statistics": "Statistics"
   },
   "Navbar": {
     "profile": "Profile",

@@ -95,7 +95,6 @@ const DashboardPage = () => {
           ) : (
             <Skeleton className="w-1/2 mx-auto h-12 my-5 rounded-lg" />
           )}
-
           <button
             className="text-white w-full h-full hover:text-gray-200 transition-colors flex flex-col items-center"
             onClick={redirectToQuizCreation}

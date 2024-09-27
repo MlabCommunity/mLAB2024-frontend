@@ -80,7 +80,12 @@
     "status": "Status",
     "image": "Zdjęcie",
     "uploading": "Przesyłanie",
-    "table": "Tabela statystyk"
+    "table": "Tabela statystyk",
+    "warning": "Ostrzeżenie",
+    "deleteFirstWarning": "Wszystkie Twoje dane zostaną trwale usunięte, w tym informacje osobiste, ustawienia i wszelkie zapisane treści",
+    "deleteSecondWarning": "Utracisz dostęp do wszystkich usług i funkcji powiązanych z tym kontem",
+    "deleteThirdWarning": "Jeśli jesteś pewien, że chcesz kontynuować, potwierdź poniżej. Jeśli masz jakieś pytania lub potrzebujesz pomocy, rozważ skontaktowanie się z pomocą techniczną przed sfinalizowaniem tej czynności.",
+    "accountDeletedSuccess": "Konto usunięto pomyślnie"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",

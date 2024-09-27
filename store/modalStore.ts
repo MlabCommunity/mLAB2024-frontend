@@ -30,6 +30,7 @@ export type ModalType =
   | "chartModal"
   | "detailsModal"
   | "regenerateQuiz"
+  | "deleteAccountModal"
   | "";
 
 export const useModalStore = create<ModalStore>((set) => ({

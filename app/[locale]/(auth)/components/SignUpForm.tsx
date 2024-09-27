@@ -34,7 +34,7 @@ function SignUpForm() {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: signUp,
-    onError: (error) => {
+    onError: () => {
       toast.error("Registration failed");
     },
     onSuccess: () => {
@@ -43,12 +43,12 @@ function SignUpForm() {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     mutate(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <label className="text-medium" htmlFor="email">
           E-mail

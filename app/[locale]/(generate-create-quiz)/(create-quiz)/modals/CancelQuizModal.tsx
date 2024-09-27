@@ -19,7 +19,6 @@ function CancelQuizModal() {
   const t = useTranslations("CreateQuiz");
   const { resetVisitedRoutes } = useStepperStore();
   const handleCancelQuiz = () => {
-    console.log("Cancelling...");
     resetVisitedRoutes();
     closeModal();
   };

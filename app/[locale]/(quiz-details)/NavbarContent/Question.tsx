@@ -1,10 +1,9 @@
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import editIcon from "/public/assets/edit.svg";
-import binIcon from "/public/assets/bin.svg";
+import { motion } from "framer-motion";
 import { QuestionsT } from "../types";
 import { cn } from "@/lib";
+import { DeleteButton } from "@/components/DeleteButton";
+import { EditButton } from "@/components/EditButton";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -62,12 +61,8 @@ function Question({
         </div>
       </div>
       <div className="flex space-x-2">
-        <button onClick={() => handleEditQuestion(index)}>
-          <Image src={editIcon} alt="edit icon" />
-        </button>
-        <button onClick={() => handleDeleteQuestion(index)}>
-          <Image src={binIcon} alt="bin icon" />
-        </button>
+        <EditButton onClick={() => handleEditQuestion(index)} />
+        <DeleteButton onClick={() => handleDeleteQuestion(index)} />
       </div>
     </motion.li>
   );

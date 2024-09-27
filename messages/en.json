@@ -33,7 +33,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "questions": "questions",
-    "total": "Total",
+    "total": "Total number of questions: ",
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
@@ -316,7 +316,8 @@
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close",
     "copiedToClipboard": "Copied to clipboard",
-    "failedToCopy": "Failed to copy"
+    "failedToCopy": "Failed to copy",
+    "scanQRCodeToShare": "Scan the QR code to share the link"
   },
   "Guest": {
     "convertedProperly": "Converted guest properly",

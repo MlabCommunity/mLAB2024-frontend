@@ -11,7 +11,6 @@ const NavbarContentContainer = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { openModal } = useModalStore();
   const t = useTranslations("quizDetails");
   return (
     <>

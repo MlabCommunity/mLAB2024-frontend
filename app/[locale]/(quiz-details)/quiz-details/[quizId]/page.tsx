@@ -120,7 +120,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           </div>
           <nav
             onClick={handleNavbarChange}
-            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 roundA-lg overflow-x-auto"
+            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 roundA-lg overflow-x-auto rounded-lg"
           >
             {tabs.map((tab) => (
               <Link

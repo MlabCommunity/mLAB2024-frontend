@@ -1,12 +1,12 @@
 "use client";
-import Image from "next/image";
+
 import React from "react";
-import thrash from "/public/assets/trash.svg";
-import edit from "/public/assets/edit-2.svg";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/react";
 import { cn } from "@/lib";
 import { motion } from "framer-motion";
+import { DeleteButton } from "@/components/DeleteButton";
+import { EditButton } from "@/components/EditButton";
 
 type QuizItemProps = {
   questionId: number;
@@ -48,30 +48,12 @@ const QuizItem = ({
       <div className="flex flex-col gap-4 pt-4 border-[1.5px] border-dashed rounded-lg pb-4 pl-6 pr-6">
         <div className="flex justify-between items-start">
           <h2 className="font-bold text-[16px] leading-6 ">
-            {`${number}.`}
+            {`${number}. `}
             {question}
           </h2>
           <div className="flex  gap-2">
-            <button
-              className="w-[22px]"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                handleEdit();
-              }}
-            >
-              <Image src={edit} alt="edit" />
-            </button>
-            <button
-              className="w-[22px]"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                handleDelete();
-              }}
-            >
-              <Image src={thrash} alt="delete" />
-            </button>
+            <EditButton onClick={handleEdit} />
+            <DeleteButton onClick={() => handleDelete()} />
           </div>
         </div>
         <div className="flex flex-col gap-3">

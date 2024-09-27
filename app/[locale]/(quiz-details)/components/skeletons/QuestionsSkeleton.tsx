@@ -4,7 +4,7 @@ import { Skeleton } from "@nextui-org/react";
 
 const QuestionsSkeleton = () => {
   return (
-    <div className=" bg-content2 py-4 px-4 rounded-lg">
+    <div className="bg-Content-content2-light dark:bg-Content-content2-dark py-4 px-4 rounded-lg">
       <div className="flex justify-between w-full">
         <Skeleton className="w-36 lg:w-72 h-9 rounded-lg" />
         <Skeleton className="w-36 h-9 rounded-lg" />

@@ -18,13 +18,11 @@ import {
   formatQuizResult,
   getLastAttempts,
 } from "@/utils/helpers";
-
 import { QuizHistoryType } from "@/types";
 import DetailsButton from "@/app/[locale]/(quiz-details)/components/statistics/buttons/DetailsButton";
 import Chart from "@/app/[locale]/(quiz-details)/components/chart/Chart";
 import DetailsModal from "@/app/[locale]/(quiz-details)/modals/DetailsModal";
 import StatusChip from "@/app/[locale]/(quiz-details)/components/statistics/StatusChip/StatusChip";
-// Updated component to accept props
 function Stats({
   quizStats = [],
   isLoading,
@@ -57,7 +55,10 @@ function Stats({
   const renderTableContent = () => {
     if (isFetching || isLoading) {
       return [...Array(5)].map((_, index) => (
-        <TableRow className="bg-white rounded-lg" key={index}>
+        <TableRow
+          className="bg-Content-content2-light dark:bg-Content-content2-dark rounded-lg"
+          key={index}
+        >
           <TableCell>
             <Skeleton className="h-6 w-full" />
           </TableCell>
@@ -81,7 +82,10 @@ function Stats({
     }
 
     return filteredStats.map((stat: QuizHistoryType, index: number) => (
-      <TableRow className="bg-white rounded-lg" key={index}>
+      <TableRow
+        className="bg-Content-content2-light dark:bg-Content-content2-dark rounded-lg"
+        key={index}
+      >
         <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
         <TableCell>{stat.quizTitle}</TableCell>
         <TableCell>
@@ -126,7 +130,7 @@ function Stats({
           <Table
             removeWrapper
             color="default"
-            className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
+            className="overflow-x-auto bg-Content-content2-light dark:bg-Content-content2-dark gap-6 p-6 rounded-lg w-full"
           >
             <TableHeader className="flex justify-between rounded-lg">
               {tableHeaders.map((tableHeader, index) => (

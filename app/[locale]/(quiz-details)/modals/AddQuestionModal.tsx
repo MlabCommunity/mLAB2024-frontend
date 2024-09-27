@@ -179,7 +179,7 @@ function AddQuestionModal() {
                         value={question.value}
                         onChange={(event) => handleInputChange(index, event)}
                       />
-                      <Button onClick={() => handleRemoveQuestion(index)}>
+                      <Button onClick={() => handleRemoveQuestion(index)} color='default'>
                         {t("remove")}
                       </Button>
                     </motion.div>

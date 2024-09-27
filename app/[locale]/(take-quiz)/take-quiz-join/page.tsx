@@ -54,8 +54,8 @@ const TakeQuizJoinPage = () => {
       transition={{ duration: 0.5 }}
       className="py-8 w-full max-w-7xl mx-auto"
     >
-      <h2 className="text-3xl font-bold mb-2 text-black">{t("takeQuiz")}</h2>
-      <p className="text-gray-600 mb-6">{t("toImprove")}</p>
+      <h2 className="text-3xl font-bold mb-2 light:text-black dark:text-white">{t("takeQuiz")}</h2>
+      <p className="light:text-black dark:text-white mb-6">{t("toImprove")}</p>
 
       <Card className="p-2">
         <CardHeader>
@@ -70,7 +70,7 @@ const TakeQuizJoinPage = () => {
               setQuizUrl(e.target.value);
               setError("");
             }}
-            className="w-full bg-gray-100  border-dashed border-2 border-gray-300 rounded-lg "
+            className="w-full light:bg-content2-dark dark:bg-content2-light border-dashed border-2  rounded-lg "
           />
           {error && <p className="text-red-500 py-3">{error}</p>}
           <Button

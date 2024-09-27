@@ -109,7 +109,7 @@ function ButtonGroupComponent() {
     selectedValue: string | string[],
     setSelectedValue: (value: string) => void
   ) => (
-    <div className="flex flex-col bg-content2 gap-4 p-6 rounded-lg">
+    <div className="flex flex-col bg-Content-content2-light dark:bg-Content-content2-dark gap-4 p-6 rounded-lg">
       <span className="text-lg font-semibold">{title}</span>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 auto-cols-fr">
         {items.map((item) => (

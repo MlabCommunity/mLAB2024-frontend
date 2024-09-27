@@ -100,7 +100,7 @@ const General = ({ title, description }: GeneralProps) => {
       <NavbarContentContainer>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="gap-8 p-6 bg-content2 flex flex-col rounded-lg"
+          className="gap-8 p-6 bg-Content-content2-light dark:bg-Content-content2-dark flex flex-col rounded-lg"
         >
           <div className="flex flex-col gap-4">
             <label className="text-md" htmlFor="QuizTitle">

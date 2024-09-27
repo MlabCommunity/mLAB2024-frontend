@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const { data: currentProfile } = useGetCurrentProfile();
@@ -51,6 +52,7 @@ const Header = () => {
         <div className="flex items-center justify-end">
           <div className="relative flex gap-2">
             <LanguageSwitcher />
+            <ThemeSwitcher />
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Avatar

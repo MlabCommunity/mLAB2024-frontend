@@ -59,7 +59,7 @@ const PromptForm = () => {
           {...register("prompt", { required: true })}
           labelPlacement="outside"
           placeholder={t("promptForm")}
-          className="p-6 gap-2 bg-content2 rounded-lg"
+          className="p-6 gap-2 bg-Content-content2-light dark:bg-Content-content2-dark rounded-lg"
         />
         {errors.prompt && (
           <motion.div

@@ -82,7 +82,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
           aria-label={t("table")}
           removeWrapper
           color="default"
-          className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
+          className="overflow-x-auto bg-Content-content2-light dark:bg-Content-content2-dark gap-6 p-6 rounded-lg w-full"
         >
           <TableHeader columns={tableHeaders}>
             {(column) => (

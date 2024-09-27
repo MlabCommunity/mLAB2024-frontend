@@ -17,6 +17,7 @@ import { QuizHistoryType } from "@/types";
 import DoughnutChart from "./Doughnut";
 import { motion, AnimatePresence } from "framer-motion";
 import { shortenStatsLabel } from "@/utils/helpers";
+import { useTheme } from "next-themes";
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +33,7 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
   const title = t("title");
   const [currentChart, setCurrentChart] = useState<"bar" | "doughnut">("bar");
   const [isMobile, setIsMobile] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,11 +54,13 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
           font: {
             size: isMobile ? 12 : 16,
           },
+          color: theme === "light" ? "#404040" : "#e2e2e2",
         },
       },
       title: {
         display: true,
         text: title,
+        color: theme === "light" ? "#404040" : "#e2e2e2",
         font: {
           size: isMobile ? 18 : 24,
         },
@@ -70,6 +74,7 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
           font: {
             size: isMobile ? 10 : 14,
           },
+          color: theme === "light" ? "#404040" : "#e2e2e2",
           callback: function (value) {
             return value + "%";
           },
@@ -80,6 +85,7 @@ const ChartsComponent = ({ quiz }: { quiz: QuizHistoryType[] }) => {
           font: {
             size: isMobile ? 10 : 14,
           },
+          color: theme === "light" ? "#404040" : "#e2e2e2",
         },
       },
     },

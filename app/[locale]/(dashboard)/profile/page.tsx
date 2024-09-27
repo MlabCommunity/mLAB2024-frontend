@@ -79,16 +79,19 @@ const ProfilePage = () => {
       transition={{ duration: 0.5 }}
       className="py-8 w-full md:max-w-7xl"
     >
-      <h2 className="text-4xl font-bold mb-4 text-foreground-700">
+      <h2 className="text-4xl font-bold mb-4 dark:text-foreground-700 light:text-black">
         {t("profile")}
       </h2>
-      <p className="text-foreground-600 mb-4 text-medium md:text-large">
+      <p className="dark:text-foreground-700 light:text-black mb-4 text-medium md:text-large">
         {t("manageSettings")}
       </p>
       <hr className="mb-4" />
-      <div className="bg-[#F4F4F5] rounded-md p-6 flex flex-col gap-8">
+      <div className="bg-Content-content2-light dark:bg-Content-content2-dark rounded-md p-6 flex flex-col gap-8">
         <div className="flex flex-col gap-3">
-          <label className="text-gray-700" htmlFor="avatar">
+          <label
+            className="dark:text-foreground-700 light:text-black"
+            htmlFor="avatar"
+          >
             {t("avatar")}
           </label>
           <div className="flex items-center gap-4">
@@ -122,7 +125,10 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <label className="text-gray-700" htmlFor="name">
+          <label
+            className="dark:text-foreground-700 light:text-black"
+            htmlFor="name"
+          >
             {t("name")}
           </label>
           <input
@@ -133,7 +139,9 @@ const ProfilePage = () => {
             onChange={handleInputChange}
             className="p-3 rounded-lg shadow-sm"
           />
-          <p className="text-foreground-500 text-sm">{t("displayName")}</p>
+          <p className="dark:text-foreground-700 light:text-black text-sm">
+            {t("displayName")}
+          </p>
           <Button
             variant="solid"
             className="bg-base-primary text-white w-min py-5 disabled:bg-base-primary/50"
@@ -146,7 +154,7 @@ const ProfilePage = () => {
 
         <div className="flex flex-col gap-3">
           <h2 className="text-medium">{t("deleteAccount")}</h2>
-          <p className="text-small text-foreground-500 -mt-1">
+          <p className="text-small dark:text-foreground-700 light:text-black -mt-1">
             {t("deleteAccountWarningProfile")}
           </p>
           <Button

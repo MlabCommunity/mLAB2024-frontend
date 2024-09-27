@@ -56,7 +56,7 @@ const HistoryResults = () => {
           return (
             <div
               key={question.id}
-              className="bg-default-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
+              className="p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
             >
               <div className="w-full">
                 <h3 className="font-bold mb-2">
@@ -69,17 +69,17 @@ const HistoryResults = () => {
                       <div
                         key={answer.id}
                         className={cn(
-                          "flex items-center p-2 rounded-lg cursor-pointer w-full bg-white justify-between",
-                          answer.isCorrect && "bg-success-100",
-                          isSelected && !answer.isCorrect && "bg-danger-100"
+                          "flex items-center p-2 rounded-lg cursor-pointer w-full bg-Content-content2-light dark:bg-Content-content2-dark justify-between",
+                          answer.isCorrect && "dark:bg-success-200 light:bg-success-200",
+                          isSelected && !answer.isCorrect && "dark:bg-danger-100 light:bg-danger-500"
                         )}
                       >
                         <div className="flex">
-                          <span className="font-medium text-gray-700">
+                          <span className="font-medium dark:text-white light:text-black">
                             {String.fromCharCode(65 + answerIndex)}
                           </span>
                           <div className="border-l border-gray-300 h-6 mx-2"></div>
-                          <span className="text-gray-700">
+                          <span className="dark:text-white light:text-black">
                             {answer.content}
                           </span>
                         </div>

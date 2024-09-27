@@ -49,10 +49,7 @@ export default function LoginForm() {
   return (
     <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-foreground-100"
-        >
+        <label htmlFor="email" className="block text-sm font-medium text-white">
           E-mail
         </label>
         <Input
@@ -73,7 +70,7 @@ export default function LoginForm() {
       <div>
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-foreground-100"
+          className="block text-sm font-medium text-white"
         >
           {t("password")}
         </label>
@@ -115,7 +112,7 @@ export default function LoginForm() {
         size="lg"
         radius="sm"
         type="submit"
-        disabled={isPending}
+        isDisabled={isPending}
         isLoading={isPending}
         className="w-full"
       >
@@ -131,7 +128,7 @@ export default function LoginForm() {
           radius="sm"
           color="primary"
           className="text-sm sm:text-base flex-1"
-          disabled={isPending}
+          isDisabled={isPending}
         >
           {t("createAccount")}
         </Button>
@@ -141,7 +138,7 @@ export default function LoginForm() {
           radius="sm"
           color="primary"
           className="text-sm sm:text-base flex-1"
-          disabled={isPending}
+          isDisabled={isPending}
         >
           {t("forgotPassword")}
         </Button>

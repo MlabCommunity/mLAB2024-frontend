@@ -105,7 +105,9 @@ export default function FilePicker({ id, name, onClose }: FilePickerProps) {
       <div
         {...getRootProps()}
         className={`border-dashed border-4 p-4 flex flex-col justify-center rounded-lg h-[50vh] ${
-          isDragActive ? "bg-gray-100 border-blue-400" : "bg-white"
+          isDragActive
+            ? "bg-gray-100 border-blue-400"
+            : "bg-Content-content2-light dark:bg-Content-content2-dark"
         } cursor-pointer`}
       >
         <input {...getInputProps()} ref={fileInputRef} />

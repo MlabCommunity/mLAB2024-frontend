@@ -95,7 +95,7 @@ const Questions = () => {
           transition={{ duration: 0.5 }}
           className="w-full"
         >
-          <div className="bg-content2 py-4 px-4 rounded-lg">
+          <div className="bg-Content-content2-light dark:bg-Content-content2-dark py-4 px-4 rounded-lg">
             <div className="flex justify-between items-center mb-6 mt-2 px-2">
               <div className="flex justify-end items-center">
                 <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
@@ -103,7 +103,7 @@ const Questions = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-black text-sm">{t("answers")}</span>
+                <span className="light:text-black dark:text-white text-sm">{t("answers")}</span>
                 <Switch checked={enabled} onValueChange={setEnabled} />
               </div>
             </div>

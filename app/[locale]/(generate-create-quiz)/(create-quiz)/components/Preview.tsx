@@ -136,7 +136,7 @@ function Preview() {
 
   return (
     <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
-      <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col rounded-lg">
+      <aside className="bg-Content-content2-light dark:bg-Content-content2-dark p-6 mt-5 gap-6 flex flex-col rounded-lg">
         <div className="flex justify-between items-center mb-6 mt-2 px-2">
           <div className="flex justify-end items-center">
             <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
@@ -144,7 +144,7 @@ function Preview() {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-black text-sm">{t("answers")}</span>
+            <span className="light:text-black dark:text-white text-sm">{t("answers")}</span>
             <Switch
               className="order-0"
               size="md"
@@ -156,7 +156,7 @@ function Preview() {
         </div>
         <Button
           color="primary"
-          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50 w-32"
+          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50 w-36"
           radius="md"
           onClick={handleOpenAddQuestion}
           isDisabled={!questions}
@@ -166,7 +166,7 @@ function Preview() {
         <Button
           color="default"
           variant="solid"
-          className=" py-2 -mt-2 rounded-lg ml-auto disabled:bg-primary/50 w-32"
+          className=" py-2 -mt-2 rounded-lg ml-auto disabled:bg-primary/50 w-36 dark:text-black"
           radius="md"
           onClick={handleOpenRegenerateQuestions}
           isDisabled={!questions}

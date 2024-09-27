@@ -69,7 +69,7 @@ const RegenerateQuizModal = () => {
         </button>
       }
     >
-      <ModalContent className="bg-content2">
+      <ModalContent className="bg-Content-content2-light dark:bg-Content-content2-dark">
         <ModalHeader className="flex flex-col gap-3">
           <h2 className="text-xl font-bold">{t("regenerateQuizHeading")}</h2>
         </ModalHeader>

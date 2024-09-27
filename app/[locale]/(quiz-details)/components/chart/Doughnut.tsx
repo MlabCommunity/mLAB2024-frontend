@@ -10,10 +10,13 @@ import {
 } from "chart.js";
 import { useTranslations } from "next-intl";
 import { QuizHistoryType } from "@/types";
+import { useTheme } from "next-themes";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
   const t = useTranslations("Dashboard");
+  const { theme } = useTheme();
 
   const { sumCorrectAnswers, sumIncorrectAnswers } = useMemo(() => {
     const correctAnswers = quiz.reduce(
@@ -54,6 +57,9 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         legend: {
           position: "bottom",
           labels: {
+            color: () => {
+              return theme === "light" ? "#404040" : "#e2e2e2";
+            },
             font: {
               size: 14,
             },
@@ -62,6 +68,9 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         title: {
           display: true,
           text: t("answerDistribution"),
+          color: () => {
+            return theme === "light" ? "#404040" : "#e2e2e2";
+          },
           font: {
             size: 24,
           },

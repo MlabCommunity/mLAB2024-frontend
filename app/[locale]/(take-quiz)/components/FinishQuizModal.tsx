@@ -48,7 +48,7 @@ function FinishQuizModal({ setShowResult }: FinishQuizModalProps) {
       onOpenChange={closeModal}
       isOpen={isModalOpen}
       size="3xl"
-      className="bg-content2"
+      className="bg-Content-content2-light dark:bg-Content-content2-dark"
       closeButton={
         <button
           style={{
@@ -70,7 +70,7 @@ function FinishQuizModal({ setShowResult }: FinishQuizModalProps) {
         </button>
       }
     >
-      <ModalContent className="bg-content2">
+      <ModalContent className="bg-Content-content2-light dark:bg-Content-content2-dark">
         <ModalHeader>
           <div className="flex flex-col justify-start">
             <p className="text-lg text-foreground-700 font-semibold">

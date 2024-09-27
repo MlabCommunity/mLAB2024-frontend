@@ -49,7 +49,7 @@ const DeleteQuestionModal = ({
         </button>
       }
     >
-      <ModalContent className="rounded-lg shadow-lg relative bg-content2">
+      <ModalContent className="rounded-lg shadow-lg relative bg-Content-content2-light dark:bg-Content-content2-dark">
         <ModalHeader className="flex flex-col">
           <div className="flex flex-col justify-start">
             <p className="text-lg text-foreground-700 font-semibold">
@@ -61,7 +61,7 @@ const DeleteQuestionModal = ({
           </div>
         </ModalHeader>
         <ModalBody>
-          <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
+          <div className="bg-Content-content2-light dark:bg-Content-content2-dark py-2 px-4 rounded-lg border-dashed border-2">
             <p className="text-foreground-700 font-semibold">{questionTitle}</p>
           </div>
         </ModalBody>

@@ -92,7 +92,7 @@ function Settings({ quizId }: SettingsProps) {
       transition={{ duration: 0.5 }}
       className="w-full"
     >
-      <NavbarContentContainer className="bg-content2 p-6 flex flex-col gap-2 rounded-lg">
+      <NavbarContentContainer className="bg-Content-content2-light dark:bg-Content-content2-dark p-6 flex flex-col gap-2 rounded-lg">
         <div>
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-2">

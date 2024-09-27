@@ -29,10 +29,14 @@ const config: Config = {
           focus: "#006FEE",
         },
         Content: {
-          content1: "#FFFFFF",
-          content2: "#f4f4f5",
-          content3: "#e4e4e7",
-          content4: "#d4d4d8",
+          content1: {
+            light: "#FFFFFF",
+            dark: "#151515",
+          },
+          content2: {
+            light: "#F4F4F5",
+            dark: "#2c2c2c",
+          },
         },
         Default: {
           "default-50": "#fafafa",

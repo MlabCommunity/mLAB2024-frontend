@@ -64,7 +64,7 @@ const Header = () => {
             {isDropdownOpen && (
               <div
                 ref={dropdownRef}
-                className="absolute right-0 mt-2 bg-white border rounded-lg py-2 z-50 shadow-md"
+                className="absolute right-0 mt-2 bg-Content-content2-light dark:bg-Content-content2-dark border rounded-lg py-2 z-50 shadow-md"
               >
                 <span className="block px-4 py-2 text-foreground-700 text-large">
                   {user.email}
@@ -72,7 +72,7 @@ const Header = () => {
                 <hr className=" w-[85%] mx-auto" />
                 <Link
                   href={routes.profile.pathname}
-                  className="block w-full text-left px-4 py-2 hover:bg-white hover:text-gray-900 transition-colors text-foreground-600 text-medium"
+                  className="block w-full text-left px-4 py-2 bg-Content-content2-light dark:bg-Content-content2-dark hover:text-gray-900 transition-colors text-foreground-600 text-medium"
                 >
                   {t("profile")}
                 </Link>

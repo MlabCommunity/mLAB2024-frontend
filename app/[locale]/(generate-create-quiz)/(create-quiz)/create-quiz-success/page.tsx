@@ -36,8 +36,8 @@ const CreateQuizSuccessPage = () => {
             <p className="text-foreground-600 text-lg">
               {t("quizSuccessMessage")}
             </p>
-            <div className="bg-content2 p-6 gap-6 flex flex-col rounded-lg">
-              <div className=" flex items-center h-[52px] bg-white p-3 gap-3 justify-center rounded-lg">
+            <div className="bg-Content-content2-light dark:bg-Content-content2-dark p-6 gap-6 flex flex-col rounded-lg">
+              <div className=" flex items-center h-[52px] bg-white dark:bg-Content-content1-dark p-3 gap-3 justify-center rounded-lg">
                 <span className="text-sm">{joinCode}</span>
                 <Popover>
                   <PopoverTrigger>
@@ -45,7 +45,7 @@ const CreateQuizSuccessPage = () => {
                       onClick={handleCopyLink}
                       src={copyIcon}
                       alt="Document Icon"
-                      className="cursor-pointer"
+                      className="cursor-pointer dark:text-white"
                     />
                   </PopoverTrigger>
                   <PopoverContent>

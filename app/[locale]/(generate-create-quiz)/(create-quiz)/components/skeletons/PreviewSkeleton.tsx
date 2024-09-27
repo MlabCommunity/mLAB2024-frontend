@@ -3,7 +3,7 @@ import React from "react";
 
 const PreviewSkeleton = () => {
   return (
-    <div className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
+    <div className="bg-Content-content2-light dark:bg-Content-content2-dark p-6 mt-5 gap-6 flex flex-col">
       <div className="flex justify-between w-full">
         <Skeleton className="w-36 h-10 rounded-lg" />
         <Skeleton className="w-36 h-10 rounded-lg" />

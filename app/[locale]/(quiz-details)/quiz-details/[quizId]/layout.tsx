@@ -40,7 +40,7 @@ export default async function Layout({
       <Header />
       <Container>
         <div className="flex flex-col md:flex-row">
-          <aside className="w-full md:w-64 bg-white p-4 md:relative md:top-0 md:left-0">
+          <aside className="w-full md:w-64 p-4 md:relative md:top-0 md:left-0">
             <Link
               href={routes.dashboard.pathname}
               className="text-xl mb-4 hover:text-foreground-600 transition-all"

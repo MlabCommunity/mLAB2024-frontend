@@ -22,7 +22,7 @@ const SignInPage = async () => {
 
   return (
     <div className="h-screen flex items-center justify-center px-4 w-xl">
-      <div className="bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500 ">
+      <div className="bg-content2-foreground dark:bg-Content-content2-dark p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500 ">
         <Image
           src={logo}
           alt="logo"

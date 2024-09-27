@@ -136,7 +136,7 @@ const EditQuestionModal = ({
         </button>
       }
     >
-      <ModalContent className="bg-content2">
+      <ModalContent className="bg-Content-content2-light dark:bg-Content-content2-dark">
         <ModalHeader className="flex flex-col gap-3">
           <div>
             <label className="block font-semibold" htmlFor="question">
@@ -156,7 +156,7 @@ const EditQuestionModal = ({
           <label className="text-lg text-foreground-700 font-semibold">
             {t("answers")}:
           </label>
-          <ul className="bg-white py-1 px-4 rounded-lg border-dashed border-2">
+          <ul className="bg-Content-content2-light dark:bg-Content-content2-dark py-1 px-4 rounded-lg border-dashed border-2">
             {options?.map((option, index) => (
               <li key={index} className="flex items-center space-x-2 mb-2">
                 <div

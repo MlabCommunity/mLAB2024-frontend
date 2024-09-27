@@ -8,7 +8,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/react"; // Import necessary NextUI components
+} from "@nextui-org/react";
 import React from "react";
 import { QuizHistoryType } from "@/types";
 import { formatParticipationDate } from "@/utils/helpers";
@@ -29,7 +29,6 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
       <ModalContent>
         <ModalHeader className="flex justify-around">
           <h1 className="text-2xl">{t("quizDetails")}</h1>
-
           <StatusChip
             status={selectedQuiz?.status as "Stopped" | "Finished" | "Started"}
           />
@@ -101,7 +100,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
             return (
               <div
                 key={question.id}
-                className="bg-default-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
+                className="bg-Content-content2-light dark:bg-Content-content2-dark p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
               >
                 <div className="w-full">
                   <h3 className="font-bold mb-2">
@@ -114,17 +113,17 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                         <div
                           key={answer.id}
                           className={cn(
-                            "flex items-center p-2 rounded-lg cursor-pointer w-full bg-white justify-between",
-                            answer.isCorrect && "bg-success-100",
+                            "flex items-center p-2 rounded-lg cursor-pointer w-full bg-Content-content2-light dark:bg-[#7a7a7a] justify-between",
+                            answer.isCorrect && "dark:bg-success-300",
                             isSelected && !answer.isCorrect && "bg-danger-100"
                           )}
                         >
                           <div className="flex">
-                            <span className="font-medium text-gray-700">
+                            <span className="font-medium light:text-black black:text-white">
                               {String.fromCharCode(65 + answerIndex)}
                             </span>
                             <div className="border-l border-gray-300 h-6 mx-2"></div>
-                            <span className="text-gray-700">
+                            <span className="light:text-black black:text-white">
                               {answer.content}
                             </span>
                           </div>

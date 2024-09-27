@@ -70,7 +70,7 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
           isOpen={isModalOpen}
           onOpenChange={closeModal}
           size="5xl"
-          className="bg-content2"
+          className="bg-Content-content2-light dark:bg-Content-content2-dark"
           closeButton={
             <button
               style={{
@@ -114,9 +114,9 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                       value={sharedLink}
                       readOnly
                       variant="flat"
-                      className="w-full bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg"
+                      className="w-full bg-Content-content2-light dark:bg-Content-content2-dark border-dashed border-2 border-gray-300 rounded-lg"
                     />
-                    <p className="text-center text-gray-600 mt-4 mb-2">
+                    <p className="text-center dark:text-white light:text-black mt-4 mb-2">
                       {t("scanQRCodeToShare")}
                     </p>
                     <QRCodeSVG value={shareLink} size={200} />

@@ -114,7 +114,7 @@ const QuizCard = ({
 
   return (
     <motion.div
-      className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-full sm:w-auto rounded-lg cursor-pointer"
+      className="border-dashed border-2 border-gray-300 bg-Content-content2-light dark:bg-Content-content2-dark p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-full sm:w-auto rounded-lg cursor-pointer"
       onClick={goQuizDetailsPage}
       whileHover={{ scale: 1.01 }}
       transition={{ duration: 0.3 }}

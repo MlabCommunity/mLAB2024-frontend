@@ -96,8 +96,8 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         style={{ scaleX: scrollYProgress }}
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left"
       />
-      <div className="bg-white w-full md:max-w-7xl">
-        <div className="bg-white p-4 md:p-6 rounded-lg">
+      <div className="w-full md:max-w-7xl">
+        <div className=" p-4 md:p-6 rounded-lg">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold">{t("detailQuizzHeading")}</h2>
             <Button
@@ -108,7 +108,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
               {t("shareQuizzButton")}
             </Button>
           </div>
-          <div className="bg-foreground-100 p-4 mb-6 rounded-lg shadow-md">
+          <div className="bg-Content-content2-light dark:bg-Content-content2-dark p-4 mb-6 rounded-lg shadow-md">
             {isFetching ? (
               <QuizDetailsInfoSkeleton />
             ) : (
@@ -120,7 +120,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           </div>
           <nav
             onClick={handleNavbarChange}
-            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 roundA-lg overflow-x-auto rounded-lg"
+            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-Content-content2-light dark:bg-Content-content2-dark p-2 rounded-lg overflow-x-auto"
           >
             {tabs.map((tab) => (
               <Link
@@ -129,7 +129,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
                 className={cn(
                   "px-2 py-2 rounded-lg whitespace-nowrap",
                   activeTab === tab.value
-                    ? "bg-white text-default-foreground"
+                    ? "bg-Content-content1-light dark:bg-Content-content1-dark text-default-foreground"
                     : "text-default-500",
                   isFetching && "pointer-events-none"
                 )}

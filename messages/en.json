@@ -55,6 +55,7 @@
     "updatingQuizStatus": "Updating quiz status...",
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
+    "deleteAccountWarning": "Are you sure that ",
     "inactive": "Inactive",
     "takeQuizBtn": "Take quiz",
     "statistics": "Statistics",

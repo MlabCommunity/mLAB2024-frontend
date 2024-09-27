@@ -107,7 +107,7 @@ const TakeQuiz = ({ params }: { params: { id: string } }) => {
 
   return (
     <Container>
-      <section className="flex items-center justify-center h-screen">
+      <section className="flex items-center justify-center min-h-screen">
         {quizState.isTakeQuizBoxVisible && (
           <TakeQuizBox
             setIsTakeQuizBoxVisible={(visible) =>

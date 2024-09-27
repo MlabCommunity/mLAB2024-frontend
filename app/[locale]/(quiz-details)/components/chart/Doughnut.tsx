@@ -1,4 +1,3 @@
-"use client";
 import React, { useMemo } from "react";
 import { Doughnut } from "react-chartjs-2";
 import {
@@ -55,11 +54,9 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: "bottom",
+          position: "bottom" as const,
           labels: {
-            color: () => {
-              return theme === "light" ? "#404040" : "#e2e2e2";
-            },
+            color: theme === "light" ? "#404040" : "#e2e2e2",
             font: {
               size: 14,
             },
@@ -68,16 +65,14 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         title: {
           display: true,
           text: t("answerDistribution"),
-          color: () => {
-            return theme === "light" ? "#404040" : "#e2e2e2";
-          },
+          color: theme === "light" ? "#404040" : "#e2e2e2",
           font: {
             size: 24,
           },
         },
       },
     }),
-    [t]
+    [t, theme]
   );
 
   return (

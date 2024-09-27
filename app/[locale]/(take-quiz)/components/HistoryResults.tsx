@@ -69,9 +69,9 @@ const HistoryResults = () => {
                       <div
                         key={answer.id}
                         className={cn(
-                          "flex items-center p-2 rounded-lg cursor-pointer w-full bg-Content-content2-light dark:bg-Content-content2-dark justify-between",
-                          answer.isCorrect && "dark:bg-success-200 light:bg-success-200",
-                          isSelected && !answer.isCorrect && "dark:bg-danger-100 light:bg-danger-500"
+                          "flex items-center p-2 rounded-lg cursor-pointer w-full justify-between bg-default-300",
+                          answer.isCorrect && "bg-success-200",
+                          isSelected && !answer.isCorrect && "bg-danger-200",
                         )}
                       >
                         <div className="flex">

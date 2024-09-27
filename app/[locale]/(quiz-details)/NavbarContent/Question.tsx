@@ -48,7 +48,9 @@ function Question({
               key={i}
               className={cn(
                 "flex items-center p-2 rounded-lg cursor-pointer",
-                answer.isCorrect && showAnswers ? "bg-success-100" : "bg-Content-content2-light dark:bg-Content-content2-dark"
+                answer.isCorrect && showAnswers
+                  ? "bg-success-100"
+                  : "bg-default-200"
               )}
             >
               <span className="font-medium text-foreground-700">

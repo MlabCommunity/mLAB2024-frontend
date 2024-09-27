@@ -114,7 +114,7 @@ function DetailsModal({ quiz }: { quiz: QuizHistoryType[] }) {
                           key={answer.id}
                           className={cn(
                             "flex items-center p-2 rounded-lg cursor-pointer w-full bg-Content-content2-light dark:bg-[#7a7a7a] justify-between",
-                            answer.isCorrect && "dark:bg-success-300",
+                            answer.isCorrect && "bg-success-300",
                             isSelected && !answer.isCorrect && "bg-danger-100"
                           )}
                         >

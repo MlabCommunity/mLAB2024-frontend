@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { UploadButton } from "@/utils/uploadThing";
 import { useModalStore } from "@/store/modalStore";
-import DeleteAccountModal from "./modals/deleteAccountModal";
+import DeleteAccountModal from "./modals/DeleteAccountModal";
 
 const ProfilePage = () => {
   const queryClient = useQueryClient();

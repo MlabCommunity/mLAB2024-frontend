@@ -27,7 +27,7 @@ function DeleteAccountModal() {
     closeModal();
   };
   const router = useRouter();
-  const { mutate } = useMutation({
+  const { mutate: deleteQuizMutation } = useMutation({
     mutationFn: deleteAccount,
     mutationKey: ["deleteAccount"],
     onSuccess: () => {
@@ -71,28 +71,26 @@ function DeleteAccountModal() {
         </ModalHeader>
         <ModalBody>
           <div className="text-danger-400">
-            <h1>Warning</h1>
+            <h1>{t("warning")}</h1>
           </div>
           <div className="bg-danger-50 text-danger-500 p-4 rounded-lg border-dashed border border-danger-400">
             <ul className="list-disc p-4 flex flex-col gap-2">
               <li>
-                All your data will be permanenty delete, including personal
-                information, settings, and any saved content
+                <span>{t("deleteFirstWarning")}</span>
               </li>
               <li>
-                You will lose access to all services and features associated
-                with this account
+                <span>{t("deleteSecondWarning")}</span>
               </li>
             </ul>
-            <h4>
-              If you are sure you want to procees, please confirm below. If you
-              have any questions or need help, consider contacting support
-              before finalizing this action.
-            </h4>
           </div>
+          <h5 className="text-small  text-center text-danger-300">
+            {t("deleteThirdWarning")}
+          </h5>
           <ModalFooter>
             <CancelButton />
-            <Button color="danger">{t("delete")}</Button>
+            <Button onClick={() => deleteQuizMutation()} color="danger">
+              {t("delete")}
+            </Button>
           </ModalFooter>
         </ModalBody>
       </ModalContent>

@@ -11,9 +11,7 @@ export const deleteAccount = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (response.status === 200) {
-      return response.data;
-    }
+    return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);

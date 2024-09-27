@@ -16,7 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <DndProvider backend={HTML5Backend}>
         <ReactQueryDevtools initialIsOpen={false} />
         <NextUIProvider>
-          <NextThemesProvider attribute="class" defaultTheme="dark">
+          <NextThemesProvider attribute="class" defaultTheme="light">
             {children}
           </NextThemesProvider>
           <ModalProvider />

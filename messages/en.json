@@ -11,7 +11,7 @@
     "register": "Register",
     "signInEnterText": "Please enter your user information.",
     "signUpEnterText": "Please enter your user information.",
-    "pending": "Przetwarzanie...",
+    "pending": "Processing...",
     "signedUp": "Successfully signed up!",
     "signedIn": "Successfully signed in!"
   },

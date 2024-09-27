@@ -85,19 +85,19 @@ const Header = () => {
                   {t("profile")}
                 </DropdownItem>
                 <DropdownItem
-                  key="logout"
-                  className="text-lg text-foreground-600"
-                  onPress={handleLogout}
-                  showDivider
-                >
-                  {t("logOut")}
-                </DropdownItem>
-                <DropdownItem
                   key="statistics"
                   className="text-lg text-foreground-600"
                   href="/statistics"
+                  showDivider
                 >
                   {t("statistics")}
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  className="text-lg text-foreground-600"
+                  onPress={handleLogout}
+                >
+                  {t("logOut")}
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

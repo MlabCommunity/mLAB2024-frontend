@@ -12,6 +12,7 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -23,7 +24,6 @@ function DeleteAccountModal() {
   const t = useTranslations("Dashboard");
   const isModalOpen = isOpen && type === "deleteAccountModal";
   const handleDeleteAccount = () => {
-    console.log("Deleting account...");
     closeModal();
   };
   const router = useRouter();
@@ -31,14 +31,21 @@ function DeleteAccountModal() {
     mutationFn: deleteAccount,
     mutationKey: ["deleteAccount"],
     onSuccess: () => {
-      toast.success("Account deleted");
+      toast.success(t("accountDeleteSuccess"));
+
       router.push(routes.signIn.pathname);
-      console.log("Account deleted successfully");
     },
     onError: (error: Error) => {
       toast.error(error.message);
     },
   });
+  const handleDelete = () => {
+    toast.success(t("accountDeletedSuccess"));
+    Cookies.remove("RefreshToken");
+    Cookies.remove("AccessToken");
+    router.push(routes.signIn.pathname);
+    closeModal();
+  };
   return (
     <Modal
       isOpen={isModalOpen}
@@ -70,10 +77,10 @@ function DeleteAccountModal() {
           <h1>{t("deleteAccount")}</h1>
         </ModalHeader>
         <ModalBody>
-          <div className="text-danger-400">
+          <div className="text-danger-400 font-semibold">
             <h1>{t("warning")}</h1>
           </div>
-          <div className="bg-danger-50 text-danger-500 p-4 rounded-lg border-dashed border border-danger-400">
+          <div className="bg-danger-50 font-semibold text-danger-500 p-4 rounded-lg border-dashed border border-danger-400">
             <ul className="list-disc p-4 flex flex-col gap-2">
               <li>
                 <span>{t("deleteFirstWarning")}</span>
@@ -87,8 +94,15 @@ function DeleteAccountModal() {
             {t("deleteThirdWarning")}
           </h5>
           <ModalFooter>
-            <CancelButton />
-            <Button onClick={() => deleteQuizMutation()} color="danger">
+            <Button
+              size="md"
+              color="primary"
+              variant="flat"
+              onClick={closeModal}
+            >
+              {t("cancel")}
+            </Button>
+            <Button size="md" onClick={handleDelete} color="danger">
               {t("delete")}
             </Button>
           </ModalFooter>

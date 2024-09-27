@@ -1,6 +1,7 @@
 "use client";
 import { routes } from "@/routes";
 import { useModalStore } from "@/store/modalStore";
+import { useStepperStore } from "@/store/stepperStore";
 import {
   Button,
   Link,
@@ -18,9 +19,11 @@ function CancelQuizModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "cancelCreateQuizz";
   const t = useTranslations("CreateQuiz");
+  const { resetVisitedRoutes, setCurrentRoute } = useStepperStore();
   const router = useRouter();
   const handleClose = () => {
-    localStorage.removeItem("visitedRoutes");
+    resetVisitedRoutes();
+    setCurrentRoute("");
     closeModal();
     router.push(routes.dashboard.pathname);
   };

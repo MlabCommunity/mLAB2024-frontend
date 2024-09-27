@@ -16,6 +16,7 @@ import {
 import { useModalStore } from "@/store/modalStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { QRCodeSVG } from "qrcode.react";
 
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.8 },
@@ -106,6 +107,7 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
+                    className="flex flex-col items-center gap-4"
                   >
                     <Input
                       type="text"
@@ -114,6 +116,10 @@ const ShareQuizModal = ({ shareLink }: { shareLink: string }) => {
                       variant="flat"
                       className="w-full bg-gray-100 border-dashed border-2 border-gray-300 rounded-lg"
                     />
+                    <p className="text-center text-gray-600 mt-4 mb-2">
+                      {t("scanQRCodeToShare")}
+                    </p>
+                    <QRCodeSVG value={shareLink} size={200} />
                   </motion.div>
                 </Tab>
                 <Tab key="code" title={t("shareAsCodeTitle")}>

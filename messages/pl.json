@@ -311,7 +311,8 @@
     "linkCopiedMsg": "Skopiowano link",
     "closeButton": "Zamknij",
     "copiedToClipboard": "Skopiowano do schowka",
-    "failedToCopy": "Nie udało się skpiować do schowka. Spróbuj ponownie"
+    "failedToCopy": "Nie udało się skpiować do schowka. Spróbuj ponownie",
+    "scanQRCodeToShare": "Skanuj kod QR do udostępnienia quizu"
   },
   "Guest": {
     "convertedProperly": "Gość został poprawnie przekonwertowany",

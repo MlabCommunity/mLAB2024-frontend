@@ -42,102 +42,105 @@ export default function LoginForm() {
     },
   });
 
-  async function onSubmit(data: FormData) {
+  const onSubmit = (data: FormData) => {
     mutate(data);
-  }
+  };
 
   return (
-    <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
-      <div className="relative">
-        <label htmlFor="email" className="text-medium text-foreground-100">
+    <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-foreground-100"
+        >
           E-mail
         </label>
         <Input
           variant="flat"
-          {...register("email", { required: true })}
+          {...register("email")}
           id="email"
-          name="email"
-          type="text"
+          type="email"
           radius="sm"
           placeholder="Email"
-          className="text-foreground-500 mt-1 text-sm"
+          className="mt-1 text-sm text-foreground-500"
           disabled={isPending}
         />
         {errors?.email && (
-          <p className="text-red-500 mt-2 text-sm">{errors?.email?.message}</p>
+          <p className="text-red-500 mt-2 text-sm">{errors.email.message}</p>
         )}
       </div>
 
-      <div className="relative mt-6">
-        <label htmlFor="password" className="text-medium text-foreground-100">
+      <div>
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-foreground-100"
+        >
           {t("password")}
         </label>
         <Input
           variant="flat"
-          {...register("password", { required: true })}
+          {...register("password")}
           id="password"
           type="password"
-          name="password"
-          className="text-foreground-500 mt-1 text-sm"
+          className="mt-1 text-sm text-foreground-500"
           placeholder={t("password")}
-          autoComplete="off"
+          autoComplete="current-password"
           disabled={isPending}
         />
         {errors?.password && (
-          <p className="text-red-500 mt-2 text-sm">
-            {errors?.password?.message}
-          </p>
+          <p className="text-red-500 mt-2 text-sm">{errors.password.message}</p>
         )}
       </div>
 
-      <div className="flex mt-6 items-center ml-2">
+      <div className="flex items-center">
         <Checkbox
           color="default"
-          radius="none"
+          radius="sm"
           size="sm"
           isDisabled={isPending}
           {...register("rememberMe")}
         >
-          <span className="text-primary text-sm">{t("rememberMe")}</span>
+          <span className="text-sm text-primary">{t("rememberMe")}</span>
         </Checkbox>
       </div>
 
       {error?.message && (
         <p className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm">
-          {error?.message}
+          {error.message}
         </p>
       )}
 
       <Button
-        variant={isPending ? "bordered" : "solid"}
         color="primary"
         size="lg"
         radius="sm"
         type="submit"
         disabled={isPending}
         isLoading={isPending}
-        className="mt-5 w-full"
+        className="w-full"
       >
         {isPending ? t("pending") : t("login")}
       </Button>
 
-      <div className="flex justify-between mt-6 gap-2">
+      <div className="flex justify-between gap-2">
         <Button
+          as={Link}
+          href={routes.signUp.pathname}
           variant="ghost"
           size="lg"
           radius="sm"
-          className="text-tiny sm:text-medium disabled:opacity-50"
           color="primary"
+          className="text-sm sm:text-base flex-1"
           disabled={isPending}
         >
-          <Link href={routes.signUp.pathname}>{t("createAccount")}</Link>
+          {t("createAccount")}
         </Button>
         <Button
           variant="ghost"
           size="lg"
           radius="sm"
           color="primary"
-          className="text-tiny sm:text-medium disabled:opacity-50"
+          className="text-sm sm:text-base flex-1"
           disabled={isPending}
         >
           {t("forgotPassword")}

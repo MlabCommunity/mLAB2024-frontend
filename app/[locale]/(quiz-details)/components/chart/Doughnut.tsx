@@ -39,7 +39,7 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         {
           data: [sumCorrectAnswers, sumIncorrectAnswers],
           backgroundColor: ["rgba(39, 208, 85, 0.8)", "#FF6384"],
-          hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+          hoverBackgroundColor: ["rgba(39, 208, 85, 0.8)", "#FF6384"],
         },
       ],
     }),

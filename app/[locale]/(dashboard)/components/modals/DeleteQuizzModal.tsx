@@ -61,8 +61,8 @@ export default function DeleteQuizzModal() {
               {modalData.description}
             </p>
           </div>
-          <div className="bg-blue-600 text-white px-2 py-1 rounded-lg max-w-36 text-center">
-            <p className="text-white text-small">
+          <div className="bg-blue-600 text-white px-2 py-1 rounded-lg max-w-72 text-center">
+            <p className="text-white text-small w-full">
               {t("total")} {modalData.questions} {t("questions")}
             </p>
           </div>

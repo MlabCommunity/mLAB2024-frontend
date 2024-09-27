@@ -1,6 +1,4 @@
-
 "use client";
-
 import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
@@ -11,11 +9,10 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { Button } from "@nextui-org/react";
 import { cn } from "@/lib";
-import Image from "next/image";
 import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
-import bin from "@/public/assets/bin.svg";
 import { motion } from "framer-motion";
-import { useTheme } from "@/app/context/ThemeContext"; 
+import { DeleteButton } from "@/components/DeleteButton";
+import { useTheme } from "@/app/context/ThemeContext";
 
 interface QuizCardProps {
   title: string;
@@ -129,29 +126,18 @@ const QuizCard = ({
     >
       <div className="flex flex-row justify-between items-start">
         <div>
-          <h3 className="font-semibold text-base">{title}</h3>
-          <p className="text-base font-medium mt-1">{description}</p>
+          <h3 className="font-semibold text-base text-default-700">{title}</h3>
+          <p className="text-base font-medium text-default-600 mt-1">
+            {description}
+          </p>
         </div>
-        <button
-          className="ml-5 cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleOpenDeleteModal(id);
-          }}
-          disabled={isDeleting}
-        >
-          <Image
-            src={bin}
-            className="min-w-5 min-h-5 md:min-h-6 md:min-w-6"
-            alt="bin icon"
-          />
-        </button>
+        <DeleteButton onClick={() => handleOpenDeleteModal(id)} />
       </div>
       <div>
         <div className="flex items-center justify-start gap-4 mt-4">
           <div className="flex items-center bg-blue-600 text-white px-2 py-1 rounded-lg">
             <p className="text-white text-small">
-              {t("total")} {questions} {t("questions")}
+              {t("total")} {questions}
             </p>
           </div>
           <Button
@@ -175,7 +161,9 @@ const QuizCard = ({
                   : "text-white"
               )}
             >
-              {isPendingStatus ? t("updatingQuizStatus") : translatedCurrentStatus}
+              {isPendingStatus
+                ? t("updatingQuizStatus")
+                : translatedCurrentStatus}
             </p>
           </Button>
         </div>

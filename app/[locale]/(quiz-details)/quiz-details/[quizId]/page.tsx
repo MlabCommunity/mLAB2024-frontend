@@ -17,7 +17,7 @@ import QuizDetailsInfo from "../../components/QuizDetailsInfo";
 import { motion, useScroll } from "framer-motion";
 import ShareQuizModal from "../../modals/ShareQuizModal";
 import { useModalStore } from "@/store/modalStore";
-import { useTheme } from "@/app/context/ThemeContext"; 
+import { useTheme } from "@/app/context/ThemeContext";
 
 const Questions = dynamic(() => import("../../NavbarContent/Questions"), {
   ssr: false,
@@ -42,7 +42,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
   const { data: singleQuizData, isFetching } = useGetSingleQuiz(params.quizId);
   const [activeTab, setActiveTab] = useState("Questions");
   const t = useTranslations("quizDetails");
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
 
   useEffect(() => {
@@ -70,9 +70,9 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
     { label: t("statistics"), value: "Statistics" },
     { label: t("general"), value: "General" },
   ];
-  
+
   const { openModal } = useModalStore();
-  
+
   const renderTabContent = useCallback(
     (activeTab: string) => {
       if (isFetching) {

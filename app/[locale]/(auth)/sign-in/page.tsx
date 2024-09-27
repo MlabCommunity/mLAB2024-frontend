@@ -1,4 +1,3 @@
-
 import SignInForm from "../components/SignInForm";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
@@ -23,7 +22,7 @@ const SignInPage = async () => {
 
   return (
     <div className="h-screen flex items-center justify-center px-4">
-      <div className="bg-[#1a1a1a] p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl">
+      <div className="bg-[#1a1a1a] bg-content2-foreground p-8 rounded-xl sm:w-[32rem] w-full shadow-2xl transform transition-transform duration-500">
         {/* Logo */}
         <Image
           src={logo}
@@ -36,9 +35,6 @@ const SignInPage = async () => {
 
        
         <SignInForm />
-
-   
-       
       </div>
     </div>
   );

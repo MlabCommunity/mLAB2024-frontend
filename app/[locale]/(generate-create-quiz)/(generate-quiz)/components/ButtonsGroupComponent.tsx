@@ -36,7 +36,7 @@ function ButtonGroupComponent() {
     onSuccess: (data) => {
       const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
-      params.set("selectedTypes", selectedTypes.join(","));
+      params.set("selectedType", selectedTypes.join(","));
       router.push(`${routes.quizPreview.pathname}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
@@ -55,7 +55,9 @@ function ButtonGroupComponent() {
     const formData = new FormData();
     formData.append("Content", Content as string);
     formData.append("NumberOfQuestions", numberOfQuestions.toString());
-    formData.append("QuestionTypes", selectedTypes.join(","));
+    selectedTypes.forEach((type) => {
+      formData.append("QuestionTypes[]", type);
+    });
     formData.append("Language", selectedLanguage);
     Attachments?.forEach((attachment) => {
       formData.append("Attachments", attachment);

@@ -17,12 +17,10 @@ function ButtonGroupComponent() {
   const router = useRouter();
   const t = useTranslations("ConfigureQuiz");
 
-  // Handle clicks for the type of questions
   const handleTypeClick = (type: string) => {
     if (!isPending) setSelectedType(type);
   };
 
-  // Handle clicks for the number of questions
   const handleQuantityClick = (qty: string) => {
     if (!isPending) setSelectedQuantity(qty);
   };

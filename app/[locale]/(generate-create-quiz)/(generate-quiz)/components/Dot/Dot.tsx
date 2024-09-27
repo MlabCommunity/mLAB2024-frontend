@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib";
+import { cn } from "@/lib"; // Assuming cn is a utility for conditional classes
 
 interface DotProps {
   step: number;
@@ -21,10 +21,10 @@ const Dot = ({ step, visited }: DotProps) => {
     },
     visited: {
       scale: 1.1,
+      opacity: 1,
       transition: { duration: 0.5, ease: "easeInOut" },
     },
   };
-
   const fillVariants = {
     initial: { scale: 0, opacity: 0 },
     animate: {
@@ -37,7 +37,6 @@ const Dot = ({ step, visited }: DotProps) => {
       },
     },
   };
-
   const lineVariants = {
     initial: { scaleX: 0, originX: 0 },
     animate: {
@@ -49,7 +48,6 @@ const Dot = ({ step, visited }: DotProps) => {
       },
     },
   };
-
   const numberVariants = {
     initial: { opacity: 1 },
     animate: {
@@ -60,6 +58,7 @@ const Dot = ({ step, visited }: DotProps) => {
 
   return (
     <section className="flex items-center">
+      {/* Outer Dot with Border */}
       <motion.div
         className={cn(
           "size-8 rounded-full flex items-center justify-center relative",
@@ -70,12 +69,15 @@ const Dot = ({ step, visited }: DotProps) => {
         initial="initial"
         animate={visited ? "visited" : "animate"}
       >
+        {/* Inner Filled Dot */}
         <motion.div
           className="absolute inset-0.5 bg-black rounded-full"
           variants={fillVariants}
           initial="initial"
           animate="animate"
         />
+
+        {/* Step number text */}
         <motion.span
           className={cn(
             "absolute z-10 text-sm font-medium",
@@ -87,6 +89,8 @@ const Dot = ({ step, visited }: DotProps) => {
         >
           {step + 1}
         </motion.span>
+
+        {/* Checkmark icon if visited */}
         {visited && (
           <motion.svg
             className="absolute w-4 h-4 text-white"
@@ -102,9 +106,11 @@ const Dot = ({ step, visited }: DotProps) => {
           </motion.svg>
         )}
       </motion.div>
+
+      {/* Connecting line (shown if it's not the last step) */}
       {step < 2 && (
         <motion.div
-          className={cn("h-0.5 w-20 bg-gray-300 relative overflow-hidden")}
+          className="h-0.5 w-20 bg-gray-300 relative overflow-hidden"
           variants={lineVariants}
           initial="initial"
           animate="animate"

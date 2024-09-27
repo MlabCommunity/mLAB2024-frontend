@@ -40,7 +40,7 @@ const FileItem = ({ fileName, fileSize, onDelete }: FileItemProps) => {
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">{renderCorrespondingIcon()}</div>
         <div className="flex flex-col ">
-          <span className="md:text-lg md:w-3/4 w-1/2 text-sm break-words border">
+          <span className="md:text-lg md:w-3/4 w-1/2 text-sm break-words ">
             {file}
           </span>
 

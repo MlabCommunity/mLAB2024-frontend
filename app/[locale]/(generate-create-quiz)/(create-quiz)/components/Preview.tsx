@@ -20,6 +20,7 @@ import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQues
 import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
 import { AnimatePresence } from "framer-motion";
 import RegenerateQuizModal from "../../(generate-quiz)/modals/RegenerateQuizModal";
+import { useStepperStore } from "@/store/stepperStore";
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -30,7 +31,7 @@ function Preview() {
   const t = useTranslations("QuizPreview");
   const { closeModal, openModal, setModalData, type } = useModalStore();
   const router = useRouter();
-
+  const { setCurrentRoute, addVisitedRoute } = useStepperStore();
   const [questions, setQuestions] = useState<GeneratedQuestionT[]>(
     generatedQuizData?.generateQuestions
   );
@@ -54,6 +55,8 @@ function Preview() {
     },
     onSuccess: (data) => {
       setGeneratedQuizData(data);
+      setCurrentRoute(routes.quizSuccess.pathname);
+      addVisitedRoute(routes.quizSuccess.pathname);
       toast.success(t("createdSuccessfullyMsg"));
       router.push(routes.quizSuccess.pathname);
       setIsSubmitting(false);

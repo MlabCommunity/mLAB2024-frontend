@@ -33,7 +33,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "questions": "questions",
-    "total": "Total",
+    "total": "Total number of questions: ",
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
@@ -160,6 +160,7 @@
     "userAvatar": "User avatar",
     "profile": "Profile",
     "logOut": "Log out",
+    "statistics": "Statistics",
     "loggedOut": "Logged out successfully"
   },
   "Navbar": {
@@ -314,8 +315,9 @@
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close",
-    "copiedToClipboard":"Copied to clipboard",
-    "failedToCopy":"Failed to copy"
+    "copiedToClipboard": "Copied to clipboard",
+    "failedToCopy": "Failed to copy",
+    "scanQRCodeToShare": "Scan the QR code to share the link"
   },
   "Guest": {
     "convertedProperly": "Converted guest properly",

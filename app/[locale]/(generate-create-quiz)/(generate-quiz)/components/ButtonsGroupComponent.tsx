@@ -11,6 +11,7 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
+import { useStepperStore } from "@/store/stepperStore";
 
 function ButtonGroupComponent() {
   const locale = useLocale();
@@ -23,6 +24,7 @@ function ButtonGroupComponent() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([
     "SingleChoice",
   ]);
+  const { addVisitedRoute, setCurrentRoute } = useStepperStore();
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
   const [selectedLanguage, setSelectedLanguage] = useState(
     locale === "en" ? "English" : "Polish"
@@ -37,9 +39,14 @@ function ButtonGroupComponent() {
       const params = new URLSearchParams(searchParams);
       setGeneratedQuizData(data);
       params.set("selectedType", selectedTypes.join(","));
+      addVisitedRoute(routes.quizPreview.pathname); // Update this line
+      setCurrentRoute(routes.quizPreview.pathname); // Set the current route
+
+      params.set("selectedType", selectedTypes.join(","));
       router.push(`${routes.quizPreview.pathname}?${params.toString()}`);
       toast.success(t("generatedSuccessfullyMsg"));
     },
+
     onMutate: () => {
       toast.loading(t("generating"), { id: "loading-toast" });
     },

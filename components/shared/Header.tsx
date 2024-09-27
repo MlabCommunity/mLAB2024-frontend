@@ -88,8 +88,16 @@ const Header = () => {
                   key="logout"
                   className="text-lg text-foreground-600"
                   onPress={handleLogout}
+                  showDivider
                 >
                   {t("logOut")}
+                </DropdownItem>
+                <DropdownItem
+                  key="statistics"
+                  className="text-lg text-foreground-600"
+                  href="/statistics"
+                >
+                  {t("statistics")}
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

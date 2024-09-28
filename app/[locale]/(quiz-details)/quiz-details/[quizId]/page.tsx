@@ -75,7 +75,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings quizId={singleQuizData?.items?.id} />;
+          return <Settings quizId={singleQuizData?.id} />;
         case "Statistics":
           return <Statistics quiz={singleQuizData} />;
         case "General":

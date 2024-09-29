@@ -55,7 +55,7 @@ function Statistics({ quiz }: { quiz: QuizDetail }) {
     switch (columnKey) {
       case "score":
         return participant.score !== undefined && participant.score !== null
-          ? `${participant.score}%`
+          ? `${participant.score.toFixed(0)}%`
           : "N/A";
       case "name":
         return participant.displayName;

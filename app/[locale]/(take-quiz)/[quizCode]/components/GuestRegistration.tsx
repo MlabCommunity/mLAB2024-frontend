@@ -11,6 +11,8 @@ import { registerParticipation } from "@/utils/actions/quiz/registerParticipatio
 import { routes } from "@/routes";
 import JoiningState from "./JoiningState";
 import { useTranslations } from "next-intl";
+import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 
 const GuestRegistration = () => {
   const t = useTranslations("Guest");
@@ -36,6 +38,8 @@ const GuestRegistration = () => {
       router.push(`${routes.takeQuiz.pathname}${id}`);
     },
     onError: () => {
+      Cookies.remove("AccessToken");
+      router.push(routes.signIn.pathname);
       toast.error(t("failedToJoin"));
     },
   });
